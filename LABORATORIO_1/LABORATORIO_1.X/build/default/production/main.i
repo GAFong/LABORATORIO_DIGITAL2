@@ -2704,96 +2704,55 @@ void ADC_INIT(int canal){
     PIE1bits.ADIE = 1;
     PIR1bits.ADIF = 0;
 }
+int ADC_READ(void){
+    int LECT;
+    LECT = ADRESH;
+    return LECT;
+}
+# 12 "main.c" 2
 
-void ADC_READ(int channel,int next_channel, int* out){
-    switch (channel){
-        case 0:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
+# 1 "./DISPLAY_LIB.h" 1
+# 10 "./DISPLAY_LIB.h"
+int TABLA_HEX[16] = {
+    0B00111111,
+    0B00000110,
+    0B01011011,
+    0B01001111,
+    0B01100110,
+    0B01101101,
+    0B01111101,
+    0B00000111,
+    0B01111111,
+    0B01100111,
+    0B01110111,
+    0B01111100,
+    0B00111001,
+    0B01011110,
+    0B01111001,
+    0B01110001,
+    };
+
+void DISPLAY_HEX(int* select, int VHEX1, int VHEX2){
+
+    switch(*select){
         case 1:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
+            PORTD = TABLA_HEX[VHEX1];
+            PORTA = 0B00000001;
+            *select = 2;
             break;
         case 2:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 3:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 4:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 5:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 6:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 7:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 8:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 9:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 10:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 11:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 12:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
-            break;
-        case 13:
-            *out = ADRESH;
-            ADCON0bits.CHS = next_channel;
-            _delay((unsigned long)((100)*(4000000/4000000.0)));
-            ADCON0bits.GO = 1;
+            PORTD = TABLA_HEX[VHEX2];
+            PORTA = 0B00000010;
+            *select = 1;
             break;
     }
 }
-# 12 "main.c" 2
+void BIN_HEX(int VBIN, int* VHEX1, int* VHEX2){
+    *VHEX1 = VBIN & 0X0F;
+    *VHEX2 = (VBIN & 0XF0)/16;
+
+}
+# 13 "main.c" 2
 
 
 
@@ -2823,13 +2782,17 @@ int CONTADOR = 0;
 int flag1 = 0;
 int flag2 = 0;
 int VALOR_ADC = 0;
+int HEX1 = 0;
+int HEX2 = 0;
+int CANAL = 2;
+int CANAL2 = 2;
+int select = 1;
 
 
 int digitos [10] = {
 0B00111111, 0B00000110, 0B01011011, 0B01001111, 0B01100110, 0B01101101,
 0B01111101, 0B00000111, 0B01111111, 0B01100111};
-
-
+# 72 "main.c"
 void setup (void);
 
 
@@ -2837,7 +2800,7 @@ void __attribute__((picinterrupt((""))))isr(void){
     (INTCONbits.GIE = 0);
     if (T0IF == 1){
         TMR0 = 100;
-
+        DISPLAY_HEX(&select,HEX1, HEX2);
         INTCONbits.T0IF = 0;
     }
     if (RBIF == 1){
@@ -2863,7 +2826,7 @@ void __attribute__((picinterrupt((""))))isr(void){
      INTCONbits.RBIF = 0;
     }
     if (ADIF == 1){
-        ADC_READ(2,2,&PORTD);
+        VALOR_ADC = ADC_READ();
         PIR1bits.ADIF = 0;
     }
     (INTCONbits.GIE = 1);
@@ -2873,6 +2836,16 @@ void main (void){
     ADCON0bits.GO = 1;
     while(1){
         PORTC = CONTADOR;
+
+        _delay((unsigned long)((100)*(4000000/4000000.0)));
+        ADCON0bits.GO = 1;
+        BIN_HEX(VALOR_ADC, &HEX1, &HEX2);
+       if (VALOR_ADC == CONTADOR){
+            PORTE = 2;
+        }
+        else {
+            PORTE = 0;
+        }
     }
 }
 
@@ -2910,7 +2883,7 @@ void setup(void){
     IOCB0 = 1 ;
     IOCB1 = 1 ;
 
-    ADC_INIT(2);
+    ADC_INIT(CANAL);
 
     INTCONbits.GIE = 1;
     INTCONbits.PEIE = 1;

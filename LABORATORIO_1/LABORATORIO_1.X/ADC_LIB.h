@@ -21,94 +21,99 @@ void ADC_INIT(int canal){
     PIE1bits.ADIE = 1;          //HABILITAMOS LA INTERRUPCION DEL ADC
     PIR1bits.ADIF = 0;
 }
-
-void ADC_READ(int channel,int next_channel, int* out){
+int ADC_READ(void){
+    int LECT;
+    LECT = ADRESH;
+    return LECT;
+}
+/*
+void ADC_CHANNELS(int channel,int next_channel){
     switch (channel){             //PODEMOS LEER LOS 13 CANALES
         case 0:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+            //*out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 1:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+           // *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 2:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+           // *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 3:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+          //  *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break; 
         case 4:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+         //   *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 5:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+         //   *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 6:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+         //   *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 7:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+         //   *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break; 
         case 8:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+        //    *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 9:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+         //   *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 10:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+         //   *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 11:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+         //   *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 12:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+         //   *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break;
         case 13:
-            *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
+        //    *out = ADRESH;       //AGREGAMOS EL VALOR ADC A LA VARIABLE
             ADCON0bits.CHS = next_channel;//AGREGAMOS EL CANAL SI QUEREMOS CAMBIAR
             __delay_us(100);
             ADCON0bits.GO = 1;
             break; 
     }
-}
+}*/
 #endif	/* ADC_LIB_H */
 

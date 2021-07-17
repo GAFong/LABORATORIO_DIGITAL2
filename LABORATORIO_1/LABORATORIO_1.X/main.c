@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <xc.h>
 #include "ADC_LIB.h"
+#include "DISPLAY_LIB.h"
 
 /*--------------------------CONFIGURACIONES ----------------------------------*/
 
@@ -32,18 +33,41 @@
 
 #define _tmr0_value 100 
 #define _XTAL_FREQ 4000000
-#define CANAL 2
+
 //------------------------------VARIABLES---------------------------------------
 int CONTADOR = 0;
 int flag1 = 0;
 int flag2 = 0;
 int VALOR_ADC = 0;
+int HEX1 = 0;
+int HEX2 = 0;
+int CANAL = 2;
+int CANAL2 = 2;
+int select = 1;
 
 //------------------------------TABLA-------------------------------------------
 int digitos [10] = {
 0B00111111, 0B00000110, 0B01011011, 0B01001111, 0B01100110, 0B01101101,
 0B01111101, 0B00000111, 0B01111111, 0B01100111};
-
+/*
+int TABLA_HEX[16] = { 
+    0B00111111,    
+    0B00000110,    
+    0B01011011,    
+    0B01001111,    
+    0B01100110,    
+    0B01101101,   
+    0B01111101,    
+    0B00000111,    
+    0B01111111,    
+    0B01100111,    
+    0B01110111,    
+    0B01111100,    
+    0B00111001,    
+    0B01011110,    
+    0B01111001,    
+    0B01110001,    
+    };*/
 //-----------------------------PROTOTIPOS---------------------------------------
 void setup (void);
 
@@ -52,7 +76,7 @@ void __interrupt()isr(void){
     di();                   //PUSH
     if  (T0IF == 1){
         TMR0 = _tmr0_value; //VALOR
-      
+        DISPLAY_HEX(&select,HEX1, HEX2);
         INTCONbits.T0IF = 0;            //LIMPIO LA BANDERA DE T0IF
     }
     if (RBIF == 1){
@@ -78,7 +102,7 @@ void __interrupt()isr(void){
      INTCONbits.RBIF = 0;           //LIMPIAMOS LA BANDERA DEL TMR0
     }
     if (ADIF == 1){
-        ADC_READ(CANAL,CANAL,&PORTD);
+        VALOR_ADC = ADC_READ();
         PIR1bits.ADIF = 0;              //LIMPIAMOS LA BANDERA DEL ADC
     }
     ei();                           //POP
@@ -88,6 +112,16 @@ void main (void){
     ADCON0bits.GO = 1;              //COMIENZA EL CICLO DEL ADC
     while(1){
         PORTC = CONTADOR;
+        //void ADC_CHANNELS(2,CANAL2);
+        __delay_us(100);
+        ADCON0bits.GO = 1;
+        BIN_HEX(VALOR_ADC, &HEX1, &HEX2);
+       if (VALOR_ADC == CONTADOR){
+            PORTE = 2;
+        }
+        else {
+            PORTE = 0;
+        }
     }
 }
 
