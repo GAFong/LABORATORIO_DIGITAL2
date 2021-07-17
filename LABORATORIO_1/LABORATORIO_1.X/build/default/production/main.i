@@ -2690,6 +2690,111 @@ extern __bank0 __bit __timeout;
 # 28 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
 # 11 "main.c" 2
 
+# 1 "./ADC_LIB.h" 1
+# 12 "./ADC_LIB.h"
+void ADC_INIT(int canal){
+
+    ADCON0bits.ADON = 0X01;
+    ADCON0bits.CHS = canal;
+    _delay((unsigned long)((100)*(4000000/4000000.0)));
+    ADCON0bits.ADCS = 0X01;
+    ADCON1bits.ADFM = 0;
+    ADCON1bits.VCFG0 = 0;
+    ADCON1bits.VCFG1 = 0;
+    PIE1bits.ADIE = 1;
+    PIR1bits.ADIF = 0;
+}
+
+void ADC_READ(int channel,int next_channel, int* out){
+    switch (channel){
+        case 0:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 1:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 2:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 3:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 4:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 5:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 6:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 7:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 8:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 9:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 10:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 11:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 12:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+        case 13:
+            *out = ADRESH;
+            ADCON0bits.CHS = next_channel;
+            _delay((unsigned long)((100)*(4000000/4000000.0)));
+            ADCON0bits.GO = 1;
+            break;
+    }
+}
+# 12 "main.c" 2
+
 
 
 
@@ -2713,9 +2818,11 @@ extern __bank0 __bit __timeout;
 
 
 
+
 int CONTADOR = 0;
 int flag1 = 0;
 int flag2 = 0;
+int VALOR_ADC = 0;
 
 
 int digitos [10] = {
@@ -2755,11 +2862,15 @@ void __attribute__((picinterrupt((""))))isr(void){
         }
      INTCONbits.RBIF = 0;
     }
+    if (ADIF == 1){
+        ADC_READ(2,2,&PORTD);
+        PIR1bits.ADIF = 0;
+    }
     (INTCONbits.GIE = 1);
 }
 void main (void){
     setup();
-
+    ADCON0bits.GO = 1;
     while(1){
         PORTC = CONTADOR;
     }
@@ -2799,6 +2910,7 @@ void setup(void){
     IOCB0 = 1 ;
     IOCB1 = 1 ;
 
+    ADC_INIT(2);
 
     INTCONbits.GIE = 1;
     INTCONbits.PEIE = 1;

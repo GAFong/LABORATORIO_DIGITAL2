@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <xc.h>
+#include "ADC_LIB.h"
 
 /*--------------------------CONFIGURACIONES ----------------------------------*/
 
@@ -30,11 +31,13 @@
 
 
 #define _tmr0_value 100 
-
+#define _XTAL_FREQ 4000000
+#define CANAL 2
 //------------------------------VARIABLES---------------------------------------
 int CONTADOR = 0;
 int flag1 = 0;
 int flag2 = 0;
+int VALOR_ADC = 0;
 
 //------------------------------TABLA-------------------------------------------
 int digitos [10] = {
@@ -74,11 +77,15 @@ void __interrupt()isr(void){
         }
      INTCONbits.RBIF = 0;           //LIMPIAMOS LA BANDERA DEL TMR0
     }
+    if (ADIF == 1){
+        ADC_READ(CANAL,CANAL,&PORTD);
+        PIR1bits.ADIF = 0;              //LIMPIAMOS LA BANDERA DEL ADC
+    }
     ei();                           //POP
 }
 void main (void){
     setup();                        //FUNCION DE SETUP
-    
+    ADCON0bits.GO = 1;              //COMIENZA EL CICLO DEL ADC
     while(1){
         PORTC = CONTADOR;
     }
@@ -118,6 +125,7 @@ void setup(void){
     IOCB0 = 1 ;
     IOCB1 = 1 ;
     
+    ADC_INIT(CANAL);
     //CONFIGURACION DE INTERRUPCIONES
     INTCONbits.GIE = 1;         //HABILITAMOS LAS INTERRUPCIONES GLOBALES
     INTCONbits.PEIE = 1;        //HABILITAMOS LAS INTERRUPCIONES PERIFERICAS
