@@ -44,6 +44,7 @@ int HEX2 = 0;
 int CANAL = 2;
 int CANAL2 = 2;
 int select = 1;
+int i;
 
 //------------------------------TABLA-------------------------------------------
 int digitos [10] = {
@@ -117,12 +118,27 @@ void main (void){
         ADCON0bits.GO = 1;
         BIN_HEX(VALOR_ADC, &HEX1, &HEX2);
        if (VALOR_ADC == CONTADOR){
-            PORTE = 2;
-        }
-        else {
+           for (i=0; i < 20; i++){
+               PORTE = 0X02;
+               __delay_us(1000);
+               PORTE = 0X00;
+               __delay_us(1000);
+           }
+           __delay_ms(500);
+         /*  for (i=0; i < 20; i++){
+               PORTE = 0X02;
+               __delay_us(2000);
+               PORTE = 0X00;
+               __delay_us(2000);
+
+            }
+           __delay_ms(200);*/
+       }
+        else  {
             PORTE = 0;
         }
-    }
+    
+}
 }
 
 //---------------------------CONFIGURACION--------------------------------------

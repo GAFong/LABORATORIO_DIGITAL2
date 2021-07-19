@@ -2787,12 +2787,13 @@ int HEX2 = 0;
 int CANAL = 2;
 int CANAL2 = 2;
 int select = 1;
+int i;
 
 
 int digitos [10] = {
 0B00111111, 0B00000110, 0B01011011, 0B01001111, 0B01100110, 0B01101101,
 0B01111101, 0B00000111, 0B01111111, 0B01100111};
-# 72 "main.c"
+# 73 "main.c"
 void setup (void);
 
 
@@ -2841,12 +2842,20 @@ void main (void){
         ADCON0bits.GO = 1;
         BIN_HEX(VALOR_ADC, &HEX1, &HEX2);
        if (VALOR_ADC == CONTADOR){
-            PORTE = 2;
-        }
+           for (i=0; i < 20; i++){
+               PORTE = 0X02;
+               _delay((unsigned long)((1000)*(4000000/4000000.0)));
+               PORTE = 0X00;
+               _delay((unsigned long)((1000)*(4000000/4000000.0)));
+           }
+           _delay((unsigned long)((500)*(4000000/4000.0)));
+# 136 "main.c"
+       }
         else {
             PORTE = 0;
         }
-    }
+
+}
 }
 
 
