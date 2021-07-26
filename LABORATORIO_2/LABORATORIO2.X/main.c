@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <xc.h>
 #include "ADC_LIB.h"
+#include "LCD_LIB.h"
+
 
 // CONFIG1
 #pragma config FOSC = INTRC_CLKOUT// Oscillator Selection bits (INTOSC oscillator: CLKOUT function on RA6/OSC2/CLKOUT pin, I/O function on RA7/OSC1/CLKIN)
@@ -29,6 +31,16 @@
 
 #define _tmr0_value 100 
 #define _XTAL_FREQ 4000000
+#define RS RB2
+#define EN RB3
+#define D0 RD0
+#define D1 RD1
+#define D2 RD2
+#define D3 RD3
+#define D4 RD4
+#define D5 RD5
+#define D6 RD6
+#define D7 RD7
 #define CANAL0 0
 #define CANAL1 1
 //------------------------------VARIABLES---------------------------------------
@@ -56,11 +68,19 @@ void __interrupt()isr(void){
 
 void main (void){
     setup();                        //FUNCION DE SETUP
+    Lcd_Init();                     //INICIALIZAMOS LA LCD
+    Lcd_Clear();
+    __delay_ms(20);
+    Lcd_Set_Cursor(1,2);
+    __delay_ms(20);
+    Lcd_Write_String("V");
     ADCON0bits.GO = 1;              //COMIENZA EL CICLO DEL ADC
     while(1){
-        ADC_CHANNELS(CANAL0,VALOR_ADC,&PORTC,&PORTD);   //POT0
+         
+         
+         ADC_CHANNELS(CANAL0,VALOR_ADC,&POT0,&POT1);   //POT1
 
-        ADC_CHANNELS(CANAL1,VALOR_ADC,&PORTC,&PORTD);  //POT1
+         ADC_CHANNELS(CANAL1,VALOR_ADC,&POT1,&POT1);  //POT0
   
     }
 }

@@ -2729,6 +2729,20 @@ void ADC_CHANNELS(unsigned int CANAL, unsigned int VALOR_ADC, unsigned int* VALO
 }
 # 11 "main.c" 2
 
+# 1 "./LCD_LIB.h" 1
+# 59 "./LCD_LIB.h"
+void LCD_PORT(unsigned char a);
+void Lcd_Cmd(char a);
+void Lcd_Clear(void);
+void Lcd_Init(void);
+void Lcd_Write_Char(char a);
+void Lcd_Write_String(char *a);
+void Lcd_Set_Cursor(char a, char b);
+void Lcd_Shift_Right(void);
+void Lcd_Shift_Left(void);
+# 12 "main.c" 2
+
+
 
 
 #pragma config FOSC = INTRC_CLKOUT
@@ -2745,13 +2759,7 @@ void ADC_CHANNELS(unsigned int CANAL, unsigned int VALOR_ADC, unsigned int* VALO
 
 #pragma config BOR4V = BOR40V
 #pragma config WRT = OFF
-
-
-
-
-
-
-
+# 47 "main.c"
 unsigned int VALOR_ADC = 0;
 unsigned int POT0 = 0;
 unsigned int POT1 = 0;
@@ -2776,11 +2784,19 @@ void __attribute__((picinterrupt((""))))isr(void){
 
 void main (void){
     setup();
+    Lcd_Init();
+    Lcd_Clear();
+    _delay((unsigned long)((20)*(4000000/4000.0)));
+    Lcd_Set_Cursor(1,2);
+    _delay((unsigned long)((20)*(4000000/4000.0)));
+    Lcd_Write_String("V");
     ADCON0bits.GO = 1;
     while(1){
-        ADC_CHANNELS(0,VALOR_ADC,&PORTC,&PORTD);
 
-        ADC_CHANNELS(1,VALOR_ADC,&PORTC,&PORTD);
+
+         ADC_CHANNELS(0,VALOR_ADC,&POT0,&POT1);
+
+         ADC_CHANNELS(1,VALOR_ADC,&POT1,&POT1);
 
     }
 }
