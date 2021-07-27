@@ -1,15 +1,16 @@
 /* 
  * File:   main.c
- * Author: GABRIEL ALEXANDER FONG PENAGOS
- *LABORATORIO 2
- * Created on July 24, 2021, 8:27 PM
+ * Author: DELL
+ *
+ * Created on July 26, 2021, 6:37 PM
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <xc.h>
 #include "ADC_LIB.h"
-#include "LCD_LIB.h"
+#include "LCD.h"
 #include "EUSART_LIB.h"
 
 
@@ -32,25 +33,30 @@
 
 #define _tmr0_value 100 
 #define _XTAL_FREQ 4000000
-/*
-#define RS RE0
-#define EN RE1
-#define D0 RD0
-#define D1 RD1
-#define D2 RD2
-#define D3 RD3
-#define D4 RD4
-#define D5 RD5
-#define D6 RD6
-#define D7 RD7*/
+
 #define CANAL0 0
 #define CANAL1 1
+#define ENTER 13
+#define PUNTO 46
+#define v 118
+#define tx 0
+#define rx 1
+
 //------------------------------VARIABLES---------------------------------------
 unsigned int VALOR_ADC = 0;
-unsigned int POT0 = 0;
-unsigned int POT1 = 0;
+uint16_t POT0 = 0;
+uint16_t POT1 = 0;
+uint8_t POS1;
+uint8_t POS2;
+uint8_t POS3;
+uint8_t DATO;
+uint8_t CONTADOR = 0;
+uint8_t OPCION;
+unsigned char S1[8] = "SENSOR1:";
+unsigned char S2[8] = "SENSOR2:";
 //-----------------------------PROTOTIPOS---------------------------------------
 void setup (void);
+void VAL (uint16_t var);
 
 //---------------------------INTERRUPCION--------------------------------------
 void __interrupt()isr(void){
@@ -64,27 +70,87 @@ void __interrupt()isr(void){
         TMR0 = _tmr0_value; //VALOR
         INTCONbits.T0IF = 0;            //LIMPIO LA BANDERA DE T0IF
     }
-    
+    if (PIR1bits.RCIF){
+        if (RCREG == 43 || RCREG == 45 ){
+                OPCION = RCREG; 
+            
+        }
+    }
     ei();                           //POP
 }
 
 void main (void){
     setup();                        //FUNCION DE SETUP
     Lcd_Init();                     //INICIALIZAMOS LA LCD
-  
+    Lcd_Clear();  //Limpiar LCD
+    Lcd_Set_Cursor(1,1); //cursor fila uno primera posicion 
+    Lcd_Write_String("S1:   S2:    S3:");
     ADCON0bits.GO = 1;              //COMIENZA EL CICLO DEL ADC
     while(1){
-          Lcd_Clear();
-         // __delay_ms(20);
-          Lcd_Set_Cursor(1,1);
-         // __delay_ms(20);
-          Lcd_Write_String("S1: S2: S3:");
-       //   __delay_ms(20);
-         
-         ADC_CHANNELS(CANAL0,VALOR_ADC,&POT0,&POT1);   //POT1
-
-         ADC_CHANNELS(CANAL1,VALOR_ADC,&POT1,&POT1);  //POT0
-  
+       
+          ADC_CHANNELS(CANAL1,VALOR_ADC,&POT0);  //POT0
+          POT0= POT0*1.961;
+        VAL(POT0);
+        Lcd_Set_Cursor(2,1);
+        Lcd_Write_Char(POS1);
+        Lcd_Write_Char(PUNTO);
+        Lcd_Write_Char(POS2);
+        Lcd_Write_Char(POS3);
+        
+        for(DATO=0; DATO <= 9; DATO++){
+             TXREG = S1[DATO];
+             __delay_ms(10);
+             }
+       // EUSART_ENVIAR(ENTER);
+        EUSART_ENVIAR(POS1);
+        EUSART_ENVIAR(PUNTO);
+        EUSART_ENVIAR(POS2);
+        EUSART_ENVIAR(POS3);
+        EUSART_ENVIAR(v);
+        EUSART_ENVIAR(ENTER);
+        
+        Lcd_Write_String("v ");
+        ADC_CHANNELS(CANAL0,VALOR_ADC,&POT1);   //POT1
+        POT1= POT1*1.961;
+        VAL(POT1);
+        Lcd_Write_Char(POS1);
+        Lcd_Write_Char(PUNTO);
+        Lcd_Write_Char(POS2);
+        Lcd_Write_Char(POS3);
+        Lcd_Write_String("v   ");
+        for(DATO=0; DATO <= 9; DATO++){
+             TXREG = S2[DATO];
+             __delay_ms(10);
+             }
+      //  EUSART_ENVIAR(ENTER);
+        EUSART_ENVIAR(POS1);
+        EUSART_ENVIAR(PUNTO);
+        EUSART_ENVIAR(POS2);
+        EUSART_ENVIAR(POS3);
+        EUSART_ENVIAR(v);
+        EUSART_ENVIAR(ENTER);
+        
+        switch(OPCION){
+            case 43:
+                CONTADOR++;
+                if (CONTADOR == 100){
+                    CONTADOR = 0;
+                }
+                OPCION = 0;
+                break;
+            case 45:
+                if (CONTADOR == 0){
+                    CONTADOR = 0X63;
+                }
+                else {
+                CONTADOR--;}
+                OPCION = 0;
+                break;    
+        }
+        VAL(CONTADOR);
+        Lcd_Write_Char(POS2);
+        Lcd_Write_Char(POS3);
+        
     }
 }
 //---------------------------CONFIGURACION--------------------------------------
@@ -94,7 +160,7 @@ void setup(void){
     ANSELH = 0X00;              //PINES COMO DIGITALES
     
     TRISA = 0B00000011;          //PORTA COMO OUTPUT
-    TRISC = 0X00;               //PORTC COMO OUTPUT
+    TRISC = 0B10000000;          //PORTC COMO OUTPUT
     TRISD = 0X00;               //PORTD COMO OUTPUT
     TRISE = 0X00;               //PORTE COMO OUTPUT
     TRISB = 0B00000000;         //PORTB COMO OUTPUT
@@ -116,7 +182,7 @@ void setup(void){
     TMR0 = _tmr0_value;         //TMR0 A 5 ms
     
     ADC_INIT(CANAL0);
-    
+    EUSART_INIT(tx,rx);
     //CONFIGURACION DE INTERRUPCIONES
     INTCONbits.GIE = 1;         //HABILITAMOS LAS INTERRUPCIONES GLOBALES
     INTCONbits.PEIE = 1;        //HABILITAMOS LAS INTERRUPCIONES PERIFERICAS
@@ -124,3 +190,17 @@ void setup(void){
     INTCONbits.T0IF = 0;        //LIMPIAMOS BANDERA DEL TMR0
 }
 
+void VAL(uint16_t variable){        // Función para obtener valor decimal
+    uint16_t valor;
+    valor = variable;                  
+    POS1 = (valor/100) ;                // VALOR DE CENTENAS
+    valor = (valor - (POS1*100));
+    POS2 = (valor/10);              // VALOR DE DECENAS
+    valor = (valor - (POS2*10));
+    POS3 = (valor);                // UNIDADES
+    
+    POS1 = POS1 + 48;          // PASARLO A VALORES ASCCI
+    POS2 = POS2 + 48;
+    POS3 = POS3 + 48;
+    
+}

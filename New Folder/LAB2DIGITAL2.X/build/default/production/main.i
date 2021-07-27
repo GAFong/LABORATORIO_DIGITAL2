@@ -211,6 +211,141 @@ extern char * ultoa(char * buf, unsigned long val, int base);
 extern char * ftoa(float f, int * status);
 # 9 "main.c" 2
 
+# 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 1 3
+# 13 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef signed char int8_t;
+
+
+
+
+
+
+typedef signed int int16_t;
+
+
+
+
+
+
+
+typedef __int24 int24_t;
+
+
+
+
+
+
+
+typedef signed long int int32_t;
+# 52 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef unsigned char uint8_t;
+
+
+
+
+
+typedef unsigned int uint16_t;
+
+
+
+
+
+
+typedef __uint24 uint24_t;
+
+
+
+
+
+
+typedef unsigned long int uint32_t;
+# 88 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef signed char int_least8_t;
+
+
+
+
+
+
+
+typedef signed int int_least16_t;
+# 109 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef __int24 int_least24_t;
+# 118 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef signed long int int_least32_t;
+# 136 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef unsigned char uint_least8_t;
+
+
+
+
+
+
+typedef unsigned int uint_least16_t;
+# 154 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef __uint24 uint_least24_t;
+
+
+
+
+
+
+
+typedef unsigned long int uint_least32_t;
+# 181 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef signed char int_fast8_t;
+
+
+
+
+
+
+typedef signed int int_fast16_t;
+# 200 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef __int24 int_fast24_t;
+
+
+
+
+
+
+
+typedef signed long int int_fast32_t;
+# 224 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef unsigned char uint_fast8_t;
+
+
+
+
+
+typedef unsigned int uint_fast16_t;
+# 240 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef __uint24 uint_fast24_t;
+
+
+
+
+
+
+typedef unsigned long int uint_fast32_t;
+# 268 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef int32_t intmax_t;
+# 282 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef uint32_t uintmax_t;
+
+
+
+
+
+
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+# 10 "main.c" 2
+
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2687,7 +2822,7 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
-# 10 "main.c" 2
+# 11 "main.c" 2
 
 # 1 "./ADC_LIB.h" 1
 # 12 "./ADC_LIB.h"
@@ -2708,17 +2843,17 @@ unsigned int ADC_READ(void){
     LECT = ADRESH;
     return LECT;
 }
-void ADC_CHANNELS(unsigned int CANAL, unsigned int VALOR_ADC, unsigned int* VALOR0, unsigned int* VALOR1){
+void ADC_CHANNELS(unsigned int CANAL, unsigned int VALOR_ADC, unsigned int* VALORA){
 
     switch (ADCON0bits.CHS){
         case 0:
-            *VALOR0 = VALOR_ADC;
+            *VALORA = VALOR_ADC;
             ADCON0bits.CHS = CANAL;
             _delay((unsigned long)((50)*(4000000/4000000.0)));
             ADCON0bits.GO = 1;
             break;
         case 1:
-            *VALOR1 = VALOR_ADC;
+            *VALORA = VALOR_ADC;
             ADCON0bits.CHS = CANAL;
             _delay((unsigned long)((50)*(4000000/4000000.0)));
             ADCON0bits.GO = 1;
@@ -2727,15 +2862,17 @@ void ADC_CHANNELS(unsigned int CANAL, unsigned int VALOR_ADC, unsigned int* VALO
 
 
 }
-# 11 "main.c" 2
+# 12 "main.c" 2
 
-# 1 "./LCD_LIB.h" 1
-# 59 "./LCD_LIB.h"
-void LCD_PORT(char a);
+# 1 "./LCD.h" 1
+# 64 "./LCD.h"
+void Lcd_Port(char a);
 
 void Lcd_Cmd(char a);
 
 void Lcd_Clear(void);
+
+void Lcd_Set_Cursor(char a, char b);
 
 void Lcd_Init(void);
 
@@ -2743,12 +2880,10 @@ void Lcd_Write_Char(char a);
 
 void Lcd_Write_String(char *a);
 
-void Lcd_Set_Cursor(char a, char b);
-
 void Lcd_Shift_Right(void);
 
 void Lcd_Shift_Left(void);
-# 12 "main.c" 2
+# 13 "main.c" 2
 
 # 1 "./EUSART_LIB.h" 1
 # 13 "./EUSART_LIB.h"
@@ -2774,7 +2909,13 @@ void EUSART_INIT(unsigned int tx, unsigned int rx){
     PIE1bits.TXIE =tx;
     PIE1bits.RCIE =rx;
 }
-# 13 "main.c" 2
+
+void EUSART_ENVIAR(uint8_t dato){
+    if (PIR1bits.TXIF){
+        TXREG = dato;
+        _delay((unsigned long)((10)*(4000000/4000.0)));}
+}
+# 14 "main.c" 2
 
 
 
@@ -2793,12 +2934,21 @@ void EUSART_INIT(unsigned int tx, unsigned int rx){
 
 #pragma config BOR4V = BOR40V
 #pragma config WRT = OFF
-# 49 "main.c"
+# 46 "main.c"
 unsigned int VALOR_ADC = 0;
-unsigned int POT0 = 0;
-unsigned int POT1 = 0;
+uint16_t POT0 = 0;
+uint16_t POT1 = 0;
+uint8_t POS1;
+uint8_t POS2;
+uint8_t POS3;
+uint8_t DATO;
+uint8_t CONTADOR = 0;
+uint8_t OPCION;
+unsigned char S1[8] = "SENSOR1:";
+unsigned char S2[8] = "SENSOR2:";
 
 void setup (void);
+void VAL (uint16_t var);
 
 
 void __attribute__((picinterrupt((""))))isr(void){
@@ -2812,26 +2962,86 @@ void __attribute__((picinterrupt((""))))isr(void){
         TMR0 = 100;
         INTCONbits.T0IF = 0;
     }
+    if (PIR1bits.RCIF){
+        if (RCREG == 43 || RCREG == 45 ){
+                OPCION = RCREG;
 
+        }
+    }
     (INTCONbits.GIE = 1);
 }
 
 void main (void){
     setup();
     Lcd_Init();
-
+    Lcd_Clear();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("S1:   S2:    S3:");
     ADCON0bits.GO = 1;
     while(1){
-          Lcd_Clear();
 
-          Lcd_Set_Cursor(1,1);
+          ADC_CHANNELS(1,VALOR_ADC,&POT0);
+          POT0= POT0*1.961;
+        VAL(POT0);
+        Lcd_Set_Cursor(2,1);
+        Lcd_Write_Char(POS1);
+        Lcd_Write_Char(46);
+        Lcd_Write_Char(POS2);
+        Lcd_Write_Char(POS3);
 
-          Lcd_Write_String("S1: S2: S3:");
+        for(DATO=0; DATO <= 9; DATO++){
+             TXREG = S1[DATO];
+             _delay((unsigned long)((10)*(4000000/4000.0)));
+             }
 
+        EUSART_ENVIAR(POS1);
+        EUSART_ENVIAR(46);
+        EUSART_ENVIAR(POS2);
+        EUSART_ENVIAR(POS3);
+        EUSART_ENVIAR(118);
+        EUSART_ENVIAR(13);
 
-         ADC_CHANNELS(0,VALOR_ADC,&POT0,&POT1);
+        Lcd_Write_String("v ");
+        ADC_CHANNELS(0,VALOR_ADC,&POT1);
+        POT1= POT1*1.961;
+        VAL(POT1);
+        Lcd_Write_Char(POS1);
+        Lcd_Write_Char(46);
+        Lcd_Write_Char(POS2);
+        Lcd_Write_Char(POS3);
+        Lcd_Write_String("v   ");
+        for(DATO=0; DATO <= 9; DATO++){
+             TXREG = S2[DATO];
+             _delay((unsigned long)((10)*(4000000/4000.0)));
+             }
 
-         ADC_CHANNELS(1,VALOR_ADC,&POT1,&POT1);
+        EUSART_ENVIAR(POS1);
+        EUSART_ENVIAR(46);
+        EUSART_ENVIAR(POS2);
+        EUSART_ENVIAR(POS3);
+        EUSART_ENVIAR(118);
+        EUSART_ENVIAR(13);
+
+        switch(OPCION){
+            case 43:
+                CONTADOR++;
+                if (CONTADOR == 100){
+                    CONTADOR = 0;
+                }
+                OPCION = 0;
+                break;
+            case 45:
+                if (CONTADOR == 0){
+                    CONTADOR = 0X63;
+                }
+                else {
+                CONTADOR--;}
+                OPCION = 0;
+                break;
+        }
+        VAL(CONTADOR);
+        Lcd_Write_Char(POS2);
+        Lcd_Write_Char(POS3);
 
     }
 }
@@ -2842,7 +3052,7 @@ void setup(void){
     ANSELH = 0X00;
 
     TRISA = 0B00000011;
-    TRISC = 0X00;
+    TRISC = 0B10000000;
     TRISD = 0X00;
     TRISE = 0X00;
     TRISB = 0B00000000;
@@ -2864,10 +3074,25 @@ void setup(void){
     TMR0 = 100;
 
     ADC_INIT(0);
-
+    EUSART_INIT(0,1);
 
     INTCONbits.GIE = 1;
     INTCONbits.PEIE = 1;
     INTCONbits.T0IE = 1;
     INTCONbits.T0IF = 0;
+}
+
+void VAL(uint16_t variable){
+    uint16_t valor;
+    valor = variable;
+    POS1 = (valor/100) ;
+    valor = (valor - (POS1*100));
+    POS2 = (valor/10);
+    valor = (valor - (POS2*10));
+    POS3 = (valor);
+
+    POS1 = POS1 + 48;
+    POS2 = POS2 + 48;
+    POS3 = POS3 + 48;
+
 }
