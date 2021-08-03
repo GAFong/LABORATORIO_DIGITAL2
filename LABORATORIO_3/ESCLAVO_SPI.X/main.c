@@ -11,7 +11,7 @@
 #include <xc.h>
 #include "ADC_LIB.h"
 #include "SPI.h"
-#include ""
+
 
 
 // CONFIG1
@@ -74,9 +74,9 @@ void main (void){
     setup();   
     while(1){
          ADC_CHANNELS(CANAL1,VALOR_ADC,&POT0);  //POT0
-         
+         __delay_ms(10);
          ADC_CHANNELS(CANAL0,VALOR_ADC,&POT1);   //POT1
-         
+         __delay_ms(10);
     }
 
 }

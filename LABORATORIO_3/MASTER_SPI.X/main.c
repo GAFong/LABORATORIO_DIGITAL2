@@ -48,7 +48,7 @@ uint8_t POS_TX = 0;
 //-----------------------------PROTOTIPOS---------------------------------------
 void setup (void);
 void VAL (uint16_t var);
-uint8_t ENVIO(void);
+
 //---------------------------INTERRUPCION--------------------------------------
 void __interrupt()isr(void){
     di();                   //PUSH
@@ -65,34 +65,17 @@ void main (void){
        __delay_ms(1);
        spiWrite(1);
        POT0 = spiRead();
-       PORTD = POT0;
-       __delay_ms(1);
-       POT0= POT0*1.961;
+       __delay_ms(10);
+      // PORTD = POT0;
+       POT0= POT0*1.961;        //MAPEO DEL VALOR
        VAL(POT0);
-       //EUSART_ENVIAR(49);
-      // __delay_ms(10);
-      // TXREG = 49;
-      // __delay_ms(50);
       
-       EUSART_ENVIAR(POS1);
-       __delay_us(200);
-       EUSART_ENVIAR(COMA);
-       __delay_us(200);
-       EUSART_ENVIAR(POS2);
-       __delay_us(200);
-       EUSART_ENVIAR(COMA);
-       __delay_us(200);
-       EUSART_ENVIAR(POS3);
-       __delay_us(200);
-       EUSART_ENVIAR(COMA);
-       __delay_us(200);
        spiWrite(2);
        POT1 = spiRead();
-       __delay_ms(1);
-       PORTB = POT1;
-       POT1= POT1*1.961;
-       VAL(POT1);
-       EUSART_ENVIAR(POS1);
+       __delay_ms(10);
+      // PORTB = POT1;
+       if (POT1 != 0){           //SE COLOCO ESTE IF POR PROBLEMA QUE MANDA VALORES CON 0 EL POT1
+        EUSART_ENVIAR(POS1);     //ENVIAMOS POSICION POR POSICION Y SEPARADOS POR COMAS
        __delay_us(200);
        EUSART_ENVIAR(COMA);
        __delay_us(200);
@@ -104,9 +87,22 @@ void main (void){
        __delay_us(200);
        EUSART_ENVIAR(COMA);
        __delay_us(200);
-       EUSART_ENVIAR(ENTER);
-       __delay_us(200);
-       
+        POT1= POT1*1.961;
+        VAL(POT1);
+
+        EUSART_ENVIAR(POS1);
+        __delay_us(200);
+        EUSART_ENVIAR(COMA);
+        __delay_us(200);
+        EUSART_ENVIAR(POS2);
+        __delay_us(200);
+        EUSART_ENVIAR(COMA);
+        __delay_us(200);
+        EUSART_ENVIAR(POS3);
+        __delay_us(200);
+        EUSART_ENVIAR(ENTER);
+        __delay_us(200);
+       }
       // __delay_ms(1);
       // PORTCbits.RC2 = 1;       //Slave Deselect
          
@@ -163,25 +159,3 @@ void VAL(uint16_t variable){        // Función para obtener valor decimal
     
 }
 
-uint8_t ENVIO (void){
-    
-    switch (POS_TX){
-        case 0:
-            POS_TX = 1;
-            return POS1;   //MANDAMOS EL VALOR MAPEADO A TXREG DEL POT0
-            break;
-        case 1:
-            POS_TX = 2;
-            return POS2;    //MANDAMOS UNA COMA
-            break;
-        case 2:
-            POS_TX = 3;
-            return POS3;   //MANDAMOS EL VALOR MAPEADO A TXREG DEL POT1
-            break;
-       
-        case 3:
-            POS_TX = 0;     
-            return 13;    //MANDAMOS ENTER
-            break;    
-    }
-}

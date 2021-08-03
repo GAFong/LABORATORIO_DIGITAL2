@@ -2904,6 +2904,7 @@ char spiRead();
 
 
 
+
 #pragma config FOSC = INTRC_CLKOUT
 #pragma config WDTE = OFF
 #pragma config PWRTE = OFF
@@ -2929,6 +2930,7 @@ unsigned int VALOR_ADC = 0;
 uint8_t POT0 = 0;
 uint8_t POT1 = 0;
 uint8_t SEL_POT = 0;
+
 
 
 void setup (void);
@@ -2962,8 +2964,9 @@ void main (void){
     setup();
     while(1){
          ADC_CHANNELS(1,VALOR_ADC,&POT0);
-
+         _delay((unsigned long)((10)*(4000000/4000.0)));
          ADC_CHANNELS(0,VALOR_ADC,&POT1);
+         _delay((unsigned long)((10)*(4000000/4000.0)));
     }
 
 }

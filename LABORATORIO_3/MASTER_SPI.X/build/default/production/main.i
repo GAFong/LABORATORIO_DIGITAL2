@@ -2922,7 +2922,7 @@ uint8_t POS_TX = 0;
 
 void setup (void);
 void VAL (uint16_t var);
-uint8_t ENVIO(void);
+
 
 void __attribute__((picinterrupt((""))))isr(void){
     (INTCONbits.GIE = 0);
@@ -2939,34 +2939,17 @@ void main (void){
        _delay((unsigned long)((1)*(4000000/4000.0)));
        spiWrite(1);
        POT0 = spiRead();
-       PORTD = POT0;
-       _delay((unsigned long)((1)*(4000000/4000.0)));
+       _delay((unsigned long)((10)*(4000000/4000.0)));
+
        POT0= POT0*1.961;
        VAL(POT0);
 
-
-
-
-
-       EUSART_ENVIAR(POS1);
-       _delay((unsigned long)((200)*(4000000/4000000.0)));
-       EUSART_ENVIAR(0x2C);
-       _delay((unsigned long)((200)*(4000000/4000000.0)));
-       EUSART_ENVIAR(POS2);
-       _delay((unsigned long)((200)*(4000000/4000000.0)));
-       EUSART_ENVIAR(0x2C);
-       _delay((unsigned long)((200)*(4000000/4000000.0)));
-       EUSART_ENVIAR(POS3);
-       _delay((unsigned long)((200)*(4000000/4000000.0)));
-       EUSART_ENVIAR(0x2C);
-       _delay((unsigned long)((200)*(4000000/4000000.0)));
        spiWrite(2);
        POT1 = spiRead();
-       _delay((unsigned long)((1)*(4000000/4000.0)));
-       PORTB = POT1;
-       POT1= POT1*1.961;
-       VAL(POT1);
-       EUSART_ENVIAR(POS1);
+       _delay((unsigned long)((10)*(4000000/4000.0)));
+
+       if (POT1 != 0){
+        EUSART_ENVIAR(POS1);
        _delay((unsigned long)((200)*(4000000/4000000.0)));
        EUSART_ENVIAR(0x2C);
        _delay((unsigned long)((200)*(4000000/4000000.0)));
@@ -2978,9 +2961,22 @@ void main (void){
        _delay((unsigned long)((200)*(4000000/4000000.0)));
        EUSART_ENVIAR(0x2C);
        _delay((unsigned long)((200)*(4000000/4000000.0)));
-       EUSART_ENVIAR(10);
-       _delay((unsigned long)((200)*(4000000/4000000.0)));
+        POT1= POT1*1.961;
+        VAL(POT1);
 
+        EUSART_ENVIAR(POS1);
+        _delay((unsigned long)((200)*(4000000/4000000.0)));
+        EUSART_ENVIAR(0x2C);
+        _delay((unsigned long)((200)*(4000000/4000000.0)));
+        EUSART_ENVIAR(POS2);
+        _delay((unsigned long)((200)*(4000000/4000000.0)));
+        EUSART_ENVIAR(0x2C);
+        _delay((unsigned long)((200)*(4000000/4000000.0)));
+        EUSART_ENVIAR(POS3);
+        _delay((unsigned long)((200)*(4000000/4000000.0)));
+        EUSART_ENVIAR(10);
+        _delay((unsigned long)((200)*(4000000/4000000.0)));
+       }
 
 
 
@@ -3035,27 +3031,4 @@ void VAL(uint16_t variable){
     POS2 = POS2 + 48;
     POS3 = POS3 + 48;
 
-}
-
-uint8_t ENVIO (void){
-
-    switch (POS_TX){
-        case 0:
-            POS_TX = 1;
-            return POS1;
-            break;
-        case 1:
-            POS_TX = 2;
-            return POS2;
-            break;
-        case 2:
-            POS_TX = 3;
-            return POS3;
-            break;
-
-        case 3:
-            POS_TX = 0;
-            return 13;
-            break;
-    }
 }

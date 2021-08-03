@@ -3,7 +3,7 @@
 [d edition pro ]
 [d chip 16F887 ]
 [d frameptr 0 ]
-"148 C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_3\MASTER_SPI.X\main.c
+"144 C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_3\MASTER_SPI.X\main.c
 [e E1478 . `uc
 SPI_MASTER_OSC_DIV4 32
 SPI_MASTER_OSC_DIV16 33
@@ -71,9 +71,9 @@ SPI_ACTIVE_2_IDLE 64
 [v _isr isr `II(v  1 e 1 0 ]
 "61
 [v _main main `(v  1 e 1 0 ]
-"118
+"114
 [v _setup setup `(v  1 e 1 0 ]
-"151
+"147
 [v _VAL VAL `(v  1 e 1 0 ]
 "12 C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_3\MASTER_SPI.X\SPI.c
 [v _spiInit spiInit `(v  1 e 1 0 ]
@@ -196,7 +196,7 @@ SPI_ACTIVE_2_IDLE 64
 [v _OSCCONbits OSCCONbits `VES266  1 e 1 @143 ]
 "2177
 [v _SSPSTAT SSPSTAT `VEuc  1 e 1 @148 ]
-[s S418 . 1 `uc 1 BF 1 0 :1:0 
+[s S417 . 1 `uc 1 BF 1 0 :1:0 
 `uc 1 UA 1 0 :1:1 
 `uc 1 R_nW 1 0 :1:2 
 `uc 1 S 1 0 :1:3 
@@ -206,39 +206,39 @@ SPI_ACTIVE_2_IDLE 64
 `uc 1 SMP 1 0 :1:7 
 ]
 "2231
-[s S427 . 1 `uc 1 . 1 0 :2:0 
+[s S426 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 D 1 0 :1:5 
 ]
-[s S432 . 1 `uc 1 . 1 0 :2:0 
+[s S431 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 I2C_READ 1 0 :1:2 
 `uc 1 I2C_START 1 0 :1:3 
 `uc 1 I2C_STOP 1 0 :1:4 
 `uc 1 I2C_DATA 1 0 :1:5 
 ]
-[s S438 . 1 `uc 1 . 1 0 :2:0 
+[s S437 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nW 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nA 1 0 :1:5 
 ]
-[s S443 . 1 `uc 1 . 1 0 :2:0 
+[s S442 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nWRITE 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nADDRESS 1 0 :1:5 
 ]
-[s S448 . 1 `uc 1 . 1 0 :2:0 
+[s S447 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R_W 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 D_A 1 0 :1:5 
 ]
-[s S453 . 1 `uc 1 . 1 0 :2:0 
+[s S452 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 READ_WRITE 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 DATA_ADDRESS 1 0 :1:5 
 ]
-[u S458 . 1 `S418 1 . 1 0 `S427 1 . 1 0 `S432 1 . 1 0 `S438 1 . 1 0 `S443 1 . 1 0 `S448 1 . 1 0 `S453 1 . 1 0 ]
-[v _SSPSTATbits SSPSTATbits `VES458  1 e 1 @148 ]
+[u S457 . 1 `S417 1 . 1 0 `S426 1 . 1 0 `S431 1 . 1 0 `S437 1 . 1 0 `S442 1 . 1 0 `S447 1 . 1 0 `S452 1 . 1 0 ]
+[v _SSPSTATbits SSPSTATbits `VES457  1 e 1 @148 ]
 [s S22 . 1 `uc 1 TX9D 1 0 :1:0 
 `uc 1 TRMT 1 0 :1:1 
 `uc 1 BRGH 1 0 :1:2 
@@ -296,12 +296,10 @@ SPI_ACTIVE_2_IDLE 64
 [v _POS2 POS2 `uc  1 e 1 0 ]
 "46
 [v _POS3 POS3 `uc  1 e 1 0 ]
-"47
-[v _POS_TX POS_TX `uc  1 e 1 0 ]
 "61
 [v _main main `(v  1 e 1 0 ]
 {
-"115
+"111
 } 0
 "34 C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_3\MASTER_SPI.X\SPI.c
 [v _spiWrite spiWrite `(v  1 e 1 0 ]
@@ -322,10 +320,10 @@ SPI_ACTIVE_2_IDLE 64
 {
 "32
 } 0
-"118 C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_3\MASTER_SPI.X\main.c
+"114 C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_3\MASTER_SPI.X\main.c
 [v _setup setup `(v  1 e 1 0 ]
 {
-"150
+"146
 } 0
 "12 C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_3\MASTER_SPI.X\SPI.c
 [v _spiInit spiInit `(v  1 e 1 0 ]
@@ -374,17 +372,17 @@ SPI_ACTIVE_2_IDLE 64
 "8 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\sprcmul.c
 [v ___flmul __flmul `(d  1 e 4 0 ]
 {
-[s S799 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
+[s S798 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
 "13
-[s S804 . 4 `i 1 wordA 2 0 `i 1 wordB 2 2 ]
-[u S807 . 4 `l 1 i 4 0 `d 1 f 4 0 `S799 1 fAsBytes 4 0 `S804 1 fAsWords 4 0 ]
-[v ___flmul@prod prod `S807  1 a 4 26 ]
+[s S803 . 4 `i 1 wordA 2 0 `i 1 wordB 2 2 ]
+[u S806 . 4 `l 1 i 4 0 `d 1 f 4 0 `S798 1 fAsBytes 4 0 `S803 1 fAsWords 4 0 ]
+[v ___flmul@prod prod `S806  1 a 4 26 ]
 "12
 [v ___flmul@grs grs `ul  1 a 4 21 ]
-[s S876 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
+[s S875 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
 "14
-[u S879 . 2 `i 1 i 2 0 `ui 1 n 2 0 `S876 1 nAsBytes 2 0 ]
-[v ___flmul@temp temp `S879  1 a 2 30 ]
+[u S878 . 2 `i 1 i 2 0 `ui 1 n 2 0 `S875 1 nAsBytes 2 0 ]
+[v ___flmul@temp temp `S878  1 a 2 30 ]
 "10
 [v ___flmul@bexp bexp `uc  1 a 1 25 ]
 "11
@@ -410,14 +408,14 @@ SPI_ACTIVE_2_IDLE 64
 [v __Umul8_16@multiplier multiplier `uc  1 a 1 4 ]
 "60
 } 0
-"151 C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_3\MASTER_SPI.X\main.c
+"147 C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_3\MASTER_SPI.X\main.c
 [v _VAL VAL `(v  1 e 1 0 ]
 {
-"152
+"148
 [v VAL@valor valor `ui  1 a 2 4 ]
-"151
+"147
 [v VAL@variable variable `ui  1 p 2 0 ]
-"164
+"160
 } 0
 "15 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]

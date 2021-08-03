@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.31 build 20201012212115 
-                                                                                               Sat Jul 31 16:18:19 2021
+                                                                                               Mon Aug 02 23:41:48 2021
 
 Microchip MPLAB XC8 C Compiler v2.31 (Free license) build 20201012212115 Og1 
      1                           	processor	16F887
@@ -343,14 +343,14 @@ Microchip MPLAB XC8 C Compiler v2.31 (Free license) build 20201012212115 Og1
    329                           ; Clear objects allocated to BANK0
    330  0014  1283               	bcf	3,5	;RP0=0, select bank0
    331  0015  1303               	bcf	3,6	;RP1=0, select bank0
-   332  0016  01A9               	clrf	__pbssBANK0& (0+127)
-   333  0017  01AA               	clrf	(__pbssBANK0+1)& (0+127)
+   332  0016  01AA               	clrf	__pbssBANK0& (0+127)
+   333  0017  01AB               	clrf	(__pbssBANK0+1)& (0+127)
    334  0018                     end_of_initialization:	
    335                           ;End of C runtime variable initialization code
    336                           
    337  0018                     __end_of__initialization:
    338  0018  0183               	clrf	3
-   339  0019  120A  118A  28EB   	ljmp	_main	;jump to C main() function
+   339  0019  120A  118A  28B4   	ljmp	_main	;jump to C main() function
    340                           
    341                           	psect	bssCOMMON
    342  007B                     __pbssCOMMON:
@@ -362,9 +362,9 @@ Microchip MPLAB XC8 C Compiler v2.31 (Free license) build 20201012212115 Og1
    348  007D                     	ds	1
    349                           
    350                           	psect	bssBANK0
-   351  0029                     __pbssBANK0:
-   352  0029                     _VALOR_ADC:
-   353  0029                     	ds	2
+   351  002A                     __pbssBANK0:
+   352  002A                     _VALOR_ADC:
+   353  002A                     	ds	2
    354                           
    355                           	psect	cstackCOMMON
    356  0070                     __pcstackCOMMON:
@@ -471,16 +471,16 @@ Microchip MPLAB XC8 C Compiler v2.31 (Free license) build 20201012212115 Og1
    457  0028                     ??_main:
    458                           
    459                           ; 1 bytes @ 0x8
-   460  0028                     	ds	1
+   460  0028                     	ds	2
    461                           
    462                           	psect	maintext
-   463  00EB                     __pmaintext:	
+   463  00B4                     __pmaintext:	
    464 ;;
-   465 ;;Main: autosize = 0, tempsize = 1, incstack = 0, save=0
+   465 ;;Main: autosize = 0, tempsize = 2, incstack = 0, save=0
    466 ;;
    467 ;; *************** function _main *****************
    468 ;; Defined at:
-   469 ;;		line 71 in file "main.c"
+   469 ;;		line 73 in file "main.c"
    470 ;; Parameters:    Size  Location     Type
    471 ;;		None
    472 ;; Auto vars:     Size  Location     Type
@@ -496,9 +496,9 @@ Microchip MPLAB XC8 C Compiler v2.31 (Free license) build 20201012212115 Og1
    482 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
    483 ;;      Params:         0       0       0       0       0
    484 ;;      Locals:         0       0       0       0       0
-   485 ;;      Temps:          0       1       0       0       0
-   486 ;;      Totals:         0       1       0       0       0
-   487 ;;Total ram usage:        1 bytes
+   485 ;;      Temps:          0       2       0       0       0
+   486 ;;      Totals:         0       2       0       0       0
+   487 ;;Total ram usage:        2 bytes
    488 ;; Hardware stack levels required when called:    5
    489 ;; This function calls:
    490 ;;		_ADC_CHANNELS
@@ -510,967 +510,996 @@ Microchip MPLAB XC8 C Compiler v2.31 (Free license) build 20201012212115 Og1
    496                           
    497                           
    498                           ;psect for function _main
-   499  00EB                     _main:
-   500  00EB                     l1015:	
+   499  00B4                     _main:
+   500  00B4                     l1019:	
    501                           ;incstack = 0
    502                           ; Regs used in _main: [wreg-fsr0h+status,2+status,0+pclath+cstack]
    503                           
    504                           
-   505                           ;main.c: 72: 
-   506  00EB  120A  118A  20B4  120A  118A  	fcall	_setup
-   507  00F0                     l1017:
+   505                           ;main.c: 74: 
+   506  00B4  120A  118A  20F6  120A  118A  	fcall	_setup
+   507  00B9                     l1021:
    508                           
-   509                           ;main.c: 74:     ADC_INIT(0);
-   510  00F0  3001               	movlw	1
-   511  00F1  1283               	bcf	3,5	;RP0=0, select bank0
-   512  00F2  1303               	bcf	3,6	;RP1=0, select bank0
-   513  00F3  00A0               	movwf	ADC_CHANNELS@CANAL
-   514  00F4  3000               	movlw	0
-   515  00F5  00A1               	movwf	ADC_CHANNELS@CANAL+1
-   516  00F6  082A               	movf	_VALOR_ADC+1,w
-   517  00F7  00A3               	movwf	ADC_CHANNELS@VALOR_ADC+1
-   518  00F8  0829               	movf	_VALOR_ADC,w
-   519  00F9  00A2               	movwf	ADC_CHANNELS@VALOR_ADC
-   520  00FA  307D               	movlw	(low (_POT0| 0))& (0+255)
-   521  00FB  00A8               	movwf	??_main
-   522  00FC  0828               	movf	??_main,w
-   523  00FD  00A4               	movwf	ADC_CHANNELS@VALORA
-   524  00FE  120A  118A  201C  120A  118A  	fcall	_ADC_CHANNELS
-   525  0103                     l1019:
+   509                           ;main.c: 76:     ADC_INIT(0);
+   510  00B9  3001               	movlw	1
+   511  00BA  1283               	bcf	3,5	;RP0=0, select bank0
+   512  00BB  1303               	bcf	3,6	;RP1=0, select bank0
+   513  00BC  00A0               	movwf	ADC_CHANNELS@CANAL
+   514  00BD  3000               	movlw	0
+   515  00BE  00A1               	movwf	ADC_CHANNELS@CANAL+1
+   516  00BF  082B               	movf	_VALOR_ADC+1,w
+   517  00C0  00A3               	movwf	ADC_CHANNELS@VALOR_ADC+1
+   518  00C1  082A               	movf	_VALOR_ADC,w
+   519  00C2  00A2               	movwf	ADC_CHANNELS@VALOR_ADC
+   520  00C3  307D               	movlw	(low (_POT0| 0))& (0+255)
+   521  00C4  00A8               	movwf	??_main
+   522  00C5  0828               	movf	??_main,w
+   523  00C6  00A4               	movwf	ADC_CHANNELS@VALORA
+   524  00C7  120A  118A  201C  120A  118A  	fcall	_ADC_CHANNELS
+   525  00CC                     l1023:
    526                           
-   527                           ;main.c: 76: 
-   528  0103  3000               	movlw	0
-   529  0104  1283               	bcf	3,5	;RP0=0, select bank0
-   530  0105  1303               	bcf	3,6	;RP1=0, select bank0
-   531  0106  00A0               	movwf	ADC_CHANNELS@CANAL
-   532  0107  00A1               	movwf	ADC_CHANNELS@CANAL+1
-   533  0108  082A               	movf	_VALOR_ADC+1,w
-   534  0109  00A3               	movwf	ADC_CHANNELS@VALOR_ADC+1
-   535  010A  0829               	movf	_VALOR_ADC,w
-   536  010B  00A2               	movwf	ADC_CHANNELS@VALOR_ADC
-   537  010C  307C               	movlw	(low (_POT1| 0))& (0+255)
-   538  010D  00A8               	movwf	??_main
-   539  010E  0828               	movf	??_main,w
-   540  010F  00A4               	movwf	ADC_CHANNELS@VALORA
-   541  0110  120A  118A  201C  120A  118A  	fcall	_ADC_CHANNELS
-   542  0115  28F0               	goto	l1017
-   543  0116  120A  118A  280E   	ljmp	start
-   544  0119                     __end_of_main:
-   545                           
-   546                           	psect	text1
-   547  00B4                     __ptext1:	
-   548 ;; *************** function _setup *****************
-   549 ;; Defined at:
-   550 ;;		line 82 in file "main.c"
-   551 ;; Parameters:    Size  Location     Type
-   552 ;;		None
-   553 ;; Auto vars:     Size  Location     Type
-   554 ;;		None
-   555 ;; Return value:  Size  Location     Type
-   556 ;;                  1    wreg      void 
-   557 ;; Registers used:
-   558 ;;		wreg, status,2, status,0, pclath, cstack
-   559 ;; Tracked objects:
-   560 ;;		On entry : 0/0
-   561 ;;		On exit  : 0/0
-   562 ;;		Unchanged: 0/0
-   563 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   564 ;;      Params:         0       0       0       0       0
-   565 ;;      Locals:         0       0       0       0       0
-   566 ;;      Temps:          0       0       0       0       0
-   567 ;;      Totals:         0       0       0       0       0
-   568 ;;Total ram usage:        0 bytes
-   569 ;; Hardware stack levels used:    1
-   570 ;; Hardware stack levels required when called:    4
-   571 ;; This function calls:
-   572 ;;		_ADC_INIT
-   573 ;;		_spiInit
-   574 ;; This function is called by:
-   575 ;;		_main
-   576 ;; This function uses a non-reentrant model
-   577 ;;
-   578                           
-   579                           
-   580                           ;psect for function _setup
-   581  00B4                     _setup:
-   582  00B4                     l967:	
-   583                           ;incstack = 0
-   584                           ; Regs used in _setup: [wreg+status,2+status,0+pclath+cstack]
-   585                           
-   586  00B4  3003               	movlw	3
-   587  00B5  1683               	bsf	3,5	;RP0=1, select bank3
-   588  00B6  1703               	bsf	3,6	;RP1=1, select bank3
-   589  00B7  0088               	movwf	8	;volatile
-   590  00B8                     l969:
-   591  00B8  0189               	clrf	9	;volatile
-   592  00B9                     l971:
-   593  00B9  3023               	movlw	35
-   594  00BA  1683               	bsf	3,5	;RP0=1, select bank1
-   595  00BB  1303               	bcf	3,6	;RP1=0, select bank1
-   596  00BC  0085               	movwf	5	;volatile
-   597  00BD  0188               	clrf	8	;volatile
-   598  00BE  0189               	clrf	9	;volatile
-   599  00BF  0186               	clrf	6	;volatile
-   600  00C0  1283               	bcf	3,5	;RP0=0, select bank0
-   601  00C1  1303               	bcf	3,6	;RP1=0, select bank0
-   602  00C2  0185               	clrf	5	;volatile
-   603  00C3  0186               	clrf	6	;volatile
-   604  00C4  0187               	clrf	7	;volatile
-   605  00C5  0188               	clrf	8	;volatile
-   606  00C6  0189               	clrf	9	;volatile
-   607  00C7                     l973:
-   608  00C7  1683               	bsf	3,5	;RP0=1, select bank1
-   609  00C8  1303               	bcf	3,6	;RP1=0, select bank1
-   610  00C9  170F               	bsf	15,6	;volatile
-   611  00CA                     l975:
-   612  00CA  168F               	bsf	15,5	;volatile
-   613  00CB                     l977:
-   614  00CB  120F               	bcf	15,4	;volatile
-   615  00CC                     l979:
-   616  00CC  140F               	bsf	15,0	;volatile
-   617  00CD                     l981:
-   618  00CD  3000               	movlw	0
-   619  00CE  1283               	bcf	3,5	;RP0=0, select bank0
-   620  00CF  1303               	bcf	3,6	;RP1=0, select bank0
-   621  00D0  00A0               	movwf	ADC_INIT@canal
-   622  00D1  00A1               	movwf	ADC_INIT@canal+1
-   623  00D2  120A  118A  2119  120A  118A  	fcall	_ADC_INIT
-   624  00D7                     l983:
-   625  00D7  1283               	bcf	3,5	;RP0=0, select bank0
-   626  00D8  1303               	bcf	3,6	;RP1=0, select bank0
-   627  00D9  01A0               	clrf	spiInit@sDataSample
-   628  00DA  01A1               	clrf	spiInit@sClockIdle
-   629  00DB  01A2               	clrf	spiInit@sTransmitEdge
-   630  00DC  3024               	movlw	36
-   631  00DD  120A  118A  213C  120A  118A  	fcall	_spiInit
-   632  00E2                     l985:
-   633  00E2  178B               	bsf	11,7	;volatile
-   634  00E3                     l987:
-   635  00E3  170B               	bsf	11,6	;volatile
-   636  00E4                     l989:
-   637  00E4  1283               	bcf	3,5	;RP0=0, select bank0
-   638  00E5  1303               	bcf	3,6	;RP1=0, select bank0
-   639  00E6  118C               	bcf	12,3	;volatile
-   640  00E7                     l991:
-   641  00E7  1683               	bsf	3,5	;RP0=1, select bank1
-   642  00E8  1303               	bcf	3,6	;RP1=0, select bank1
-   643  00E9  158C               	bsf	12,3	;volatile
-   644  00EA                     l93:
-   645  00EA  0008               	return
-   646  00EB                     __end_of_setup:
-   647                           
-   648                           	psect	text2
-   649  013C                     __ptext2:	
-   650 ;; *************** function _spiInit *****************
-   651 ;; Defined at:
-   652 ;;		line 12 in file "SPI.c"
-   653 ;; Parameters:    Size  Location     Type
-   654 ;;  sType           1    wreg     enum E1264
-   655 ;;  sDataSample     1    0[BANK0 ] enum E1272
-   656 ;;  sClockIdle      1    1[BANK0 ] enum E1276
-   657 ;;  sTransmitEdg    1    2[BANK0 ] enum E1280
-   658 ;; Auto vars:     Size  Location     Type
-   659 ;;  sType           1    3[BANK0 ] enum E1264
-   660 ;; Return value:  Size  Location     Type
-   661 ;;                  1    wreg      void 
-   662 ;; Registers used:
-   663 ;;		wreg, status,2, status,0
-   664 ;; Tracked objects:
-   665 ;;		On entry : 0/0
-   666 ;;		On exit  : 0/0
-   667 ;;		Unchanged: 0/0
-   668 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   669 ;;      Params:         0       3       0       0       0
-   670 ;;      Locals:         0       1       0       0       0
-   671 ;;      Temps:          0       0       0       0       0
-   672 ;;      Totals:         0       4       0       0       0
-   673 ;;Total ram usage:        4 bytes
-   674 ;; Hardware stack levels used:    1
-   675 ;; Hardware stack levels required when called:    3
-   676 ;; This function calls:
-   677 ;;		Nothing
-   678 ;; This function is called by:
-   679 ;;		_setup
-   680 ;; This function uses a non-reentrant model
-   681 ;;
-   682                           
-   683                           
-   684                           ;psect for function _spiInit
-   685  013C                     _spiInit:
-   686                           
-   687                           ;incstack = 0
-   688                           ; Regs used in _spiInit: [wreg+status,2+status,0]
-   689                           ;spiInit@sType stored from wreg
-   690  013C  1283               	bcf	3,5	;RP0=0, select bank0
-   691  013D  1303               	bcf	3,6	;RP1=0, select bank0
-   692  013E  00A3               	movwf	spiInit@sType
-   693  013F                     l917:
-   694                           
-   695                           ;SPI.c: 12: void spiInit(Spi_Type sType, Spi_Data_Sample sDataSample, Spi_Clock_Idle sCl
-      +                          ockIdle, Spi_Transmit_Edge sTransmitEdge);SPI.c: 13: {;SPI.c: 14:     TRISC5 = 0;
-   696  013F  1683               	bsf	3,5	;RP0=1, select bank1
-   697  0140  1303               	bcf	3,6	;RP1=0, select bank1
-   698  0141  1287               	bcf	7,5	;volatile
-   699                           
-   700                           ;SPI.c: 15:     if(sType & 0b00000100)
-   701  0142  1283               	bcf	3,5	;RP0=0, select bank0
-   702  0143  1303               	bcf	3,6	;RP1=0, select bank0
-   703  0144  1D23               	btfss	spiInit@sType,2
-   704  0145  2947               	goto	u51
-   705  0146  2948               	goto	u50
-   706  0147                     u51:
-   707  0147  294E               	goto	l923
-   708  0148                     u50:
-   709  0148                     l919:
+   527                           ;main.c: 77:     spiInit(SPI_SLAVE_SS_EN, SPI_DATA_SAMPLE_MIDDLE, SPI_CLOCK_IDLE_LOW, SP
+      +                          I_IDLE_2_ACTIVE);
+   528  00CC  300D               	movlw	13
+   529  00CD  1283               	bcf	3,5	;RP0=0, select bank0
+   530  00CE  1303               	bcf	3,6	;RP1=0, select bank0
+   531  00CF  00A9               	movwf	??_main+1
+   532  00D0  30FB               	movlw	251
+   533  00D1  00A8               	movwf	??_main
+   534  00D2                     u97:
+   535  00D2  0BA8               	decfsz	??_main,f
+   536  00D3  28D2               	goto	u97
+   537  00D4  0BA9               	decfsz	??_main+1,f
+   538  00D5  28D2               	goto	u97
+   539  00D6                     l1025:
+   540                           
+   541                           ;main.c: 78: 
+   542  00D6  3000               	movlw	0
+   543  00D7  1283               	bcf	3,5	;RP0=0, select bank0
+   544  00D8  1303               	bcf	3,6	;RP1=0, select bank0
+   545  00D9  00A0               	movwf	ADC_CHANNELS@CANAL
+   546  00DA  00A1               	movwf	ADC_CHANNELS@CANAL+1
+   547  00DB  082B               	movf	_VALOR_ADC+1,w
+   548  00DC  00A3               	movwf	ADC_CHANNELS@VALOR_ADC+1
+   549  00DD  082A               	movf	_VALOR_ADC,w
+   550  00DE  00A2               	movwf	ADC_CHANNELS@VALOR_ADC
+   551  00DF  307C               	movlw	(low (_POT1| 0))& (0+255)
+   552  00E0  00A8               	movwf	??_main
+   553  00E1  0828               	movf	??_main,w
+   554  00E2  00A4               	movwf	ADC_CHANNELS@VALORA
+   555  00E3  120A  118A  201C  120A  118A  	fcall	_ADC_CHANNELS
+   556  00E8                     l1027:
+   557                           
+   558                           ;main.c: 79:     INTCONbits.GIE = 1;
+   559  00E8  300D               	movlw	13
+   560  00E9  1283               	bcf	3,5	;RP0=0, select bank0
+   561  00EA  1303               	bcf	3,6	;RP1=0, select bank0
+   562  00EB  00A9               	movwf	??_main+1
+   563  00EC  30FB               	movlw	251
+   564  00ED  00A8               	movwf	??_main
+   565  00EE                     u107:
+   566  00EE  0BA8               	decfsz	??_main,f
+   567  00EF  28EE               	goto	u107
+   568  00F0  0BA9               	decfsz	??_main+1,f
+   569  00F1  28EE               	goto	u107
+   570  00F2  28B9               	goto	l1021
+   571  00F3  120A  118A  280E   	ljmp	start
+   572  00F6                     __end_of_main:
+   573                           
+   574                           	psect	text1
+   575  00F6                     __ptext1:	
+   576 ;; *************** function _setup *****************
+   577 ;; Defined at:
+   578 ;;		line 85 in file "main.c"
+   579 ;; Parameters:    Size  Location     Type
+   580 ;;		None
+   581 ;; Auto vars:     Size  Location     Type
+   582 ;;		None
+   583 ;; Return value:  Size  Location     Type
+   584 ;;                  1    wreg      void 
+   585 ;; Registers used:
+   586 ;;		wreg, status,2, status,0, pclath, cstack
+   587 ;; Tracked objects:
+   588 ;;		On entry : 0/0
+   589 ;;		On exit  : 0/0
+   590 ;;		Unchanged: 0/0
+   591 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   592 ;;      Params:         0       0       0       0       0
+   593 ;;      Locals:         0       0       0       0       0
+   594 ;;      Temps:          0       0       0       0       0
+   595 ;;      Totals:         0       0       0       0       0
+   596 ;;Total ram usage:        0 bytes
+   597 ;; Hardware stack levels used:    1
+   598 ;; Hardware stack levels required when called:    4
+   599 ;; This function calls:
+   600 ;;		_ADC_INIT
+   601 ;;		_spiInit
+   602 ;; This function is called by:
+   603 ;;		_main
+   604 ;; This function uses a non-reentrant model
+   605 ;;
+   606                           
+   607                           
+   608                           ;psect for function _setup
+   609  00F6                     _setup:
+   610  00F6                     l971:	
+   611                           ;incstack = 0
+   612                           ; Regs used in _setup: [wreg+status,2+status,0+pclath+cstack]
+   613                           
+   614  00F6  3003               	movlw	3
+   615  00F7  1683               	bsf	3,5	;RP0=1, select bank3
+   616  00F8  1703               	bsf	3,6	;RP1=1, select bank3
+   617  00F9  0088               	movwf	8	;volatile
+   618  00FA                     l973:
+   619  00FA  0189               	clrf	9	;volatile
+   620  00FB                     l975:
+   621  00FB  3023               	movlw	35
+   622  00FC  1683               	bsf	3,5	;RP0=1, select bank1
+   623  00FD  1303               	bcf	3,6	;RP1=0, select bank1
+   624  00FE  0085               	movwf	5	;volatile
+   625  00FF  0188               	clrf	8	;volatile
+   626  0100  0189               	clrf	9	;volatile
+   627  0101  0186               	clrf	6	;volatile
+   628  0102  1283               	bcf	3,5	;RP0=0, select bank0
+   629  0103  1303               	bcf	3,6	;RP1=0, select bank0
+   630  0104  0185               	clrf	5	;volatile
+   631  0105  0186               	clrf	6	;volatile
+   632  0106  0187               	clrf	7	;volatile
+   633  0107  0188               	clrf	8	;volatile
+   634  0108  0189               	clrf	9	;volatile
+   635  0109                     l977:
+   636  0109  1683               	bsf	3,5	;RP0=1, select bank1
+   637  010A  1303               	bcf	3,6	;RP1=0, select bank1
+   638  010B  170F               	bsf	15,6	;volatile
+   639  010C                     l979:
+   640  010C  168F               	bsf	15,5	;volatile
+   641  010D                     l981:
+   642  010D  120F               	bcf	15,4	;volatile
+   643  010E                     l983:
+   644  010E  140F               	bsf	15,0	;volatile
+   645  010F                     l985:
+   646  010F  3000               	movlw	0
+   647  0110  1283               	bcf	3,5	;RP0=0, select bank0
+   648  0111  1303               	bcf	3,6	;RP1=0, select bank0
+   649  0112  00A0               	movwf	ADC_INIT@canal
+   650  0113  00A1               	movwf	ADC_INIT@canal+1
+   651  0114  120A  118A  212D  120A  118A  	fcall	_ADC_INIT
+   652  0119                     l987:
+   653  0119  1283               	bcf	3,5	;RP0=0, select bank0
+   654  011A  1303               	bcf	3,6	;RP1=0, select bank0
+   655  011B  01A0               	clrf	spiInit@sDataSample
+   656  011C  01A1               	clrf	spiInit@sClockIdle
+   657  011D  01A2               	clrf	spiInit@sTransmitEdge
+   658  011E  3024               	movlw	36
+   659  011F  120A  118A  2150  120A  118A  	fcall	_spiInit
+   660  0124                     l989:
+   661  0124  178B               	bsf	11,7	;volatile
+   662  0125                     l991:
+   663  0125  170B               	bsf	11,6	;volatile
+   664  0126                     l993:
+   665  0126  1283               	bcf	3,5	;RP0=0, select bank0
+   666  0127  1303               	bcf	3,6	;RP1=0, select bank0
+   667  0128  118C               	bcf	12,3	;volatile
+   668  0129                     l995:
+   669  0129  1683               	bsf	3,5	;RP0=1, select bank1
+   670  012A  1303               	bcf	3,6	;RP1=0, select bank1
+   671  012B  158C               	bsf	12,3	;volatile
+   672  012C                     l93:
+   673  012C  0008               	return
+   674  012D                     __end_of_setup:
+   675                           
+   676                           	psect	text2
+   677  0150                     __ptext2:	
+   678 ;; *************** function _spiInit *****************
+   679 ;; Defined at:
+   680 ;;		line 12 in file "SPI.c"
+   681 ;; Parameters:    Size  Location     Type
+   682 ;;  sType           1    wreg     enum E1264
+   683 ;;  sDataSample     1    0[BANK0 ] enum E1272
+   684 ;;  sClockIdle      1    1[BANK0 ] enum E1276
+   685 ;;  sTransmitEdg    1    2[BANK0 ] enum E1280
+   686 ;; Auto vars:     Size  Location     Type
+   687 ;;  sType           1    3[BANK0 ] enum E1264
+   688 ;; Return value:  Size  Location     Type
+   689 ;;                  1    wreg      void 
+   690 ;; Registers used:
+   691 ;;		wreg, status,2, status,0
+   692 ;; Tracked objects:
+   693 ;;		On entry : 0/0
+   694 ;;		On exit  : 0/0
+   695 ;;		Unchanged: 0/0
+   696 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   697 ;;      Params:         0       3       0       0       0
+   698 ;;      Locals:         0       1       0       0       0
+   699 ;;      Temps:          0       0       0       0       0
+   700 ;;      Totals:         0       4       0       0       0
+   701 ;;Total ram usage:        4 bytes
+   702 ;; Hardware stack levels used:    1
+   703 ;; Hardware stack levels required when called:    3
+   704 ;; This function calls:
+   705 ;;		Nothing
+   706 ;; This function is called by:
+   707 ;;		_setup
+   708 ;; This function uses a non-reentrant model
+   709 ;;
    710                           
-   711                           ;SPI.c: 16:     {;SPI.c: 17:         SSPSTAT = sTransmitEdge;
-   712  0148  0822               	movf	spiInit@sTransmitEdge,w
-   713  0149  1683               	bsf	3,5	;RP0=1, select bank1
-   714  014A  1303               	bcf	3,6	;RP1=0, select bank1
-   715  014B  0094               	movwf	20	;volatile
-   716  014C                     l921:
-   717                           
-   718                           ;SPI.c: 18:         TRISC3 = 1;
-   719  014C  1587               	bsf	7,3	;volatile
-   720                           
-   721                           ;SPI.c: 19:     }
-   722  014D  2954               	goto	l109
-   723  014E                     l923:
-   724                           
-   725                           ;SPI.c: 21:     {;SPI.c: 22:         SSPSTAT = sDataSample | sTransmitEdge;
-   726  014E  0820               	movf	spiInit@sDataSample,w
-   727  014F  0422               	iorwf	spiInit@sTransmitEdge,w
-   728  0150  1683               	bsf	3,5	;RP0=1, select bank1
-   729  0151  1303               	bcf	3,6	;RP1=0, select bank1
-   730  0152  0094               	movwf	20	;volatile
-   731  0153                     l925:
-   732                           
-   733                           ;SPI.c: 23:         TRISC3 = 0;
-   734  0153  1187               	bcf	7,3	;volatile
-   735  0154                     l109:	
-   736                           ;SPI.c: 24:     }
-   737                           
+   711                           
+   712                           ;psect for function _spiInit
+   713  0150                     _spiInit:
+   714                           
+   715                           ;incstack = 0
+   716                           ; Regs used in _spiInit: [wreg+status,2+status,0]
+   717                           ;spiInit@sType stored from wreg
+   718  0150  1283               	bcf	3,5	;RP0=0, select bank0
+   719  0151  1303               	bcf	3,6	;RP1=0, select bank0
+   720  0152  00A3               	movwf	spiInit@sType
+   721  0153                     l921:
+   722                           
+   723                           ;SPI.c: 12: void spiInit(Spi_Type sType, Spi_Data_Sample sDataSample, Spi_Clock_Idle sCl
+      +                          ockIdle, Spi_Transmit_Edge sTransmitEdge);SPI.c: 13: {;SPI.c: 14:     TRISC5 = 0;
+   724  0153  1683               	bsf	3,5	;RP0=1, select bank1
+   725  0154  1303               	bcf	3,6	;RP1=0, select bank1
+   726  0155  1287               	bcf	7,5	;volatile
+   727                           
+   728                           ;SPI.c: 15:     if(sType & 0b00000100)
+   729  0156  1283               	bcf	3,5	;RP0=0, select bank0
+   730  0157  1303               	bcf	3,6	;RP1=0, select bank0
+   731  0158  1D23               	btfss	spiInit@sType,2
+   732  0159  295B               	goto	u51
+   733  015A  295C               	goto	u50
+   734  015B                     u51:
+   735  015B  2962               	goto	l927
+   736  015C                     u50:
+   737  015C                     l923:
    738                           
-   739                           ;SPI.c: 26:     SSPCON = sType | sClockIdle;
-   740  0154  1283               	bcf	3,5	;RP0=0, select bank0
-   741  0155  1303               	bcf	3,6	;RP1=0, select bank0
-   742  0156  0823               	movf	spiInit@sType,w
-   743  0157  0421               	iorwf	spiInit@sClockIdle,w
-   744  0158  0094               	movwf	20	;volatile
-   745  0159                     l110:
-   746  0159  0008               	return
-   747  015A                     __end_of_spiInit:
+   739                           ;SPI.c: 16:     {;SPI.c: 17:         SSPSTAT = sTransmitEdge;
+   740  015C  0822               	movf	spiInit@sTransmitEdge,w
+   741  015D  1683               	bsf	3,5	;RP0=1, select bank1
+   742  015E  1303               	bcf	3,6	;RP1=0, select bank1
+   743  015F  0094               	movwf	20	;volatile
+   744  0160                     l925:
+   745                           
+   746                           ;SPI.c: 18:         TRISC3 = 1;
+   747  0160  1587               	bsf	7,3	;volatile
    748                           
-   749                           	psect	text3
-   750  0119                     __ptext3:	
-   751 ;; *************** function _ADC_INIT *****************
-   752 ;; Defined at:
-   753 ;;		line 12 in file "./ADC_LIB.h"
-   754 ;; Parameters:    Size  Location     Type
-   755 ;;  canal           2    0[BANK0 ] unsigned int 
-   756 ;; Auto vars:     Size  Location     Type
-   757 ;;		None
-   758 ;; Return value:  Size  Location     Type
-   759 ;;                  1    wreg      void 
-   760 ;; Registers used:
-   761 ;;		wreg, status,2, status,0
-   762 ;; Tracked objects:
-   763 ;;		On entry : 0/0
-   764 ;;		On exit  : 0/0
-   765 ;;		Unchanged: 0/0
-   766 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   767 ;;      Params:         0       2       0       0       0
-   768 ;;      Locals:         0       0       0       0       0
-   769 ;;      Temps:          0       1       0       0       0
-   770 ;;      Totals:         0       3       0       0       0
-   771 ;;Total ram usage:        3 bytes
-   772 ;; Hardware stack levels used:    1
-   773 ;; Hardware stack levels required when called:    3
-   774 ;; This function calls:
-   775 ;;		Nothing
-   776 ;; This function is called by:
-   777 ;;		_setup
-   778 ;; This function uses a non-reentrant model
-   779 ;;
-   780                           
-   781                           
-   782                           ;psect for function _ADC_INIT
-   783  0119                     _ADC_INIT:
-   784  0119                     l899:	
-   785                           ;incstack = 0
-   786                           ; Regs used in _ADC_INIT: [wreg+status,2+status,0]
-   787                           
-   788                           
-   789                           ;./ADC_LIB.h: 14:     ADCON0bits.ADON = 0X01;
-   790  0119  1283               	bcf	3,5	;RP0=0, select bank0
-   791  011A  1303               	bcf	3,6	;RP1=0, select bank0
-   792  011B  141F               	bsf	31,0	;volatile
-   793  011C                     l901:
-   794                           
-   795                           ;./ADC_LIB.h: 15:     ADCON0bits.CHS = canal;
-   796  011C  0820               	movf	ADC_INIT@canal,w
-   797  011D  00A2               	movwf	??_ADC_INIT
-   798  011E  0DA2               	rlf	??_ADC_INIT,f
-   799  011F  0DA2               	rlf	??_ADC_INIT,f
-   800  0120  081F               	movf	31,w	;volatile
-   801  0121  0622               	xorwf	??_ADC_INIT,w
-   802  0122  39C3               	andlw	-61
-   803  0123  0622               	xorwf	??_ADC_INIT,w
-   804  0124  009F               	movwf	31	;volatile
-   805  0125                     l903:
-   806                           
-   807                           ;./ADC_LIB.h: 16:     _delay((unsigned long)((100)*(4000000/4000000.0)));
-   808  0125  3020               	movlw	32
-   809  0126  1283               	bcf	3,5	;RP0=0, select bank0
-   810  0127  1303               	bcf	3,6	;RP1=0, select bank0
-   811  0128  00A2               	movwf	??_ADC_INIT
-   812  0129                     u97:
-   813  0129  0BA2               	decfsz	??_ADC_INIT,f
-   814  012A  2929               	goto	u97
-   815  012B  0000               	nop
-   816  012C                     l905:
-   817                           
-   818                           ;./ADC_LIB.h: 17:     ADCON0bits.ADCS = 0X01;
-   819  012C  1283               	bcf	3,5	;RP0=0, select bank0
-   820  012D  1303               	bcf	3,6	;RP1=0, select bank0
-   821  012E  081F               	movf	31,w	;volatile
-   822  012F  393F               	andlw	-193
-   823  0130  3840               	iorlw	64
-   824  0131  009F               	movwf	31	;volatile
-   825  0132                     l907:
-   826                           
-   827                           ;./ADC_LIB.h: 18:     ADCON1bits.ADFM = 0;
-   828  0132  1683               	bsf	3,5	;RP0=1, select bank1
-   829  0133  1303               	bcf	3,6	;RP1=0, select bank1
-   830  0134  139F               	bcf	31,7	;volatile
-   831  0135                     l909:
-   832                           
-   833                           ;./ADC_LIB.h: 19:     ADCON1bits.VCFG0 = 0;
-   834  0135  121F               	bcf	31,4	;volatile
-   835  0136                     l911:
-   836                           
-   837                           ;./ADC_LIB.h: 20:     ADCON1bits.VCFG1 = 0;
-   838  0136  129F               	bcf	31,5	;volatile
-   839  0137                     l913:
-   840                           
-   841                           ;./ADC_LIB.h: 21:     PIE1bits.ADIE = 1;
-   842  0137  170C               	bsf	12,6	;volatile
-   843  0138                     l915:
-   844                           
-   845                           ;./ADC_LIB.h: 22:     PIR1bits.ADIF = 0;
-   846  0138  1283               	bcf	3,5	;RP0=0, select bank0
-   847  0139  1303               	bcf	3,6	;RP1=0, select bank0
-   848  013A  130C               	bcf	12,6	;volatile
-   849  013B                     l53:
-   850  013B  0008               	return
-   851  013C                     __end_of_ADC_INIT:
-   852                           
-   853                           	psect	text4
-   854  001C                     __ptext4:	
-   855 ;; *************** function _ADC_CHANNELS *****************
-   856 ;; Defined at:
-   857 ;;		line 29 in file "./ADC_LIB.h"
-   858 ;; Parameters:    Size  Location     Type
-   859 ;;  CANAL           2    0[BANK0 ] unsigned int 
-   860 ;;  VALOR_ADC       2    2[BANK0 ] unsigned int 
-   861 ;;  VALORA          1    4[BANK0 ] PTR unsigned int 
-   862 ;;		 -> POT1(1), POT0(1), 
-   863 ;; Auto vars:     Size  Location     Type
-   864 ;;		None
-   865 ;; Return value:  Size  Location     Type
-   866 ;;                  1    wreg      void 
-   867 ;; Registers used:
-   868 ;;		wreg, fsr0l, fsr0h, status,2, status,0
-   869 ;; Tracked objects:
-   870 ;;		On entry : 0/0
-   871 ;;		On exit  : 0/0
-   872 ;;		Unchanged: 0/0
-   873 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   874 ;;      Params:         0       5       0       0       0
-   875 ;;      Locals:         0       0       0       0       0
-   876 ;;      Temps:          0       3       0       0       0
-   877 ;;      Totals:         0       8       0       0       0
-   878 ;;Total ram usage:        8 bytes
-   879 ;; Hardware stack levels used:    1
-   880 ;; Hardware stack levels required when called:    3
-   881 ;; This function calls:
-   882 ;;		Nothing
-   883 ;; This function is called by:
-   884 ;;		_main
-   885 ;; This function uses a non-reentrant model
-   886 ;;
-   887                           
-   888                           
-   889                           ;psect for function _ADC_CHANNELS
-   890  001C                     _ADC_CHANNELS:
-   891  001C                     l933:	
-   892                           ;incstack = 0
-   893                           ; Regs used in _ADC_CHANNELS: [wreg-fsr0h+status,2+status,0]
-   894                           
-   895                           
-   896                           ;./ADC_LIB.h: 31:     switch (ADCON0bits.CHS){
-   897  001C  2853               	goto	l953
-   898  001D                     l935:
-   899                           
-   900                           ;./ADC_LIB.h: 33:             *VALORA = VALOR_ADC;
-   901  001D  0824               	movf	ADC_CHANNELS@VALORA,w
-   902  001E  0084               	movwf	4
-   903  001F  0822               	movf	ADC_CHANNELS@VALOR_ADC,w
-   904  0020  0080               	movwf	0
-   905  0021  0A84               	incf	4,f
-   906  0022  0823               	movf	ADC_CHANNELS@VALOR_ADC+1,w
-   907  0023  0080               	movwf	0
-   908  0024                     l937:
-   909                           
-   910                           ;./ADC_LIB.h: 34:             ADCON0bits.CHS = CANAL;
-   911  0024  0820               	movf	ADC_CHANNELS@CANAL,w
-   912  0025  00A5               	movwf	??_ADC_CHANNELS
-   913  0026  0DA5               	rlf	??_ADC_CHANNELS,f
-   914  0027  0DA5               	rlf	??_ADC_CHANNELS,f
-   915  0028  081F               	movf	31,w	;volatile
-   916  0029  0625               	xorwf	??_ADC_CHANNELS,w
-   917  002A  39C3               	andlw	-61
-   918  002B  0625               	xorwf	??_ADC_CHANNELS,w
-   919  002C  009F               	movwf	31	;volatile
-   920  002D                     l939:
-   921                           
-   922                           ;./ADC_LIB.h: 35:             _delay((unsigned long)((50)*(4000000/4000000.0)));
-   923  002D  300F               	movlw	15
-   924  002E  1283               	bcf	3,5	;RP0=0, select bank0
-   925  002F  1303               	bcf	3,6	;RP1=0, select bank0
-   926  0030  00A5               	movwf	??_ADC_CHANNELS
-   927  0031                     u107:
-   928  0031  0BA5               	decfsz	??_ADC_CHANNELS,f
-   929  0032  2831               	goto	u107
-   930  0033  2834               	nop2
-   931  0034                     l941:
-   932                           
-   933                           ;./ADC_LIB.h: 36:             ADCON0bits.GO = 1;
-   934  0034  1283               	bcf	3,5	;RP0=0, select bank0
-   935  0035  1303               	bcf	3,6	;RP1=0, select bank0
-   936  0036  149F               	bsf	31,1	;volatile
+   749                           ;SPI.c: 19:     }
+   750  0161  2968               	goto	l109
+   751  0162                     l927:
+   752                           
+   753                           ;SPI.c: 21:     {;SPI.c: 22:         SSPSTAT = sDataSample | sTransmitEdge;
+   754  0162  0820               	movf	spiInit@sDataSample,w
+   755  0163  0422               	iorwf	spiInit@sTransmitEdge,w
+   756  0164  1683               	bsf	3,5	;RP0=1, select bank1
+   757  0165  1303               	bcf	3,6	;RP1=0, select bank1
+   758  0166  0094               	movwf	20	;volatile
+   759  0167                     l929:
+   760                           
+   761                           ;SPI.c: 23:         TRISC3 = 0;
+   762  0167  1187               	bcf	7,3	;volatile
+   763  0168                     l109:	
+   764                           ;SPI.c: 24:     }
+   765                           
+   766                           
+   767                           ;SPI.c: 26:     SSPCON = sType | sClockIdle;
+   768  0168  1283               	bcf	3,5	;RP0=0, select bank0
+   769  0169  1303               	bcf	3,6	;RP1=0, select bank0
+   770  016A  0823               	movf	spiInit@sType,w
+   771  016B  0421               	iorwf	spiInit@sClockIdle,w
+   772  016C  0094               	movwf	20	;volatile
+   773  016D                     l110:
+   774  016D  0008               	return
+   775  016E                     __end_of_spiInit:
+   776                           
+   777                           	psect	text3
+   778  012D                     __ptext3:	
+   779 ;; *************** function _ADC_INIT *****************
+   780 ;; Defined at:
+   781 ;;		line 12 in file "./ADC_LIB.h"
+   782 ;; Parameters:    Size  Location     Type
+   783 ;;  canal           2    0[BANK0 ] unsigned int 
+   784 ;; Auto vars:     Size  Location     Type
+   785 ;;		None
+   786 ;; Return value:  Size  Location     Type
+   787 ;;                  1    wreg      void 
+   788 ;; Registers used:
+   789 ;;		wreg, status,2, status,0
+   790 ;; Tracked objects:
+   791 ;;		On entry : 0/0
+   792 ;;		On exit  : 0/0
+   793 ;;		Unchanged: 0/0
+   794 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   795 ;;      Params:         0       2       0       0       0
+   796 ;;      Locals:         0       0       0       0       0
+   797 ;;      Temps:          0       1       0       0       0
+   798 ;;      Totals:         0       3       0       0       0
+   799 ;;Total ram usage:        3 bytes
+   800 ;; Hardware stack levels used:    1
+   801 ;; Hardware stack levels required when called:    3
+   802 ;; This function calls:
+   803 ;;		Nothing
+   804 ;; This function is called by:
+   805 ;;		_setup
+   806 ;; This function uses a non-reentrant model
+   807 ;;
+   808                           
+   809                           
+   810                           ;psect for function _ADC_INIT
+   811  012D                     _ADC_INIT:
+   812  012D                     l903:	
+   813                           ;incstack = 0
+   814                           ; Regs used in _ADC_INIT: [wreg+status,2+status,0]
+   815                           
+   816                           
+   817                           ;./ADC_LIB.h: 14:     ADCON0bits.ADON = 0X01;
+   818  012D  1283               	bcf	3,5	;RP0=0, select bank0
+   819  012E  1303               	bcf	3,6	;RP1=0, select bank0
+   820  012F  141F               	bsf	31,0	;volatile
+   821  0130                     l905:
+   822                           
+   823                           ;./ADC_LIB.h: 15:     ADCON0bits.CHS = canal;
+   824  0130  0820               	movf	ADC_INIT@canal,w
+   825  0131  00A2               	movwf	??_ADC_INIT
+   826  0132  0DA2               	rlf	??_ADC_INIT,f
+   827  0133  0DA2               	rlf	??_ADC_INIT,f
+   828  0134  081F               	movf	31,w	;volatile
+   829  0135  0622               	xorwf	??_ADC_INIT,w
+   830  0136  39C3               	andlw	-61
+   831  0137  0622               	xorwf	??_ADC_INIT,w
+   832  0138  009F               	movwf	31	;volatile
+   833  0139                     l907:
+   834                           
+   835                           ;./ADC_LIB.h: 16:     _delay((unsigned long)((100)*(4000000/4000000.0)));
+   836  0139  3020               	movlw	32
+   837  013A  1283               	bcf	3,5	;RP0=0, select bank0
+   838  013B  1303               	bcf	3,6	;RP1=0, select bank0
+   839  013C  00A2               	movwf	??_ADC_INIT
+   840  013D                     u117:
+   841  013D  0BA2               	decfsz	??_ADC_INIT,f
+   842  013E  293D               	goto	u117
+   843  013F  0000               	nop
+   844  0140                     l909:
+   845                           
+   846                           ;./ADC_LIB.h: 17:     ADCON0bits.ADCS = 0X01;
+   847  0140  1283               	bcf	3,5	;RP0=0, select bank0
+   848  0141  1303               	bcf	3,6	;RP1=0, select bank0
+   849  0142  081F               	movf	31,w	;volatile
+   850  0143  393F               	andlw	-193
+   851  0144  3840               	iorlw	64
+   852  0145  009F               	movwf	31	;volatile
+   853  0146                     l911:
+   854                           
+   855                           ;./ADC_LIB.h: 18:     ADCON1bits.ADFM = 0;
+   856  0146  1683               	bsf	3,5	;RP0=1, select bank1
+   857  0147  1303               	bcf	3,6	;RP1=0, select bank1
+   858  0148  139F               	bcf	31,7	;volatile
+   859  0149                     l913:
+   860                           
+   861                           ;./ADC_LIB.h: 19:     ADCON1bits.VCFG0 = 0;
+   862  0149  121F               	bcf	31,4	;volatile
+   863  014A                     l915:
+   864                           
+   865                           ;./ADC_LIB.h: 20:     ADCON1bits.VCFG1 = 0;
+   866  014A  129F               	bcf	31,5	;volatile
+   867  014B                     l917:
+   868                           
+   869                           ;./ADC_LIB.h: 21:     PIE1bits.ADIE = 1;
+   870  014B  170C               	bsf	12,6	;volatile
+   871  014C                     l919:
+   872                           
+   873                           ;./ADC_LIB.h: 22:     PIR1bits.ADIF = 0;
+   874  014C  1283               	bcf	3,5	;RP0=0, select bank0
+   875  014D  1303               	bcf	3,6	;RP1=0, select bank0
+   876  014E  130C               	bcf	12,6	;volatile
+   877  014F                     l53:
+   878  014F  0008               	return
+   879  0150                     __end_of_ADC_INIT:
+   880                           
+   881                           	psect	text4
+   882  001C                     __ptext4:	
+   883 ;; *************** function _ADC_CHANNELS *****************
+   884 ;; Defined at:
+   885 ;;		line 29 in file "./ADC_LIB.h"
+   886 ;; Parameters:    Size  Location     Type
+   887 ;;  CANAL           2    0[BANK0 ] unsigned int 
+   888 ;;  VALOR_ADC       2    2[BANK0 ] unsigned int 
+   889 ;;  VALORA          1    4[BANK0 ] PTR unsigned int 
+   890 ;;		 -> POT1(1), POT0(1), 
+   891 ;; Auto vars:     Size  Location     Type
+   892 ;;		None
+   893 ;; Return value:  Size  Location     Type
+   894 ;;                  1    wreg      void 
+   895 ;; Registers used:
+   896 ;;		wreg, fsr0l, fsr0h, status,2, status,0
+   897 ;; Tracked objects:
+   898 ;;		On entry : 0/0
+   899 ;;		On exit  : 0/0
+   900 ;;		Unchanged: 0/0
+   901 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   902 ;;      Params:         0       5       0       0       0
+   903 ;;      Locals:         0       0       0       0       0
+   904 ;;      Temps:          0       3       0       0       0
+   905 ;;      Totals:         0       8       0       0       0
+   906 ;;Total ram usage:        8 bytes
+   907 ;; Hardware stack levels used:    1
+   908 ;; Hardware stack levels required when called:    3
+   909 ;; This function calls:
+   910 ;;		Nothing
+   911 ;; This function is called by:
+   912 ;;		_main
+   913 ;; This function uses a non-reentrant model
+   914 ;;
+   915                           
+   916                           
+   917                           ;psect for function _ADC_CHANNELS
+   918  001C                     _ADC_CHANNELS:
+   919  001C                     l937:	
+   920                           ;incstack = 0
+   921                           ; Regs used in _ADC_CHANNELS: [wreg-fsr0h+status,2+status,0]
+   922                           
+   923                           
+   924                           ;./ADC_LIB.h: 31:     switch (ADCON0bits.CHS){
+   925  001C  2853               	goto	l957
+   926  001D                     l939:
+   927                           
+   928                           ;./ADC_LIB.h: 33:             *VALORA = VALOR_ADC;
+   929  001D  0824               	movf	ADC_CHANNELS@VALORA,w
+   930  001E  0084               	movwf	4
+   931  001F  0822               	movf	ADC_CHANNELS@VALOR_ADC,w
+   932  0020  0080               	movwf	0
+   933  0021  0A84               	incf	4,f
+   934  0022  0823               	movf	ADC_CHANNELS@VALOR_ADC+1,w
+   935  0023  0080               	movwf	0
+   936  0024                     l941:
    937                           
-   938                           ;./ADC_LIB.h: 37:             break;
-   939  0037  2868               	goto	l63
-   940  0038                     l943:
-   941                           
-   942                           ;./ADC_LIB.h: 39:             *VALORA = VALOR_ADC;
-   943  0038  0824               	movf	ADC_CHANNELS@VALORA,w
-   944  0039  0084               	movwf	4
-   945  003A  0822               	movf	ADC_CHANNELS@VALOR_ADC,w
-   946  003B  0080               	movwf	0
-   947  003C  0A84               	incf	4,f
-   948  003D  0823               	movf	ADC_CHANNELS@VALOR_ADC+1,w
-   949  003E  0080               	movwf	0
-   950  003F                     l945:
-   951                           
-   952                           ;./ADC_LIB.h: 40:             ADCON0bits.CHS = CANAL;
-   953  003F  0820               	movf	ADC_CHANNELS@CANAL,w
-   954  0040  00A5               	movwf	??_ADC_CHANNELS
-   955  0041  0DA5               	rlf	??_ADC_CHANNELS,f
-   956  0042  0DA5               	rlf	??_ADC_CHANNELS,f
-   957  0043  081F               	movf	31,w	;volatile
-   958  0044  0625               	xorwf	??_ADC_CHANNELS,w
-   959  0045  39C3               	andlw	-61
-   960  0046  0625               	xorwf	??_ADC_CHANNELS,w
-   961  0047  009F               	movwf	31	;volatile
-   962  0048                     l947:
-   963                           
-   964                           ;./ADC_LIB.h: 41:             _delay((unsigned long)((50)*(4000000/4000000.0)));
-   965  0048  300F               	movlw	15
-   966  0049  1283               	bcf	3,5	;RP0=0, select bank0
-   967  004A  1303               	bcf	3,6	;RP1=0, select bank0
-   968  004B  00A5               	movwf	??_ADC_CHANNELS
-   969  004C                     u117:
-   970  004C  0BA5               	decfsz	??_ADC_CHANNELS,f
-   971  004D  284C               	goto	u117
-   972  004E  284F               	nop2
-   973  004F                     l949:
-   974                           
-   975                           ;./ADC_LIB.h: 42:             ADCON0bits.GO = 1;
-   976  004F  1283               	bcf	3,5	;RP0=0, select bank0
-   977  0050  1303               	bcf	3,6	;RP1=0, select bank0
-   978  0051  149F               	bsf	31,1	;volatile
+   938                           ;./ADC_LIB.h: 34:             ADCON0bits.CHS = CANAL;
+   939  0024  0820               	movf	ADC_CHANNELS@CANAL,w
+   940  0025  00A5               	movwf	??_ADC_CHANNELS
+   941  0026  0DA5               	rlf	??_ADC_CHANNELS,f
+   942  0027  0DA5               	rlf	??_ADC_CHANNELS,f
+   943  0028  081F               	movf	31,w	;volatile
+   944  0029  0625               	xorwf	??_ADC_CHANNELS,w
+   945  002A  39C3               	andlw	-61
+   946  002B  0625               	xorwf	??_ADC_CHANNELS,w
+   947  002C  009F               	movwf	31	;volatile
+   948  002D                     l943:
+   949                           
+   950                           ;./ADC_LIB.h: 35:             _delay((unsigned long)((50)*(4000000/4000000.0)));
+   951  002D  300F               	movlw	15
+   952  002E  1283               	bcf	3,5	;RP0=0, select bank0
+   953  002F  1303               	bcf	3,6	;RP1=0, select bank0
+   954  0030  00A5               	movwf	??_ADC_CHANNELS
+   955  0031                     u127:
+   956  0031  0BA5               	decfsz	??_ADC_CHANNELS,f
+   957  0032  2831               	goto	u127
+   958  0033  2834               	nop2
+   959  0034                     l945:
+   960                           
+   961                           ;./ADC_LIB.h: 36:             ADCON0bits.GO = 1;
+   962  0034  1283               	bcf	3,5	;RP0=0, select bank0
+   963  0035  1303               	bcf	3,6	;RP1=0, select bank0
+   964  0036  149F               	bsf	31,1	;volatile
+   965                           
+   966                           ;./ADC_LIB.h: 37:             break;
+   967  0037  2868               	goto	l63
+   968  0038                     l947:
+   969                           
+   970                           ;./ADC_LIB.h: 39:             *VALORA = VALOR_ADC;
+   971  0038  0824               	movf	ADC_CHANNELS@VALORA,w
+   972  0039  0084               	movwf	4
+   973  003A  0822               	movf	ADC_CHANNELS@VALOR_ADC,w
+   974  003B  0080               	movwf	0
+   975  003C  0A84               	incf	4,f
+   976  003D  0823               	movf	ADC_CHANNELS@VALOR_ADC+1,w
+   977  003E  0080               	movwf	0
+   978  003F                     l949:
    979                           
-   980                           ;./ADC_LIB.h: 43:             break;
-   981  0052  2868               	goto	l63
-   982  0053                     l953:
-   983  0053  1283               	bcf	3,5	;RP0=0, select bank0
-   984  0054  1303               	bcf	3,6	;RP1=0, select bank0
-   985  0055  0C1F               	rrf	31,w	;volatile
-   986  0056  00A5               	movwf	??_ADC_CHANNELS
-   987  0057  0C25               	rrf	??_ADC_CHANNELS,w
-   988  0058  390F               	andlw	15
-   989  0059  00A6               	movwf	??_ADC_CHANNELS+1
-   990  005A  01A7               	clrf	??_ADC_CHANNELS+2
+   980                           ;./ADC_LIB.h: 40:             ADCON0bits.CHS = CANAL;
+   981  003F  0820               	movf	ADC_CHANNELS@CANAL,w
+   982  0040  00A5               	movwf	??_ADC_CHANNELS
+   983  0041  0DA5               	rlf	??_ADC_CHANNELS,f
+   984  0042  0DA5               	rlf	??_ADC_CHANNELS,f
+   985  0043  081F               	movf	31,w	;volatile
+   986  0044  0625               	xorwf	??_ADC_CHANNELS,w
+   987  0045  39C3               	andlw	-61
+   988  0046  0625               	xorwf	??_ADC_CHANNELS,w
+   989  0047  009F               	movwf	31	;volatile
+   990  0048                     l951:
    991                           
-   992                           ; Switch on 2 bytes has been partitioned into a top level switch of size 1, and 1 sub-sw
-      +                          itches
-   993                           ; Switch size 1, requested type "simple"
-   994                           ; Number of cases is 1, Range of values is 0 to 0
-   995                           ; switch strategies available:
-   996                           ; Name         Instructions Cycles
-   997                           ; simple_byte            4     3 (average)
-   998                           ; direct_byte           11     8 (fixed)
-   999                           ; jumptable            260     6 (fixed)
-  1000                           ;	Chosen strategy is simple_byte
-  1001  005B  0827               	movf	??_ADC_CHANNELS+2,w
-  1002  005C  3A00               	xorlw	0	; case 0
-  1003  005D  1903               	skipnz
-  1004  005E  2860               	goto	l1061
-  1005  005F  2868               	goto	l63
-  1006  0060                     l1061:
+   992                           ;./ADC_LIB.h: 41:             _delay((unsigned long)((50)*(4000000/4000000.0)));
+   993  0048  300F               	movlw	15
+   994  0049  1283               	bcf	3,5	;RP0=0, select bank0
+   995  004A  1303               	bcf	3,6	;RP1=0, select bank0
+   996  004B  00A5               	movwf	??_ADC_CHANNELS
+   997  004C                     u137:
+   998  004C  0BA5               	decfsz	??_ADC_CHANNELS,f
+   999  004D  284C               	goto	u137
+  1000  004E  284F               	nop2
+  1001  004F                     l953:
+  1002                           
+  1003                           ;./ADC_LIB.h: 42:             ADCON0bits.GO = 1;
+  1004  004F  1283               	bcf	3,5	;RP0=0, select bank0
+  1005  0050  1303               	bcf	3,6	;RP1=0, select bank0
+  1006  0051  149F               	bsf	31,1	;volatile
   1007                           
-  1008                           ; Switch size 1, requested type "simple"
-  1009                           ; Number of cases is 2, Range of values is 0 to 1
-  1010                           ; switch strategies available:
-  1011                           ; Name         Instructions Cycles
-  1012                           ; simple_byte            7     4 (average)
-  1013                           ; direct_byte           14     8 (fixed)
-  1014                           ; jumptable            260     6 (fixed)
-  1015                           ;	Chosen strategy is simple_byte
-  1016  0060  0826               	movf	??_ADC_CHANNELS+1,w
-  1017  0061  3A00               	xorlw	0	; case 0
-  1018  0062  1903               	skipnz
-  1019  0063  281D               	goto	l935
-  1020  0064  3A01               	xorlw	1	; case 1
-  1021  0065  1903               	skipnz
-  1022  0066  2838               	goto	l943
-  1023  0067  2868               	goto	l63
-  1024  0068                     l63:
-  1025  0068  0008               	return
-  1026  0069                     __end_of_ADC_CHANNELS:
-  1027                           
-  1028                           	psect	text5
-  1029  0069                     __ptext5:	
-  1030 ;; *************** function _isr *****************
-  1031 ;; Defined at:
-  1032 ;;		line 47 in file "main.c"
-  1033 ;; Parameters:    Size  Location     Type
-  1034 ;;		None
-  1035 ;; Auto vars:     Size  Location     Type
-  1036 ;;		None
-  1037 ;; Return value:  Size  Location     Type
-  1038 ;;                  1    wreg      void 
-  1039 ;; Registers used:
-  1040 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
-  1041 ;; Tracked objects:
-  1042 ;;		On entry : 0/0
-  1043 ;;		On exit  : 0/0
-  1044 ;;		Unchanged: 0/0
-  1045 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-  1046 ;;      Params:         0       0       0       0       0
-  1047 ;;      Locals:         0       0       0       0       0
-  1048 ;;      Temps:          5       0       0       0       0
-  1049 ;;      Totals:         5       0       0       0       0
-  1050 ;;Total ram usage:        5 bytes
-  1051 ;; Hardware stack levels used:    1
-  1052 ;; Hardware stack levels required when called:    2
-  1053 ;; This function calls:
-  1054 ;;		_ADC_READ
-  1055 ;;		_spiRead
-  1056 ;;		_spiWrite
-  1057 ;; This function is called by:
-  1058 ;;		Interrupt level 1
-  1059 ;; This function uses a non-reentrant model
-  1060 ;;
-  1061                           
-  1062                           
-  1063                           ;psect for function _isr
-  1064  0069                     _isr:
-  1065  0069                     i1l993:
-  1066                           
-  1067                           ;main.c: 48: 
-  1068  0069  138B               	bcf	11,7	;volatile
-  1069                           
-  1070                           ;main.c: 49: 
-  1071  006A  1283               	bcf	3,5	;RP0=0, select bank0
-  1072  006B  1303               	bcf	3,6	;RP1=0, select bank0
-  1073  006C  1F0C               	btfss	12,6	;volatile
-  1074  006D  286F               	goto	u7_21
-  1075  006E  2870               	goto	u7_20
-  1076  006F                     u7_21:
-  1077  006F  287C               	goto	i1l999
-  1078  0070                     u7_20:
-  1079  0070                     i1l995:
-  1080                           
-  1081                           ;main.c: 51: 
-  1082  0070  120A  118A  215A  120A  118A  	fcall	_ADC_READ
-  1083  0075  0871               	movf	?_ADC_READ+1,w
-  1084  0076  1283               	bcf	3,5	;RP0=0, select bank0
-  1085  0077  1303               	bcf	3,6	;RP1=0, select bank0
-  1086  0078  00AA               	movwf	_VALOR_ADC+1
-  1087  0079  0870               	movf	?_ADC_READ,w
-  1088  007A  00A9               	movwf	_VALOR_ADC
-  1089  007B                     i1l997:
-  1090                           
-  1091                           ;main.c: 52:     ANSEL = 0B00000011;
-  1092  007B  130C               	bcf	12,6	;volatile
-  1093  007C                     i1l999:
-  1094                           
-  1095                           ;main.c: 54: 
-  1096  007C  1D8C               	btfss	12,3	;volatile
-  1097  007D  287F               	goto	u8_21
-  1098  007E  2880               	goto	u8_20
-  1099  007F                     u8_21:
-  1100  007F  28AA               	goto	i1l77
-  1101  0080                     u8_20:
-  1102  0080                     i1l1001:
-  1103                           
-  1104                           ;main.c: 55:     TRISA = 0B00100011;
-  1105  0080  120A  118A  2168  120A  118A  	fcall	_spiRead
-  1106  0085  00F6               	movwf	??_isr
-  1107  0086  0876               	movf	??_isr,w
-  1108  0087  00FB               	movwf	_SEL_POT
-  1109                           
-  1110                           ;main.c: 56:     TRISD = 0X00;
-  1111  0088  2897               	goto	i1l1009
-  1112  0089                     i1l1003:
-  1113                           
-  1114                           ;main.c: 58:     TRISB = 0B00000000;
-  1115  0089  087D               	movf	_POT0,w
-  1116  008A  120A  118A  2178  120A  118A  	fcall	_spiWrite
-  1117                           
-  1118                           ;main.c: 59: 
-  1119  008F  28A7               	goto	i1l80
-  1120  0090                     i1l1005:
-  1121                           
-  1122                           ;main.c: 61:     PORTB = 0X00;
-  1123  0090  087C               	movf	_POT1,w
-  1124  0091  120A  118A  2178  120A  118A  	fcall	_spiWrite
-  1125                           
-  1126                           ;main.c: 62:     PORTC = 0X00;
-  1127  0096  28A7               	goto	i1l80
-  1128  0097                     i1l1009:
-  1129  0097  087B               	movf	_SEL_POT,w
-  1130  0098  00F6               	movwf	??_isr
-  1131  0099  01F7               	clrf	??_isr+1
-  1132                           
-  1133                           ; Switch on 2 bytes has been partitioned into a top level switch of size 1, and 1 sub-sw
+  1008                           ;./ADC_LIB.h: 43:             break;
+  1009  0052  2868               	goto	l63
+  1010  0053                     l957:
+  1011  0053  1283               	bcf	3,5	;RP0=0, select bank0
+  1012  0054  1303               	bcf	3,6	;RP1=0, select bank0
+  1013  0055  0C1F               	rrf	31,w	;volatile
+  1014  0056  00A5               	movwf	??_ADC_CHANNELS
+  1015  0057  0C25               	rrf	??_ADC_CHANNELS,w
+  1016  0058  390F               	andlw	15
+  1017  0059  00A6               	movwf	??_ADC_CHANNELS+1
+  1018  005A  01A7               	clrf	??_ADC_CHANNELS+2
+  1019                           
+  1020                           ; Switch on 2 bytes has been partitioned into a top level switch of size 1, and 1 sub-sw
       +                          itches
-  1134                           ; Switch size 1, requested type "simple"
-  1135                           ; Number of cases is 1, Range of values is 0 to 0
-  1136                           ; switch strategies available:
-  1137                           ; Name         Instructions Cycles
-  1138                           ; simple_byte            4     3 (average)
-  1139                           ; direct_byte           11     8 (fixed)
-  1140                           ; jumptable            260     6 (fixed)
-  1141                           ;	Chosen strategy is simple_byte
-  1142  009A  0877               	movf	??_isr+1,w
-  1143  009B  3A00               	xorlw	0	; case 0
-  1144  009C  1903               	skipnz
-  1145  009D  289F               	goto	i1l1063
-  1146  009E  28A7               	goto	i1l80
-  1147  009F                     i1l1063:
-  1148                           
-  1149                           ; Switch size 1, requested type "simple"
-  1150                           ; Number of cases is 2, Range of values is 1 to 2
-  1151                           ; switch strategies available:
-  1152                           ; Name         Instructions Cycles
-  1153                           ; simple_byte            7     4 (average)
-  1154                           ; direct_byte           17    11 (fixed)
-  1155                           ; jumptable            263     9 (fixed)
-  1156                           ;	Chosen strategy is simple_byte
-  1157  009F  0876               	movf	??_isr,w
-  1158  00A0  3A01               	xorlw	1	; case 1
-  1159  00A1  1903               	skipnz
-  1160  00A2  2889               	goto	i1l1003
-  1161  00A3  3A03               	xorlw	3	; case 2
-  1162  00A4  1903               	skipnz
-  1163  00A5  2890               	goto	i1l1005
-  1164  00A6  28A7               	goto	i1l80
-  1165  00A7                     i1l80:
-  1166                           
-  1167                           ;main.c: 65: 
-  1168  00A7  1283               	bcf	3,5	;RP0=0, select bank0
-  1169  00A8  1303               	bcf	3,6	;RP1=0, select bank0
-  1170  00A9  118C               	bcf	12,3	;volatile
-  1171  00AA                     i1l77:	
-  1172                           ;main.c: 66: 
-  1173                           
-  1174                           
-  1175                           ;main.c: 68:     OSCCONbits.IRCF1 = 1;
-  1176  00AA  178B               	bsf	11,7	;volatile
-  1177  00AB                     i1l82:
-  1178  00AB  087A               	movf	??_isr+4,w
-  1179  00AC  008A               	movwf	10
-  1180  00AD  0879               	movf	??_isr+3,w
-  1181  00AE  0084               	movwf	4
-  1182  00AF  0E78               	swapf	??_isr+2,w
-  1183  00B0  0083               	movwf	3
-  1184  00B1  0EFE               	swapf	btemp,f
-  1185  00B2  0E7E               	swapf	btemp,w
-  1186  00B3  0009               	retfie
-  1187  00B4                     __end_of_isr:
-  1188                           
-  1189                           	psect	intentry
-  1190  0004                     __pintentry:	
-  1191                           ;incstack = 0
-  1192                           ; Regs used in _isr: [wreg-fsr0h+status,2+status,0+pclath+cstack]
-  1193                           
-  1194  0004                     interrupt_function:
-  1195  007E                     saved_w	set	btemp
-  1196  0004  00FE               	movwf	btemp
-  1197  0005  0E03               	swapf	3,w
-  1198  0006  00F8               	movwf	??_isr+2
-  1199  0007  0804               	movf	4,w
-  1200  0008  00F9               	movwf	??_isr+3
-  1201  0009  080A               	movf	10,w
-  1202  000A  00FA               	movwf	??_isr+4
-  1203  000B  120A  118A  2869   	ljmp	_isr
-  1204                           
-  1205                           	psect	text6
-  1206  0178                     __ptext6:	
-  1207 ;; *************** function _spiWrite *****************
-  1208 ;; Defined at:
-  1209 ;;		line 34 in file "SPI.c"
-  1210 ;; Parameters:    Size  Location     Type
-  1211 ;;  dat             1    wreg     unsigned char 
-  1212 ;; Auto vars:     Size  Location     Type
-  1213 ;;  dat             1    0[COMMON] unsigned char 
-  1214 ;; Return value:  Size  Location     Type
-  1215 ;;                  1    wreg      void 
-  1216 ;; Registers used:
-  1217 ;;		wreg
-  1218 ;; Tracked objects:
-  1219 ;;		On entry : 0/0
-  1220 ;;		On exit  : 0/0
-  1221 ;;		Unchanged: 0/0
-  1222 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-  1223 ;;      Params:         0       0       0       0       0
-  1224 ;;      Locals:         1       0       0       0       0
-  1225 ;;      Temps:          0       0       0       0       0
-  1226 ;;      Totals:         1       0       0       0       0
-  1227 ;;Total ram usage:        1 bytes
-  1228 ;; Hardware stack levels used:    1
-  1229 ;; This function calls:
-  1230 ;;		Nothing
-  1231 ;; This function is called by:
-  1232 ;;		_isr
-  1233 ;; This function uses a non-reentrant model
-  1234 ;;
-  1235                           
-  1236                           
-  1237                           ;psect for function _spiWrite
-  1238  0178                     _spiWrite:
-  1239                           
-  1240                           ;incstack = 0
-  1241                           ; Regs used in _spiWrite: [wreg]
-  1242                           ;spiWrite@dat stored from wreg
-  1243  0178  00F0               	movwf	spiWrite@dat
-  1244  0179                     i1l965:
-  1245                           
-  1246                           ;SPI.c: 34: void spiWrite(char dat);SPI.c: 35: {;SPI.c: 36:     SSPBUF = dat;
-  1247  0179  0870               	movf	spiWrite@dat,w
-  1248  017A  1283               	bcf	3,5	;RP0=0, select bank0
-  1249  017B  1303               	bcf	3,6	;RP1=0, select bank0
-  1250  017C  0093               	movwf	19	;volatile
-  1251  017D                     i1l119:
-  1252  017D  0008               	return
-  1253  017E                     __end_of_spiWrite:
-  1254                           
-  1255                           	psect	text7
-  1256  0168                     __ptext7:	
-  1257 ;; *************** function _spiRead *****************
-  1258 ;; Defined at:
-  1259 ;;		line 47 in file "SPI.c"
-  1260 ;; Parameters:    Size  Location     Type
-  1261 ;;		None
-  1262 ;; Auto vars:     Size  Location     Type
-  1263 ;;		None
-  1264 ;; Return value:  Size  Location     Type
-  1265 ;;                  1    wreg      unsigned char 
-  1266 ;; Registers used:
-  1267 ;;		wreg, status,2, status,0, pclath, cstack
-  1268 ;; Tracked objects:
-  1269 ;;		On entry : 0/0
-  1270 ;;		On exit  : 0/0
-  1271 ;;		Unchanged: 0/0
-  1272 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-  1273 ;;      Params:         0       0       0       0       0
-  1274 ;;      Locals:         0       0       0       0       0
-  1275 ;;      Temps:          0       0       0       0       0
-  1276 ;;      Totals:         0       0       0       0       0
-  1277 ;;Total ram usage:        0 bytes
-  1278 ;; Hardware stack levels used:    1
-  1279 ;; Hardware stack levels required when called:    1
-  1280 ;; This function calls:
-  1281 ;;		_spiReceiveWait
-  1282 ;; This function is called by:
-  1283 ;;		_isr
-  1284 ;; This function uses a non-reentrant model
-  1285 ;;
-  1286                           
-  1287                           
-  1288                           ;psect for function _spiRead
-  1289  0168                     _spiRead:
-  1290  0168                     i1l959:	
-  1291                           ;incstack = 0
-  1292                           ; Regs used in _spiRead: [wreg+status,2+status,0+pclath+cstack]
-  1293                           
-  1294                           
-  1295                           ;SPI.c: 49:     spiReceiveWait();
-  1296  0168  120A  118A  2171  120A  118A  	fcall	_spiReceiveWait
-  1297  016D                     i1l961:
-  1298                           
-  1299                           ;SPI.c: 50:     return(SSPBUF);
-  1300  016D  1283               	bcf	3,5	;RP0=0, select bank0
-  1301  016E  1303               	bcf	3,6	;RP1=0, select bank0
-  1302  016F  0813               	movf	19,w	;volatile
-  1303  0170                     i1l127:
-  1304  0170  0008               	return
-  1305  0171                     __end_of_spiRead:
-  1306                           
-  1307                           	psect	text8
-  1308  0171                     __ptext8:	
-  1309 ;; *************** function _spiReceiveWait *****************
-  1310 ;; Defined at:
-  1311 ;;		line 29 in file "SPI.c"
-  1312 ;; Parameters:    Size  Location     Type
-  1313 ;;		None
-  1314 ;; Auto vars:     Size  Location     Type
-  1315 ;;		None
-  1316 ;; Return value:  Size  Location     Type
-  1317 ;;                  1    wreg      void 
-  1318 ;; Registers used:
-  1319 ;;		None
-  1320 ;; Tracked objects:
-  1321 ;;		On entry : 0/0
-  1322 ;;		On exit  : 0/0
-  1323 ;;		Unchanged: 0/0
-  1324 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-  1325 ;;      Params:         0       0       0       0       0
-  1326 ;;      Locals:         0       0       0       0       0
-  1327 ;;      Temps:          0       0       0       0       0
-  1328 ;;      Totals:         0       0       0       0       0
-  1329 ;;Total ram usage:        0 bytes
-  1330 ;; Hardware stack levels used:    1
-  1331 ;; This function calls:
-  1332 ;;		Nothing
-  1333 ;; This function is called by:
-  1334 ;;		_spiRead
-  1335 ;; This function uses a non-reentrant model
-  1336 ;;
-  1337                           
-  1338                           
-  1339                           ;psect for function _spiReceiveWait
-  1340  0171                     _spiReceiveWait:
-  1341  0171                     i1l927:	
-  1342                           ;incstack = 0
-  1343                           ; Regs used in _spiReceiveWait: []
-  1344                           
-  1345  0171                     i1l113:	
-  1346                           ;SPI.c: 31:     while ( !SSPSTATbits.BF );
-  1347                           
-  1348  0171  1683               	bsf	3,5	;RP0=1, select bank1
-  1349  0172  1303               	bcf	3,6	;RP1=0, select bank1
-  1350  0173  1C14               	btfss	20,0	;volatile
-  1351  0174  2976               	goto	u6_21
-  1352  0175  2977               	goto	u6_20
-  1353  0176                     u6_21:
-  1354  0176  2971               	goto	i1l113
-  1355  0177                     u6_20:
-  1356  0177                     i1l116:
-  1357  0177  0008               	return
-  1358  0178                     __end_of_spiReceiveWait:
-  1359                           
-  1360                           	psect	text9
-  1361  015A                     __ptext9:	
-  1362 ;; *************** function _ADC_READ *****************
-  1363 ;; Defined at:
-  1364 ;;		line 24 in file "./ADC_LIB.h"
-  1365 ;; Parameters:    Size  Location     Type
-  1366 ;;		None
-  1367 ;; Auto vars:     Size  Location     Type
-  1368 ;;  LECT            2    4[COMMON] unsigned int 
-  1369 ;; Return value:  Size  Location     Type
-  1370 ;;                  2    0[COMMON] unsigned int 
-  1371 ;; Registers used:
-  1372 ;;		wreg
-  1373 ;; Tracked objects:
-  1374 ;;		On entry : 0/0
-  1375 ;;		On exit  : 0/0
-  1376 ;;		Unchanged: 0/0
-  1377 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-  1378 ;;      Params:         2       0       0       0       0
-  1379 ;;      Locals:         2       0       0       0       0
-  1380 ;;      Temps:          2       0       0       0       0
-  1381 ;;      Totals:         6       0       0       0       0
-  1382 ;;Total ram usage:        6 bytes
-  1383 ;; Hardware stack levels used:    1
-  1384 ;; This function calls:
-  1385 ;;		Nothing
-  1386 ;; This function is called by:
-  1387 ;;		_isr
-  1388 ;; This function uses a non-reentrant model
-  1389 ;;
-  1390                           
-  1391                           
-  1392                           ;psect for function _ADC_READ
-  1393  015A                     _ADC_READ:
-  1394  015A                     i1l929:	
-  1395                           ;incstack = 0
-  1396                           ; Regs used in _ADC_READ: [wreg]
-  1397                           
-  1398                           
-  1399                           ;./ADC_LIB.h: 25:     unsigned int LECT;;./ADC_LIB.h: 26:     LECT = ADRESH;
-  1400  015A  1283               	bcf	3,5	;RP0=0, select bank0
-  1401  015B  1303               	bcf	3,6	;RP1=0, select bank0
-  1402  015C  081E               	movf	30,w	;volatile
-  1403  015D  00F2               	movwf	??_ADC_READ
-  1404  015E  01F3               	clrf	??_ADC_READ+1
-  1405  015F  0872               	movf	??_ADC_READ,w
-  1406  0160  00F4               	movwf	ADC_READ@LECT
-  1407  0161  0873               	movf	??_ADC_READ+1,w
-  1408  0162  00F5               	movwf	ADC_READ@LECT+1
-  1409                           
-  1410                           ;./ADC_LIB.h: 27:     return LECT;
-  1411  0163  0875               	movf	ADC_READ@LECT+1,w
-  1412  0164  00F1               	movwf	?_ADC_READ+1
-  1413  0165  0874               	movf	ADC_READ@LECT,w
-  1414  0166  00F0               	movwf	?_ADC_READ
-  1415  0167                     i1l56:
-  1416  0167  0008               	return
-  1417  0168                     __end_of_ADC_READ:
-  1418  007E                     btemp	set	126	;btemp
-  1419  007E                     wtemp0	set	126
-  1420                           
-  1421                           	psect	config
-  1422                           
-  1423                           ;Config register CONFIG1 @ 0x2007
-  1424                           ;	Oscillator Selection bits
-  1425                           ;	FOSC = INTRC_CLKOUT, INTOSC oscillator: CLKOUT function on RA6/OSC2/CLKOUT pin, I/O fu
-      +                          nction on RA7/OSC1/CLKIN
-  1426                           ;	Watchdog Timer Enable bit
-  1427                           ;	WDTE = OFF, WDT disabled and can be enabled by SWDTEN bit of the WDTCON register
-  1428                           ;	Power-up Timer Enable bit
-  1429                           ;	PWRTE = OFF, PWRT disabled
-  1430                           ;	RE3/MCLR pin function select bit
-  1431                           ;	MCLRE = OFF, RE3/MCLR pin function is digital input, MCLR internally tied to VDD
-  1432                           ;	Code Protection bit
-  1433                           ;	CP = OFF, Program memory code protection is disabled
-  1434                           ;	Data Code Protection bit
-  1435                           ;	CPD = OFF, Data memory code protection is disabled
-  1436                           ;	Brown Out Reset Selection bits
-  1437                           ;	BOREN = OFF, BOR disabled
-  1438                           ;	Internal External Switchover bit
-  1439                           ;	IESO = OFF, Internal/External Switchover mode is disabled
-  1440                           ;	Fail-Safe Clock Monitor Enabled bit
-  1441                           ;	FCMEN = OFF, Fail-Safe Clock Monitor is disabled
-  1442                           ;	Low Voltage Programming Enable bit
-  1443                           ;	LVP = OFF, RB3 pin has digital I/O, HV on MCLR must be used for programming
-  1444                           ;	In-Circuit Debugger Mode bit
-  1445                           ;	DEBUG = 0x1, unprogrammed default
-  1446  2007                     	org	8199
-  1447  2007  20D5               	dw	8405
+  1021                           ; Switch size 1, requested type "simple"
+  1022                           ; Number of cases is 1, Range of values is 0 to 0
+  1023                           ; switch strategies available:
+  1024                           ; Name         Instructions Cycles
+  1025                           ; simple_byte            4     3 (average)
+  1026                           ; direct_byte           11     8 (fixed)
+  1027                           ; jumptable            260     6 (fixed)
+  1028                           ;	Chosen strategy is simple_byte
+  1029  005B  0827               	movf	??_ADC_CHANNELS+2,w
+  1030  005C  3A00               	xorlw	0	; case 0
+  1031  005D  1903               	skipnz
+  1032  005E  2860               	goto	l1069
+  1033  005F  2868               	goto	l63
+  1034  0060                     l1069:
+  1035                           
+  1036                           ; Switch size 1, requested type "simple"
+  1037                           ; Number of cases is 2, Range of values is 0 to 1
+  1038                           ; switch strategies available:
+  1039                           ; Name         Instructions Cycles
+  1040                           ; simple_byte            7     4 (average)
+  1041                           ; direct_byte           14     8 (fixed)
+  1042                           ; jumptable            260     6 (fixed)
+  1043                           ;	Chosen strategy is simple_byte
+  1044  0060  0826               	movf	??_ADC_CHANNELS+1,w
+  1045  0061  3A00               	xorlw	0	; case 0
+  1046  0062  1903               	skipnz
+  1047  0063  281D               	goto	l939
+  1048  0064  3A01               	xorlw	1	; case 1
+  1049  0065  1903               	skipnz
+  1050  0066  2838               	goto	l947
+  1051  0067  2868               	goto	l63
+  1052  0068                     l63:
+  1053  0068  0008               	return
+  1054  0069                     __end_of_ADC_CHANNELS:
+  1055                           
+  1056                           	psect	text5
+  1057  0069                     __ptext5:	
+  1058 ;; *************** function _isr *****************
+  1059 ;; Defined at:
+  1060 ;;		line 49 in file "main.c"
+  1061 ;; Parameters:    Size  Location     Type
+  1062 ;;		None
+  1063 ;; Auto vars:     Size  Location     Type
+  1064 ;;		None
+  1065 ;; Return value:  Size  Location     Type
+  1066 ;;                  1    wreg      void 
+  1067 ;; Registers used:
+  1068 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+  1069 ;; Tracked objects:
+  1070 ;;		On entry : 0/0
+  1071 ;;		On exit  : 0/0
+  1072 ;;		Unchanged: 0/0
+  1073 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1074 ;;      Params:         0       0       0       0       0
+  1075 ;;      Locals:         0       0       0       0       0
+  1076 ;;      Temps:          5       0       0       0       0
+  1077 ;;      Totals:         5       0       0       0       0
+  1078 ;;Total ram usage:        5 bytes
+  1079 ;; Hardware stack levels used:    1
+  1080 ;; Hardware stack levels required when called:    2
+  1081 ;; This function calls:
+  1082 ;;		_ADC_READ
+  1083 ;;		_spiRead
+  1084 ;;		_spiWrite
+  1085 ;; This function is called by:
+  1086 ;;		Interrupt level 1
+  1087 ;; This function uses a non-reentrant model
+  1088 ;;
+  1089                           
+  1090                           
+  1091                           ;psect for function _isr
+  1092  0069                     _isr:
+  1093  0069                     i1l997:
+  1094                           
+  1095                           ;main.c: 50: 
+  1096  0069  138B               	bcf	11,7	;volatile
+  1097                           
+  1098                           ;main.c: 51: 
+  1099  006A  1283               	bcf	3,5	;RP0=0, select bank0
+  1100  006B  1303               	bcf	3,6	;RP1=0, select bank0
+  1101  006C  1F0C               	btfss	12,6	;volatile
+  1102  006D  286F               	goto	u7_21
+  1103  006E  2870               	goto	u7_20
+  1104  006F                     u7_21:
+  1105  006F  287C               	goto	i1l1003
+  1106  0070                     u7_20:
+  1107  0070                     i1l999:
+  1108                           
+  1109                           ;main.c: 53: 
+  1110  0070  120A  118A  216E  120A  118A  	fcall	_ADC_READ
+  1111  0075  0871               	movf	?_ADC_READ+1,w
+  1112  0076  1283               	bcf	3,5	;RP0=0, select bank0
+  1113  0077  1303               	bcf	3,6	;RP1=0, select bank0
+  1114  0078  00AB               	movwf	_VALOR_ADC+1
+  1115  0079  0870               	movf	?_ADC_READ,w
+  1116  007A  00AA               	movwf	_VALOR_ADC
+  1117  007B                     i1l1001:
+  1118                           
+  1119                           ;main.c: 54:     ANSEL = 0B00000011;
+  1120  007B  130C               	bcf	12,6	;volatile
+  1121  007C                     i1l1003:
+  1122                           
+  1123                           ;main.c: 56: 
+  1124  007C  1D8C               	btfss	12,3	;volatile
+  1125  007D  287F               	goto	u8_21
+  1126  007E  2880               	goto	u8_20
+  1127  007F                     u8_21:
+  1128  007F  28AA               	goto	i1l77
+  1129  0080                     u8_20:
+  1130  0080                     i1l1005:
+  1131                           
+  1132                           ;main.c: 57:     TRISA = 0B00100011;
+  1133  0080  120A  118A  217C  120A  118A  	fcall	_spiRead
+  1134  0085  00F6               	movwf	??_isr
+  1135  0086  0876               	movf	??_isr,w
+  1136  0087  00FB               	movwf	_SEL_POT
+  1137                           
+  1138                           ;main.c: 58:     TRISD = 0X00;
+  1139  0088  2897               	goto	i1l1013
+  1140  0089                     i1l1007:
+  1141                           
+  1142                           ;main.c: 60:     TRISB = 0B00000000;
+  1143  0089  087D               	movf	_POT0,w
+  1144  008A  120A  118A  218C  120A  118A  	fcall	_spiWrite
+  1145                           
+  1146                           ;main.c: 61: 
+  1147  008F  28A7               	goto	i1l80
+  1148  0090                     i1l1009:
+  1149                           
+  1150                           ;main.c: 63:     PORTB = 0X00;
+  1151  0090  087C               	movf	_POT1,w
+  1152  0091  120A  118A  218C  120A  118A  	fcall	_spiWrite
+  1153                           
+  1154                           ;main.c: 64:     PORTC = 0X00;
+  1155  0096  28A7               	goto	i1l80
+  1156  0097                     i1l1013:
+  1157  0097  087B               	movf	_SEL_POT,w
+  1158  0098  00F6               	movwf	??_isr
+  1159  0099  01F7               	clrf	??_isr+1
+  1160                           
+  1161                           ; Switch on 2 bytes has been partitioned into a top level switch of size 1, and 1 sub-sw
+      +                          itches
+  1162                           ; Switch size 1, requested type "simple"
+  1163                           ; Number of cases is 1, Range of values is 0 to 0
+  1164                           ; switch strategies available:
+  1165                           ; Name         Instructions Cycles
+  1166                           ; simple_byte            4     3 (average)
+  1167                           ; direct_byte           11     8 (fixed)
+  1168                           ; jumptable            260     6 (fixed)
+  1169                           ;	Chosen strategy is simple_byte
+  1170  009A  0877               	movf	??_isr+1,w
+  1171  009B  3A00               	xorlw	0	; case 0
+  1172  009C  1903               	skipnz
+  1173  009D  289F               	goto	i1l1071
+  1174  009E  28A7               	goto	i1l80
+  1175  009F                     i1l1071:
+  1176                           
+  1177                           ; Switch size 1, requested type "simple"
+  1178                           ; Number of cases is 2, Range of values is 1 to 2
+  1179                           ; switch strategies available:
+  1180                           ; Name         Instructions Cycles
+  1181                           ; simple_byte            7     4 (average)
+  1182                           ; direct_byte           17    11 (fixed)
+  1183                           ; jumptable            263     9 (fixed)
+  1184                           ;	Chosen strategy is simple_byte
+  1185  009F  0876               	movf	??_isr,w
+  1186  00A0  3A01               	xorlw	1	; case 1
+  1187  00A1  1903               	skipnz
+  1188  00A2  2889               	goto	i1l1007
+  1189  00A3  3A03               	xorlw	3	; case 2
+  1190  00A4  1903               	skipnz
+  1191  00A5  2890               	goto	i1l1009
+  1192  00A6  28A7               	goto	i1l80
+  1193  00A7                     i1l80:
+  1194                           
+  1195                           ;main.c: 67: 
+  1196  00A7  1283               	bcf	3,5	;RP0=0, select bank0
+  1197  00A8  1303               	bcf	3,6	;RP1=0, select bank0
+  1198  00A9  118C               	bcf	12,3	;volatile
+  1199  00AA                     i1l77:	
+  1200                           ;main.c: 68: 
+  1201                           
+  1202                           
+  1203                           ;main.c: 70:     OSCCONbits.IRCF1 = 1;
+  1204  00AA  178B               	bsf	11,7	;volatile
+  1205  00AB                     i1l82:
+  1206  00AB  087A               	movf	??_isr+4,w
+  1207  00AC  008A               	movwf	10
+  1208  00AD  0879               	movf	??_isr+3,w
+  1209  00AE  0084               	movwf	4
+  1210  00AF  0E78               	swapf	??_isr+2,w
+  1211  00B0  0083               	movwf	3
+  1212  00B1  0EFE               	swapf	btemp,f
+  1213  00B2  0E7E               	swapf	btemp,w
+  1214  00B3  0009               	retfie
+  1215  00B4                     __end_of_isr:
+  1216                           
+  1217                           	psect	intentry
+  1218  0004                     __pintentry:	
+  1219                           ;incstack = 0
+  1220                           ; Regs used in _isr: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+  1221                           
+  1222  0004                     interrupt_function:
+  1223  007E                     saved_w	set	btemp
+  1224  0004  00FE               	movwf	btemp
+  1225  0005  0E03               	swapf	3,w
+  1226  0006  00F8               	movwf	??_isr+2
+  1227  0007  0804               	movf	4,w
+  1228  0008  00F9               	movwf	??_isr+3
+  1229  0009  080A               	movf	10,w
+  1230  000A  00FA               	movwf	??_isr+4
+  1231  000B  120A  118A  2869   	ljmp	_isr
+  1232                           
+  1233                           	psect	text6
+  1234  018C                     __ptext6:	
+  1235 ;; *************** function _spiWrite *****************
+  1236 ;; Defined at:
+  1237 ;;		line 34 in file "SPI.c"
+  1238 ;; Parameters:    Size  Location     Type
+  1239 ;;  dat             1    wreg     unsigned char 
+  1240 ;; Auto vars:     Size  Location     Type
+  1241 ;;  dat             1    0[COMMON] unsigned char 
+  1242 ;; Return value:  Size  Location     Type
+  1243 ;;                  1    wreg      void 
+  1244 ;; Registers used:
+  1245 ;;		wreg
+  1246 ;; Tracked objects:
+  1247 ;;		On entry : 0/0
+  1248 ;;		On exit  : 0/0
+  1249 ;;		Unchanged: 0/0
+  1250 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1251 ;;      Params:         0       0       0       0       0
+  1252 ;;      Locals:         1       0       0       0       0
+  1253 ;;      Temps:          0       0       0       0       0
+  1254 ;;      Totals:         1       0       0       0       0
+  1255 ;;Total ram usage:        1 bytes
+  1256 ;; Hardware stack levels used:    1
+  1257 ;; This function calls:
+  1258 ;;		Nothing
+  1259 ;; This function is called by:
+  1260 ;;		_isr
+  1261 ;; This function uses a non-reentrant model
+  1262 ;;
+  1263                           
+  1264                           
+  1265                           ;psect for function _spiWrite
+  1266  018C                     _spiWrite:
+  1267                           
+  1268                           ;incstack = 0
+  1269                           ; Regs used in _spiWrite: [wreg]
+  1270                           ;spiWrite@dat stored from wreg
+  1271  018C  00F0               	movwf	spiWrite@dat
+  1272  018D                     i1l969:
+  1273                           
+  1274                           ;SPI.c: 34: void spiWrite(char dat);SPI.c: 35: {;SPI.c: 36:     SSPBUF = dat;
+  1275  018D  0870               	movf	spiWrite@dat,w
+  1276  018E  1283               	bcf	3,5	;RP0=0, select bank0
+  1277  018F  1303               	bcf	3,6	;RP1=0, select bank0
+  1278  0190  0093               	movwf	19	;volatile
+  1279  0191                     i1l119:
+  1280  0191  0008               	return
+  1281  0192                     __end_of_spiWrite:
+  1282                           
+  1283                           	psect	text7
+  1284  017C                     __ptext7:	
+  1285 ;; *************** function _spiRead *****************
+  1286 ;; Defined at:
+  1287 ;;		line 47 in file "SPI.c"
+  1288 ;; Parameters:    Size  Location     Type
+  1289 ;;		None
+  1290 ;; Auto vars:     Size  Location     Type
+  1291 ;;		None
+  1292 ;; Return value:  Size  Location     Type
+  1293 ;;                  1    wreg      unsigned char 
+  1294 ;; Registers used:
+  1295 ;;		wreg, status,2, status,0, pclath, cstack
+  1296 ;; Tracked objects:
+  1297 ;;		On entry : 0/0
+  1298 ;;		On exit  : 0/0
+  1299 ;;		Unchanged: 0/0
+  1300 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1301 ;;      Params:         0       0       0       0       0
+  1302 ;;      Locals:         0       0       0       0       0
+  1303 ;;      Temps:          0       0       0       0       0
+  1304 ;;      Totals:         0       0       0       0       0
+  1305 ;;Total ram usage:        0 bytes
+  1306 ;; Hardware stack levels used:    1
+  1307 ;; Hardware stack levels required when called:    1
+  1308 ;; This function calls:
+  1309 ;;		_spiReceiveWait
+  1310 ;; This function is called by:
+  1311 ;;		_isr
+  1312 ;; This function uses a non-reentrant model
+  1313 ;;
+  1314                           
+  1315                           
+  1316                           ;psect for function _spiRead
+  1317  017C                     _spiRead:
+  1318  017C                     i1l963:	
+  1319                           ;incstack = 0
+  1320                           ; Regs used in _spiRead: [wreg+status,2+status,0+pclath+cstack]
+  1321                           
+  1322                           
+  1323                           ;SPI.c: 49:     spiReceiveWait();
+  1324  017C  120A  118A  2185  120A  118A  	fcall	_spiReceiveWait
+  1325  0181                     i1l965:
+  1326                           
+  1327                           ;SPI.c: 50:     return(SSPBUF);
+  1328  0181  1283               	bcf	3,5	;RP0=0, select bank0
+  1329  0182  1303               	bcf	3,6	;RP1=0, select bank0
+  1330  0183  0813               	movf	19,w	;volatile
+  1331  0184                     i1l127:
+  1332  0184  0008               	return
+  1333  0185                     __end_of_spiRead:
+  1334                           
+  1335                           	psect	text8
+  1336  0185                     __ptext8:	
+  1337 ;; *************** function _spiReceiveWait *****************
+  1338 ;; Defined at:
+  1339 ;;		line 29 in file "SPI.c"
+  1340 ;; Parameters:    Size  Location     Type
+  1341 ;;		None
+  1342 ;; Auto vars:     Size  Location     Type
+  1343 ;;		None
+  1344 ;; Return value:  Size  Location     Type
+  1345 ;;                  1    wreg      void 
+  1346 ;; Registers used:
+  1347 ;;		None
+  1348 ;; Tracked objects:
+  1349 ;;		On entry : 0/0
+  1350 ;;		On exit  : 0/0
+  1351 ;;		Unchanged: 0/0
+  1352 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1353 ;;      Params:         0       0       0       0       0
+  1354 ;;      Locals:         0       0       0       0       0
+  1355 ;;      Temps:          0       0       0       0       0
+  1356 ;;      Totals:         0       0       0       0       0
+  1357 ;;Total ram usage:        0 bytes
+  1358 ;; Hardware stack levels used:    1
+  1359 ;; This function calls:
+  1360 ;;		Nothing
+  1361 ;; This function is called by:
+  1362 ;;		_spiRead
+  1363 ;; This function uses a non-reentrant model
+  1364 ;;
+  1365                           
+  1366                           
+  1367                           ;psect for function _spiReceiveWait
+  1368  0185                     _spiReceiveWait:
+  1369  0185                     i1l931:	
+  1370                           ;incstack = 0
+  1371                           ; Regs used in _spiReceiveWait: []
+  1372                           
+  1373  0185                     i1l113:	
+  1374                           ;SPI.c: 31:     while ( !SSPSTATbits.BF );
+  1375                           
+  1376  0185  1683               	bsf	3,5	;RP0=1, select bank1
+  1377  0186  1303               	bcf	3,6	;RP1=0, select bank1
+  1378  0187  1C14               	btfss	20,0	;volatile
+  1379  0188  298A               	goto	u6_21
+  1380  0189  298B               	goto	u6_20
+  1381  018A                     u6_21:
+  1382  018A  2985               	goto	i1l113
+  1383  018B                     u6_20:
+  1384  018B                     i1l116:
+  1385  018B  0008               	return
+  1386  018C                     __end_of_spiReceiveWait:
+  1387                           
+  1388                           	psect	text9
+  1389  016E                     __ptext9:	
+  1390 ;; *************** function _ADC_READ *****************
+  1391 ;; Defined at:
+  1392 ;;		line 24 in file "./ADC_LIB.h"
+  1393 ;; Parameters:    Size  Location     Type
+  1394 ;;		None
+  1395 ;; Auto vars:     Size  Location     Type
+  1396 ;;  LECT            2    4[COMMON] unsigned int 
+  1397 ;; Return value:  Size  Location     Type
+  1398 ;;                  2    0[COMMON] unsigned int 
+  1399 ;; Registers used:
+  1400 ;;		wreg
+  1401 ;; Tracked objects:
+  1402 ;;		On entry : 0/0
+  1403 ;;		On exit  : 0/0
+  1404 ;;		Unchanged: 0/0
+  1405 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1406 ;;      Params:         2       0       0       0       0
+  1407 ;;      Locals:         2       0       0       0       0
+  1408 ;;      Temps:          2       0       0       0       0
+  1409 ;;      Totals:         6       0       0       0       0
+  1410 ;;Total ram usage:        6 bytes
+  1411 ;; Hardware stack levels used:    1
+  1412 ;; This function calls:
+  1413 ;;		Nothing
+  1414 ;; This function is called by:
+  1415 ;;		_isr
+  1416 ;; This function uses a non-reentrant model
+  1417 ;;
+  1418                           
+  1419                           
+  1420                           ;psect for function _ADC_READ
+  1421  016E                     _ADC_READ:
+  1422  016E                     i1l933:	
+  1423                           ;incstack = 0
+  1424                           ; Regs used in _ADC_READ: [wreg]
+  1425                           
+  1426                           
+  1427                           ;./ADC_LIB.h: 25:     unsigned int LECT;;./ADC_LIB.h: 26:     LECT = ADRESH;
+  1428  016E  1283               	bcf	3,5	;RP0=0, select bank0
+  1429  016F  1303               	bcf	3,6	;RP1=0, select bank0
+  1430  0170  081E               	movf	30,w	;volatile
+  1431  0171  00F2               	movwf	??_ADC_READ
+  1432  0172  01F3               	clrf	??_ADC_READ+1
+  1433  0173  0872               	movf	??_ADC_READ,w
+  1434  0174  00F4               	movwf	ADC_READ@LECT
+  1435  0175  0873               	movf	??_ADC_READ+1,w
+  1436  0176  00F5               	movwf	ADC_READ@LECT+1
+  1437                           
+  1438                           ;./ADC_LIB.h: 27:     return LECT;
+  1439  0177  0875               	movf	ADC_READ@LECT+1,w
+  1440  0178  00F1               	movwf	?_ADC_READ+1
+  1441  0179  0874               	movf	ADC_READ@LECT,w
+  1442  017A  00F0               	movwf	?_ADC_READ
+  1443  017B                     i1l56:
+  1444  017B  0008               	return
+  1445  017C                     __end_of_ADC_READ:
+  1446  007E                     btemp	set	126	;btemp
+  1447  007E                     wtemp0	set	126
   1448                           
-  1449                           ;Config register CONFIG2 @ 0x2008
-  1450                           ;	Brown-out Reset Selection bit
-  1451                           ;	BOR4V = BOR40V, Brown-out Reset set to 4.0V
-  1452                           ;	Flash Program Memory Self Write Enable bits
-  1453                           ;	WRT = OFF, Write protection off
-  1454  2008                     	org	8200
-  1455  2008  3FFF               	dw	16383
+  1449                           	psect	config
+  1450                           
+  1451                           ;Config register CONFIG1 @ 0x2007
+  1452                           ;	Oscillator Selection bits
+  1453                           ;	FOSC = INTRC_CLKOUT, INTOSC oscillator: CLKOUT function on RA6/OSC2/CLKOUT pin, I/O fu
+      +                          nction on RA7/OSC1/CLKIN
+  1454                           ;	Watchdog Timer Enable bit
+  1455                           ;	WDTE = OFF, WDT disabled and can be enabled by SWDTEN bit of the WDTCON register
+  1456                           ;	Power-up Timer Enable bit
+  1457                           ;	PWRTE = OFF, PWRT disabled
+  1458                           ;	RE3/MCLR pin function select bit
+  1459                           ;	MCLRE = OFF, RE3/MCLR pin function is digital input, MCLR internally tied to VDD
+  1460                           ;	Code Protection bit
+  1461                           ;	CP = OFF, Program memory code protection is disabled
+  1462                           ;	Data Code Protection bit
+  1463                           ;	CPD = OFF, Data memory code protection is disabled
+  1464                           ;	Brown Out Reset Selection bits
+  1465                           ;	BOREN = OFF, BOR disabled
+  1466                           ;	Internal External Switchover bit
+  1467                           ;	IESO = OFF, Internal/External Switchover mode is disabled
+  1468                           ;	Fail-Safe Clock Monitor Enabled bit
+  1469                           ;	FCMEN = OFF, Fail-Safe Clock Monitor is disabled
+  1470                           ;	Low Voltage Programming Enable bit
+  1471                           ;	LVP = OFF, RB3 pin has digital I/O, HV on MCLR must be used for programming
+  1472                           ;	In-Circuit Debugger Mode bit
+  1473                           ;	DEBUG = 0x1, unprogrammed default
+  1474  2007                     	org	8199
+  1475  2007  20D5               	dw	8405
+  1476                           
+  1477                           ;Config register CONFIG2 @ 0x2008
+  1478                           ;	Brown-out Reset Selection bit
+  1479                           ;	BOR4V = BOR40V, Brown-out Reset set to 4.0V
+  1480                           ;	Flash Program Memory Self Write Enable bits
+  1481                           ;	WRT = OFF, Write protection off
+  1482  2008                     	org	8200
+  1483  2008  3FFF               	dw	16383
 
 Data Sizes:
     Strings     0
@@ -1483,7 +1512,7 @@ Data Sizes:
 Auto Spaces:
     Space          Size  Autos    Used
     COMMON           14     11      14
-    BANK0            80      9      11
+    BANK0            80     10      12
     BANK1            80      0       0
     BANK3            96      0       0
     BANK2            96      0       0
@@ -1540,8 +1569,8 @@ Call Graph Tables:
  ---------------------------------------------------------------------------------
  (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
  ---------------------------------------------------------------------------------
- (0) _main                                                 1     1      0    1046
-                                              8 BANK0      1     1      0
+ (0) _main                                                 2     2      0    1046
+                                              8 BANK0      2     2      0
                        _ADC_CHANNELS
                               _setup
  ---------------------------------------------------------------------------------
@@ -1608,11 +1637,11 @@ SFR0                 0      0       0       1        0.0%
 BITSFR1              0      0       0       2        0.0%
 SFR1                 0      0       0       2        0.0%
 STACK                0      0       0       2        0.0%
-ABS                  0      0      19       3        0.0%
+ABS                  0      0      1A       3        0.0%
 BITBANK0            50      0       0       4        0.0%
 BITSFR3              0      0       0       4        0.0%
 SFR3                 0      0       0       4        0.0%
-BANK0               50      9       B       5       13.8%
+BANK0               50      A       C       5       15.0%
 BITSFR2              0      0       0       5        0.0%
 SFR2                 0      0       0       5        0.0%
 BITBANK1            50      0       0       6        0.0%
@@ -1621,76 +1650,77 @@ BITBANK3            60      0       0       8        0.0%
 BANK3               60      0       0       9        0.0%
 BITBANK2            60      0       0      10        0.0%
 BANK2               60      0       0      11        0.0%
-DATA                 0      0      19      12        0.0%
+DATA                 0      0      1A      12        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.31 build 20201012212115 
-Symbol Table                                                                                   Sat Jul 31 16:18:19 2021
+Symbol Table                                                                                   Mon Aug 02 23:41:48 2021
 
-            _SSPSTATbits 0094                       l53 013B                       l63 0068  
-                     l93 00EA                       u50 0148                       u51 0147  
-                     u97 0129                      l110 0159                      l109 0154  
-                    l901 011C                      l911 0136                      l903 0125  
-                    l913 0137                      l905 012C                      l921 014C  
-                    l915 0138                      l907 0132                      l923 014E  
-                    l941 0034                      l933 001C                      l909 0135  
-                    l925 0153                      l917 013F                      l943 0038  
-                    l935 001D                      l919 0148                      l945 003F  
-                    l937 0024                      l953 0053                      l947 0048  
-                    l939 002D                      l971 00B9                      l949 004F  
-                    l981 00CD                      l973 00C7                      l991 00E7  
-                    l983 00D7                      l975 00CA                      l967 00B4  
-                    l985 00E2                      l977 00CB                      l969 00B8  
-                    l899 0119                      l987 00E3                      l979 00CC  
-                    l989 00E4                      u107 0031                      u117 004C  
-                    _isr 0069                      fsr0 0004                      indf 0000  
-                   l1015 00EB                     l1017 00F0                     l1019 0103  
-                   l1061 0060                     _ADIF 0066                     ?_isr 0070  
-                   i1l56 0167                     i1l80 00A7                     i1l82 00AB  
-                   i1l77 00AA                     _POT0 007D                     _POT1 007C  
-           _ADC_CHANNELS 001C                     u6_20 0177                     u6_21 0176  
-                   u7_20 0070                     u7_21 006F                     u8_20 0080  
-                   u8_21 007F         __end_of_ADC_INIT 013C         __end_of_ADC_READ 0168  
-                   _main 00EB                     btemp 007E                     start 000E  
-                  ??_isr 0076                    ?_main 0070                    _ANSEL 0188  
-                  i1l113 0171                    i1l116 0177                    i1l127 0170  
-                  i1l119 017D                    i1l927 0171                    i1l929 015A  
-                  i1l961 016D                    i1l965 0179                    i1l959 0168  
-                  i1l993 0069                    i1l995 0070                    i1l997 007B  
-                  i1l999 007C                    _PORTA 0005                    _PORTB 0006  
-                  _PORTC 0007                    _PORTD 0008                    _PORTE 0009  
-                  _TRISA 0085                    _TRISB 0086                    _TRISD 0088  
-                  _TRISE 0089                    _SSPIF 0063                    _setup 00B4  
-                  pclath 000A          __end_of_spiInit 015A          __end_of_spiRead 0171  
-                  status 0003                    wtemp0 007E          __initialization 0011  
-           __end_of_main 0119                   ??_main 0028                   _ADRESH 001E  
-                 ?_setup 0070                   _ANSELH 0189                   i1l1001 0080  
-                 i1l1003 0089                   i1l1005 0090                   i1l1009 0097  
-                 i1l1063 009F                   _TRISC3 043B                   _TRISC5 043D  
-                 _SSPCON 0014                   _SSPBUF 0013                ?_ADC_INIT 0020  
-              ?_ADC_READ 0070                   saved_w 007E         __end_of_spiWrite 017E  
-              ??_spiInit 0023                ??_spiRead 0070  __end_of__initialization 0018  
-         __pcstackCOMMON 0070        ADC_CHANNELS@CANAL 0020             ADC_READ@LECT 0074  
-          __end_of_setup 00EB               ??_ADC_INIT 0022               ??_ADC_READ 0072  
-                ??_setup 0024               __pbssBANK0 0029               __pmaintext 00EB  
-             __pintentry 0004  __size_of_spiReceiveWait 0007                  _SEL_POT 007B  
-                _SSPSTAT 0094    ADC_CHANNELS@VALOR_ADC 0022                ?_spiWrite 0070  
-                __ptext1 00B4                  __ptext2 013C                  __ptext3 0119  
-                __ptext4 001C                  __ptext5 0069                  __ptext6 0178  
-                __ptext7 0168                  __ptext8 0171                  __ptext9 015A  
-           __size_of_isr 004B                  _spiInit 013C                  _spiRead 0168  
-   end_of_initialization 0018               ??_spiWrite 0070                _VALOR_ADC 0029  
-      __size_of_ADC_INIT 0023        __size_of_ADC_READ 000E              spiWrite@dat 0070  
-         _spiReceiveWait 0171       ADC_CHANNELS@VALORA 0024            ADC_INIT@canal 0020  
-    start_initialization 0011              __end_of_isr 00B4            ?_ADC_CHANNELS 0020  
- __end_of_spiReceiveWait 0178              __pbssCOMMON 007B                ___latbits 0002  
-          __pcstackBANK0 0020           ??_ADC_CHANNELS 0025          ?_spiReceiveWait 0070  
-      __size_of_spiWrite 0006                 _ADC_INIT 0119                 _ADC_READ 015A  
-               ?_spiInit 0020                 ?_spiRead 0070           __size_of_setup 0037  
-   spiInit@sTransmitEdge 0022        interrupt_function 0004                 _PIE1bits 008C  
-     spiInit@sDataSample 0020                 _PIR1bits 000C               _ADCON0bits 001F  
-             _ADCON1bits 009F     __end_of_ADC_CHANNELS 0069         __size_of_spiInit 001E  
-       __size_of_spiRead 0009            __size_of_main 002E                 _spiWrite 0178  
-           spiInit@sType 0023        spiInit@sClockIdle 0021               _INTCONbits 000B  
-               intlevel1 0000         ??_spiReceiveWait 0070               _OSCCONbits 008F  
-  __size_of_ADC_CHANNELS 004D  
+            _SSPSTATbits 0094                       l53 014F                       l63 0068  
+                     l93 012C                       u50 015C                       u51 015B  
+                     u97 00D2                      l110 016D                      l109 0168  
+                    l911 0146                      l903 012D                      l913 0149  
+                    l905 0130                      l921 0153                      l915 014A  
+                    l907 0139                      l923 015C                      l941 0024  
+                    l917 014B                      l909 0140                      l925 0160  
+                    l951 0048                      l943 002D                      l919 014C  
+                    l927 0162                      l953 004F                      l945 0034  
+                    l937 001C                      l929 0167                      l947 0038  
+                    l939 001D                      l971 00F6                      l949 003F  
+                    l957 0053                      l981 010D                      l973 00FA  
+                    l991 0125                      l983 010E                      l975 00FB  
+                    l993 0126                      l985 010F                      l977 0109  
+                    l995 0129                      l987 0119                      l979 010C  
+                    l989 0124                      u107 00EE                      u117 013D  
+                    u127 0031                      u137 004C                      _isr 0069  
+                    fsr0 0004                      indf 0000                     l1021 00B9  
+                   l1023 00CC                     l1025 00D6                     l1027 00E8  
+                   l1019 00B4                     l1069 0060                     _ADIF 0066  
+                   ?_isr 0070                     i1l56 017B                     i1l80 00A7  
+                   i1l82 00AB                     i1l77 00AA                     _POT0 007D  
+                   _POT1 007C             _ADC_CHANNELS 001C                     u6_20 018B  
+                   u6_21 018A                     u7_20 0070                     u7_21 006F  
+                   u8_20 0080                     u8_21 007F         __end_of_ADC_INIT 0150  
+       __end_of_ADC_READ 017C                     _main 00B4                     btemp 007E  
+                   start 000E                    ??_isr 0076                    ?_main 0070  
+                  _ANSEL 0188                    i1l113 0185                    i1l116 018B  
+                  i1l127 0184                    i1l119 0191                    i1l931 0185  
+                  i1l933 016E                    i1l963 017C                    i1l965 0181  
+                  i1l969 018D                    i1l997 0069                    i1l999 0070  
+                  _PORTA 0005                    _PORTB 0006                    _PORTC 0007  
+                  _PORTD 0008                    _PORTE 0009                    _TRISA 0085  
+                  _TRISB 0086                    _TRISD 0088                    _TRISE 0089  
+                  _SSPIF 0063                    _setup 00F6                    pclath 000A  
+        __end_of_spiInit 016E          __end_of_spiRead 0185                    status 0003  
+                  wtemp0 007E          __initialization 0011             __end_of_main 00F6  
+                 ??_main 0028                   _ADRESH 001E                   ?_setup 0070  
+                 _ANSELH 0189                   i1l1001 007B                   i1l1003 007C  
+                 i1l1013 0097                   i1l1005 0080                   i1l1007 0089  
+                 i1l1009 0090                   i1l1071 009F                   _TRISC3 043B  
+                 _TRISC5 043D                   _SSPCON 0014                   _SSPBUF 0013  
+              ?_ADC_INIT 0020                ?_ADC_READ 0070                   saved_w 007E  
+       __end_of_spiWrite 0192                ??_spiInit 0023                ??_spiRead 0070  
+__end_of__initialization 0018           __pcstackCOMMON 0070        ADC_CHANNELS@CANAL 0020  
+           ADC_READ@LECT 0074            __end_of_setup 012D               ??_ADC_INIT 0022  
+             ??_ADC_READ 0072                  ??_setup 0024               __pbssBANK0 002A  
+             __pmaintext 00B4               __pintentry 0004  __size_of_spiReceiveWait 0007  
+                _SEL_POT 007B                  _SSPSTAT 0094    ADC_CHANNELS@VALOR_ADC 0022  
+              ?_spiWrite 0070                  __ptext1 00F6                  __ptext2 0150  
+                __ptext3 012D                  __ptext4 001C                  __ptext5 0069  
+                __ptext6 018C                  __ptext7 017C                  __ptext8 0185  
+                __ptext9 016E             __size_of_isr 004B                  _spiInit 0150  
+                _spiRead 017C     end_of_initialization 0018               ??_spiWrite 0070  
+              _VALOR_ADC 002A        __size_of_ADC_INIT 0023        __size_of_ADC_READ 000E  
+            spiWrite@dat 0070           _spiReceiveWait 0185       ADC_CHANNELS@VALORA 0024  
+          ADC_INIT@canal 0020      start_initialization 0011              __end_of_isr 00B4  
+          ?_ADC_CHANNELS 0020   __end_of_spiReceiveWait 018C              __pbssCOMMON 007B  
+              ___latbits 0002            __pcstackBANK0 0020           ??_ADC_CHANNELS 0025  
+        ?_spiReceiveWait 0070        __size_of_spiWrite 0006                 _ADC_INIT 012D  
+               _ADC_READ 016E                 ?_spiInit 0020                 ?_spiRead 0070  
+         __size_of_setup 0037     spiInit@sTransmitEdge 0022        interrupt_function 0004  
+               _PIE1bits 008C       spiInit@sDataSample 0020                 _PIR1bits 000C  
+             _ADCON0bits 001F               _ADCON1bits 009F     __end_of_ADC_CHANNELS 0069  
+       __size_of_spiInit 001E         __size_of_spiRead 0009            __size_of_main 0042  
+               _spiWrite 018C             spiInit@sType 0023        spiInit@sClockIdle 0021  
+             _INTCONbits 000B                 intlevel1 0000         ??_spiReceiveWait 0070  
+             _OSCCONbits 008F    __size_of_ADC_CHANNELS 004D  
