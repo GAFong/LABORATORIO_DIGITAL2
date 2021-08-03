@@ -1,7 +1,7 @@
 /* 
  * File:   main.c
- * Author: DELL
- *
+ * Author: GABRIEL ALEXANDER FONG PENAGOS
+ *LABORATORIO 2
  * Created on July 26, 2021, 6:37 PM
  */
 
@@ -131,14 +131,14 @@ void main (void){
         EUSART_ENVIAR(ENTER);
         
         switch(OPCION){
-            case 43:
+            case 43:                //INCREMENTO DEL CONTADOR
                 CONTADOR++;
                 if (CONTADOR == 100){
                     CONTADOR = 0;
                 }
                 OPCION = 0;
                 break;
-            case 45:
+            case 45:                //DECREMENTO DEL CONTADOR
                 if (CONTADOR == 0){
                     CONTADOR = 0X63;
                 }
@@ -199,7 +199,7 @@ void VAL(uint16_t variable){        // Función para obtener valor decimal
     valor = (valor - (POS2*10));
     POS3 = (valor);                // UNIDADES
     
-    POS1 = POS1 + 48;          // PASARLO A VALORES ASCCI
+    POS1 = POS1 + 48;          // PASARLO A VALORES ASCCII
     POS2 = POS2 + 48;
     POS3 = POS3 + 48;
     

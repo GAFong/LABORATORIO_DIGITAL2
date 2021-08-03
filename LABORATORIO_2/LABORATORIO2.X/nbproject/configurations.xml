@@ -7,7 +7,6 @@
       <itemPath>ADC_LIB.h</itemPath>
       <itemPath>LCD_LIB.h</itemPath>
       <itemPath>EUSART_LIB.h</itemPath>
-      <itemPath>LCD_8LIB.c</itemPath>
       <itemPath>LCD_LIB.c</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"

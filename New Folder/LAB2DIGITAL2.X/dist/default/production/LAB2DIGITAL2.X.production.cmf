@@ -11,7 +11,7 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$C:\Users\DELL\AppData\Local\Temp\spvc.o
+$C:\Users\DELL\AppData\Local\Temp\sp14.o
 reset_vec CODE 0 0 0 3 2
 end_init CODE 0 C C 3 2
 config CONFIG 4 2007 2007 2 2
@@ -106,42 +106,42 @@ STRING 1000-1FFF 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\LAB2DIGITAL2.X.production.o
-F cinit CODE >764:C:\Users\DELL\AppData\Local\Temp\spvc.s
-F cinit CODE >767:C:\Users\DELL\AppData\Local\Temp\spvc.s
-F cinit CODE >846:C:\Users\DELL\AppData\Local\Temp\spvc.s
-10 cinit CODE >847:C:\Users\DELL\AppData\Local\Temp\spvc.s
-11 cinit CODE >848:C:\Users\DELL\AppData\Local\Temp\spvc.s
-12 cinit CODE >849:C:\Users\DELL\AppData\Local\Temp\spvc.s
-13 cinit CODE >850:C:\Users\DELL\AppData\Local\Temp\spvc.s
-14 cinit CODE >851:C:\Users\DELL\AppData\Local\Temp\spvc.s
-15 cinit CODE >852:C:\Users\DELL\AppData\Local\Temp\spvc.s
-16 cinit CODE >853:C:\Users\DELL\AppData\Local\Temp\spvc.s
-17 cinit CODE >854:C:\Users\DELL\AppData\Local\Temp\spvc.s
-18 cinit CODE >855:C:\Users\DELL\AppData\Local\Temp\spvc.s
-1D cinit CODE >859:C:\Users\DELL\AppData\Local\Temp\spvc.s
-1E cinit CODE >860:C:\Users\DELL\AppData\Local\Temp\spvc.s
-1F cinit CODE >861:C:\Users\DELL\AppData\Local\Temp\spvc.s
-20 cinit CODE >862:C:\Users\DELL\AppData\Local\Temp\spvc.s
-21 cinit CODE >863:C:\Users\DELL\AppData\Local\Temp\spvc.s
-22 cinit CODE >864:C:\Users\DELL\AppData\Local\Temp\spvc.s
-23 cinit CODE >865:C:\Users\DELL\AppData\Local\Temp\spvc.s
-24 cinit CODE >866:C:\Users\DELL\AppData\Local\Temp\spvc.s
-25 cinit CODE >867:C:\Users\DELL\AppData\Local\Temp\spvc.s
-2A cinit CODE >871:C:\Users\DELL\AppData\Local\Temp\spvc.s
-2B cinit CODE >872:C:\Users\DELL\AppData\Local\Temp\spvc.s
-2C cinit CODE >873:C:\Users\DELL\AppData\Local\Temp\spvc.s
-2D cinit CODE >874:C:\Users\DELL\AppData\Local\Temp\spvc.s
-2E cinit CODE >875:C:\Users\DELL\AppData\Local\Temp\spvc.s
-2F cinit CODE >876:C:\Users\DELL\AppData\Local\Temp\spvc.s
-30 cinit CODE >877:C:\Users\DELL\AppData\Local\Temp\spvc.s
-31 cinit CODE >878:C:\Users\DELL\AppData\Local\Temp\spvc.s
-32 cinit CODE >879:C:\Users\DELL\AppData\Local\Temp\spvc.s
-33 cinit CODE >880:C:\Users\DELL\AppData\Local\Temp\spvc.s
-34 cinit CODE >881:C:\Users\DELL\AppData\Local\Temp\spvc.s
-35 cinit CODE >882:C:\Users\DELL\AppData\Local\Temp\spvc.s
-36 cinit CODE >888:C:\Users\DELL\AppData\Local\Temp\spvc.s
-36 cinit CODE >890:C:\Users\DELL\AppData\Local\Temp\spvc.s
-37 cinit CODE >891:C:\Users\DELL\AppData\Local\Temp\spvc.s
+F cinit CODE >764:C:\Users\DELL\AppData\Local\Temp\sp14.s
+F cinit CODE >767:C:\Users\DELL\AppData\Local\Temp\sp14.s
+F cinit CODE >846:C:\Users\DELL\AppData\Local\Temp\sp14.s
+10 cinit CODE >847:C:\Users\DELL\AppData\Local\Temp\sp14.s
+11 cinit CODE >848:C:\Users\DELL\AppData\Local\Temp\sp14.s
+12 cinit CODE >849:C:\Users\DELL\AppData\Local\Temp\sp14.s
+13 cinit CODE >850:C:\Users\DELL\AppData\Local\Temp\sp14.s
+14 cinit CODE >851:C:\Users\DELL\AppData\Local\Temp\sp14.s
+15 cinit CODE >852:C:\Users\DELL\AppData\Local\Temp\sp14.s
+16 cinit CODE >853:C:\Users\DELL\AppData\Local\Temp\sp14.s
+17 cinit CODE >854:C:\Users\DELL\AppData\Local\Temp\sp14.s
+18 cinit CODE >855:C:\Users\DELL\AppData\Local\Temp\sp14.s
+1D cinit CODE >859:C:\Users\DELL\AppData\Local\Temp\sp14.s
+1E cinit CODE >860:C:\Users\DELL\AppData\Local\Temp\sp14.s
+1F cinit CODE >861:C:\Users\DELL\AppData\Local\Temp\sp14.s
+20 cinit CODE >862:C:\Users\DELL\AppData\Local\Temp\sp14.s
+21 cinit CODE >863:C:\Users\DELL\AppData\Local\Temp\sp14.s
+22 cinit CODE >864:C:\Users\DELL\AppData\Local\Temp\sp14.s
+23 cinit CODE >865:C:\Users\DELL\AppData\Local\Temp\sp14.s
+24 cinit CODE >866:C:\Users\DELL\AppData\Local\Temp\sp14.s
+25 cinit CODE >867:C:\Users\DELL\AppData\Local\Temp\sp14.s
+2A cinit CODE >871:C:\Users\DELL\AppData\Local\Temp\sp14.s
+2B cinit CODE >872:C:\Users\DELL\AppData\Local\Temp\sp14.s
+2C cinit CODE >873:C:\Users\DELL\AppData\Local\Temp\sp14.s
+2D cinit CODE >874:C:\Users\DELL\AppData\Local\Temp\sp14.s
+2E cinit CODE >875:C:\Users\DELL\AppData\Local\Temp\sp14.s
+2F cinit CODE >876:C:\Users\DELL\AppData\Local\Temp\sp14.s
+30 cinit CODE >877:C:\Users\DELL\AppData\Local\Temp\sp14.s
+31 cinit CODE >878:C:\Users\DELL\AppData\Local\Temp\sp14.s
+32 cinit CODE >879:C:\Users\DELL\AppData\Local\Temp\sp14.s
+33 cinit CODE >880:C:\Users\DELL\AppData\Local\Temp\sp14.s
+34 cinit CODE >881:C:\Users\DELL\AppData\Local\Temp\sp14.s
+35 cinit CODE >882:C:\Users\DELL\AppData\Local\Temp\sp14.s
+36 cinit CODE >888:C:\Users\DELL\AppData\Local\Temp\sp14.s
+36 cinit CODE >890:C:\Users\DELL\AppData\Local\Temp\sp14.s
+37 cinit CODE >891:C:\Users\DELL\AppData\Local\Temp\sp14.s
 4 intentry CODE >62:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\New Folder\LAB2DIGITAL2.X\main.c
 DDA text21 CODE >24:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\New Folder\LAB2DIGITAL2.X/ADC_LIB.h
 DDA text21 CODE >26:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\New Folder\LAB2DIGITAL2.X/ADC_LIB.h
@@ -522,23 +522,23 @@ F6B text1 CODE >191:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABOR
 575 maintext CODE >150:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\New Folder\LAB2DIGITAL2.X\main.c
 581 maintext CODE >151:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\New Folder\LAB2DIGITAL2.X\main.c
 589 maintext CODE >152:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\New Folder\LAB2DIGITAL2.X\main.c
-DE8 inittext CODE >820:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DE8 inittext CODE >821:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DE9 inittext CODE >822:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DEA inittext CODE >823:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DEB inittext CODE >824:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DEC inittext CODE >831:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DEC inittext CODE >832:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DF1 inittext CODE >833:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DF2 inittext CODE >834:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DF3 inittext CODE >835:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DF4 inittext CODE >836:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DF5 inittext CODE >837:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DF6 inittext CODE >838:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DF7 inittext CODE >839:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DF8 inittext CODE >840:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DF9 inittext CODE >841:C:\Users\DELL\AppData\Local\Temp\spvc.s
-DFA inittext CODE >842:C:\Users\DELL\AppData\Local\Temp\spvc.s
+DE8 inittext CODE >820:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DE8 inittext CODE >821:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DE9 inittext CODE >822:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DEA inittext CODE >823:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DEB inittext CODE >824:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DEC inittext CODE >831:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DEC inittext CODE >832:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DF1 inittext CODE >833:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DF2 inittext CODE >834:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DF3 inittext CODE >835:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DF4 inittext CODE >836:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DF5 inittext CODE >837:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DF6 inittext CODE >838:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DF7 inittext CODE >839:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DF8 inittext CODE >840:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DF9 inittext CODE >841:C:\Users\DELL\AppData\Local\Temp\sp14.s
+DFA inittext CODE >842:C:\Users\DELL\AppData\Local\Temp\sp14.s
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -579,11 +579,11 @@ _POT0 5F 0 BANK0 1 bssBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
 _POT1 5D 0 BANK0 1 bssBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
 _T0IF 5A 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
 _TMR0 1 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
-___sp 0 0 STACK 2 stack C:\Users\DELL\AppData\Local\Temp\spvc.o
+___sp 0 0 STACK 2 stack C:\Users\DELL\AppData\Local\Temp\sp14.o
 _main 736 0 CODE 0 maintext dist/default/production\LAB2DIGITAL2.X.production.o
 btemp 7E 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
 _Lcd_Write_Char 1C2E 0 CODE 0 text12 dist/default/production\LAB2DIGITAL2.X.production.o
-start 18 0 CODE 0 init C:\Users\DELL\AppData\Local\Temp\spvc.o
+start 18 0 CODE 0 init C:\Users\DELL\AppData\Local\Temp\sp14.o
 ___flmul@aexp 40 0 BANK0 1 cstackBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
 ___flmul@bexp 41 0 BANK0 1 cstackBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
 ___flmul@prod 42 0 BANK0 1 cstackBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
@@ -603,12 +603,12 @@ VAL@variable 28 0 BANK0 1 cstackBANK0 dist/default/production\LAB2DIGITAL2.X.pro
 _ADC_CHANNELS F32 0 CODE 0 text19 dist/default/production\LAB2DIGITAL2.X.production.o
 __size_of_ADC_INIT 0 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
 __size_of_ADC_READ 0 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
-intlevel0 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\spvc.o
-intlevel1 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\spvc.o
-intlevel2 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\spvc.o
-intlevel3 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\spvc.o
-intlevel4 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\spvc.o
-intlevel5 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\spvc.o
+intlevel0 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\sp14.o
+intlevel1 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\sp14.o
+intlevel2 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\sp14.o
+intlevel3 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\sp14.o
+intlevel4 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\sp14.o
+intlevel5 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\sp14.o
 _OSCCONbits 8F 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
 wtemp0 7E 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
 __Hfunctab 0 0 ENTRY 0 functab -
@@ -636,8 +636,8 @@ _OPTION_REG 81 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
 __end_of_ADC_INIT 1CB4 0 CODE 0 text3 dist/default/production\LAB2DIGITAL2.X.production.o
 __end_of_ADC_READ 1BD0 0 CODE 0 text21 dist/default/production\LAB2DIGITAL2.X.production.o
 __end_of_EUSART_ENVIAR FF8 0 CODE 0 text18 dist/default/production\LAB2DIGITAL2.X.production.o
-___stackhi 0 0 ABS 0 - C:\Users\DELL\AppData\Local\Temp\spvc.o
-___stacklo 0 0 ABS 0 - C:\Users\DELL\AppData\Local\Temp\spvc.o
+___stackhi 0 0 ABS 0 - C:\Users\DELL\AppData\Local\Temp\sp14.o
+___stacklo 0 0 ABS 0 - C:\Users\DELL\AppData\Local\Temp\sp14.o
 __end_of_ADC_CHANNELS FD0 0 CODE 0 text19 dist/default/production\LAB2DIGITAL2.X.production.o
 _BAUDCTLbits 187 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
 ___lwdiv@quotient 25 0 BANK0 1 cstackBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
@@ -652,7 +652,7 @@ _SPBRGH 9A 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
 __pcstackBANK0 20 0 BANK0 1 cstackBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
 ADC_INIT@canal 20 0 BANK0 1 cstackBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
 __size_of_Lcd_Cmd 0 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
-___int_sp 0 0 STACK 2 stack C:\Users\DELL\AppData\Local\Temp\spvc.o
+___int_sp 0 0 STACK 2 stack C:\Users\DELL\AppData\Local\Temp\sp14.o
 __end_of_EUSART_INIT 1D50 0 CODE 0 text2 dist/default/production\LAB2DIGITAL2.X.production.o
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
@@ -721,7 +721,7 @@ __size_of_Lcd_Write_String 0 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.pr
 __stringtab 1000 0 STRING 0 strings dist/default/production\LAB2DIGITAL2.X.production.o
 Lcd_Write_String@a 27 0 BANK0 1 cstackBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
 Lcd_Write_String@i 25 0 BANK0 1 cstackBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
-reset_vec 0 0 CODE 0 reset_vec C:\Users\DELL\AppData\Local\Temp\spvc.o
+reset_vec 0 0 CODE 0 reset_vec C:\Users\DELL\AppData\Local\Temp\sp14.o
 __size_of_Lcd_Clear 0 0 ABS 0 - dist/default/production\LAB2DIGITAL2.X.production.o
 __end_of___xxtofl CA2 0 CODE 0 text4 dist/default/production\LAB2DIGITAL2.X.production.o
 __pdataBANK0 61 0 BANK0 1 dataBANK0 dist/default/production\LAB2DIGITAL2.X.production.o
