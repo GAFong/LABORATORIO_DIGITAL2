@@ -104,9 +104,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 "482
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 482: extern volatile INTCONbits_t INTCONbits __attribute__((address(0x00B)));
 [v _INTCONbits `VS20 ~T0 @X0 0 e@11 ]
+"1140
+[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1140: extern volatile unsigned char RCREG __attribute__((address(0x01A)));
+[v _RCREG `Vuc ~T0 @X0 0 e@26 ]
 [p mainexit ]
-"49 main.c
-[; ;main.c: 49:        EUSART_ENVIAR(POS2);
+"54 main.c
+[; ;main.c: 54:        _delay((unsigned long)((1)*(4000000/4000.0)));
 [v _setup `(v ~T0 @X0 0 ef ]
 "296 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 296:     struct {
@@ -125,10 +128,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 "49
 [; ;./SPI.h: 49: char spiRead();
 [v _spiRead `(uc ~T0 @X0 0 e? ]
-"50 main.c
-[; ;main.c: 50:        _delay((unsigned long)((200)*(4000000/4000000.0)));
+"55 main.c
+[; ;main.c: 55:        spiWrite(1);
 [v _VAL `(v ~T0 @X0 0 ef1`ui ]
-"3387 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
+"228 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
+[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 228: extern volatile unsigned char PORTB __attribute__((address(0x006)));
+[v _PORTB `Vuc ~T0 @X0 0 e@6 ]
+"3387
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 3387: extern volatile unsigned char ANSEL __attribute__((address(0x188)));
 [v _ANSEL `Vuc ~T0 @X0 0 e@392 ]
 "3449
@@ -155,9 +161,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "166
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 166: extern volatile unsigned char PORTA __attribute__((address(0x005)));
 [v _PORTA `Vuc ~T0 @X0 0 e@5 ]
-"228
-[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 228: extern volatile unsigned char PORTB __attribute__((address(0x006)));
-[v _PORTB `Vuc ~T0 @X0 0 e@6 ]
 "290
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 290: extern volatile unsigned char PORTC __attribute__((address(0x007)));
 [v _PORTC `Vuc ~T0 @X0 0 e@7 ]
@@ -182,7 +185,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "1882
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1882: extern volatile OSCCONbits_t OSCCONbits __attribute__((address(0x08F)));
 [v _OSCCONbits `VS74 ~T0 @X0 0 e@143 ]
-"144 main.c
+"167 main.c
 [c E1478 32 33 34 35 36 37 .. ]
 [n E1478 . SPI_MASTER_OSC_DIV4 SPI_MASTER_OSC_DIV16 SPI_MASTER_OSC_DIV64 SPI_MASTER_TMR2 SPI_SLAVE_SS_EN SPI_SLAVE_SS_DIS  ]
 [c E1486 0 128 .. ]
@@ -500,19 +503,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 144 ]
 }
 "18 main.c
-[; ;main.c: 18: 
+[; ;main.c: 18: uint8_t DATO2 = 0;
 [p x FOSC  =  INTRC_CLKOUT ]
 "19
-[; ;main.c: 19: 
+[; ;main.c: 19: uint8_t DATO3 = 0;
 [p x WDTE  =  OFF        ]
 "20
-[; ;main.c: 20: void __attribute__((picinterrupt((""))))isr(void){
+[; ;main.c: 20: 
 [p x PWRTE  =  OFF       ]
 "21
-[; ;main.c: 21:     (INTCONbits.GIE = 0);
+[; ;main.c: 21: void setup (void);
 [p x MCLRE  =  OFF       ]
 "22
-[; ;main.c: 22: 
+[; ;main.c: 22: void VAL (uint16_t var);
 [p x CP  =  OFF          ]
 "23
 [; ;main.c: 23: 
@@ -521,302 +524,410 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 24: 
 [p x BOREN  =  OFF       ]
 "25
-[; ;main.c: 25:     (INTCONbits.GIE = 1);
+[; ;main.c: 25: void __attribute__((picinterrupt((""))))isr(void){
 [p x IESO  =  OFF        ]
 "26
-[; ;main.c: 26: }
+[; ;main.c: 26:     (INTCONbits.GIE = 0);
 [p x FCMEN  =  OFF       ]
 "27
-[; ;main.c: 27: 
+[; ;main.c: 27:      if (PIR1bits.RCIF){
 [p x LVP  =  OFF         ]
 "30
-[; ;main.c: 30:     while(1){
+[; ;main.c: 30:         else {
 [p x BOR4V  =  BOR40V    ]
 "31
-[; ;main.c: 31:         PORTCbits.RC2 = 0;
+[; ;main.c: 31:             switch (POS_RX){
 [p x WRT  =  OFF         ]
 "40
-[; ;main.c: 40:        spiWrite(2);
+[; ;main.c: 40:                 case 2:
 [v _POT0 `ui ~T0 @X0 1 e ]
 [i _POT0
 -> -> 0 `i `ui
 ]
 "41
-[; ;main.c: 41:        POT1 = spiRead();
+[; ;main.c: 41:                     DATO3 = (RCREG-48);
 [v _POT1 `ui ~T0 @X0 1 e ]
 [i _POT1
 -> -> 0 `i `ui
 ]
 "42
-[; ;main.c: 42:        _delay((unsigned long)((10)*(4000000/4000.0)));
+[; ;main.c: 42:                     POS_RX = 0;
 [v _SEL_POT `uc ~T0 @X0 1 e ]
 [i _SEL_POT
 -> -> 0 `i `uc
 ]
 "43
-[; ;main.c: 43: 
+[; ;main.c: 43:                     break;
 [v _valor `ui ~T0 @X0 1 e ]
 "44
-[; ;main.c: 44:        if (POT1 != 0){
+[; ;main.c: 44:         }
 [v _POS1 `uc ~T0 @X0 1 e ]
 "45
-[; ;main.c: 45:         EUSART_ENVIAR(POS1);
+[; ;main.c: 45:         }
 [v _POS2 `uc ~T0 @X0 1 e ]
 "46
-[; ;main.c: 46:        _delay((unsigned long)((200)*(4000000/4000000.0)));
+[; ;main.c: 46:      }
 [v _POS3 `uc ~T0 @X0 1 e ]
 "47
-[; ;main.c: 47:        EUSART_ENVIAR(0x2C);
+[; ;main.c: 47:     (INTCONbits.GIE = 1);
 [v _POS_TX `uc ~T0 @X0 1 e ]
 [i _POS_TX
 -> -> 0 `i `uc
 ]
+"48
+[; ;main.c: 48: }
+[v _POS_RX `uc ~T0 @X0 1 e ]
+[i _POS_RX
+-> -> 0 `i `uc
+]
+"49
+[; ;main.c: 49: 
+[v _SEL `uc ~T0 @X0 1 e ]
+[i _SEL
+-> -> 0 `i `uc
+]
+"50
+[; ;main.c: 50: void main (void){
+[v _DATO1 `uc ~T0 @X0 1 e ]
+[i _DATO1
+-> -> 0 `i `uc
+]
+"51
+[; ;main.c: 51:     setup();
+[v _DATO2 `uc ~T0 @X0 1 e ]
+[i _DATO2
+-> -> 0 `i `uc
+]
+"52
+[; ;main.c: 52:     while(1){
+[v _DATO3 `uc ~T0 @X0 1 e ]
+[i _DATO3
+-> -> 0 `i `uc
+]
 [v $root$_isr `(v ~T0 @X0 0 e ]
-"53
-[; ;main.c: 53:        EUSART_ENVIAR(POS3);
+"58
+[; ;main.c: 58: 
 [v _isr `(v ~T1 @X0 1 ef ]
 {
 [e :U _isr ]
 [f ]
-"54
-[; ;main.c: 54:        _delay((unsigned long)((200)*(4000000/4000000.0)));
-[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
-"58
-[; ;main.c: 58:         VAL(POT1);
-[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
 "59
-[; ;main.c: 59: 
+[; ;main.c: 59:        POT0= POT0*1.961;
+[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
+"60
+[; ;main.c: 60:        VAL(POT0);
+[e $ ! != -> . . _PIR1bits 0 5 `i -> 0 `i 147  ]
+{
+"61
+[; ;main.c: 61: 
+[e $ ! && >= -> _RCREG `i -> 97 `i <= -> _RCREG `i -> 104 `i 148  ]
+{
+"62
+[; ;main.c: 62:        spiWrite(2);
+[e = _SEL _RCREG ]
+}
+[e $U 149  ]
+"63
+[; ;main.c: 63:        POT1 = spiRead();
+[e :U 148 ]
+{
+"64
+[; ;main.c: 64:        _delay((unsigned long)((10)*(4000000/4000.0)));
+[e $U 151  ]
+{
+"65
+[; ;main.c: 65: 
+[e :U 152 ]
+"66
+[; ;main.c: 66:        if (POT1 != 0){
+[e = _DATO1 -> * - -> _RCREG `i -> 48 `i -> 100 `i `uc ]
+"67
+[; ;main.c: 67:         EUSART_ENVIAR(POS1);
+[e = _POS_RX -> -> 1 `i `uc ]
+"68
+[; ;main.c: 68:        _delay((unsigned long)((200)*(4000000/4000000.0)));
+[e $U 150  ]
+"69
+[; ;main.c: 69:        EUSART_ENVIAR(0x2C);
+[e :U 153 ]
+"70
+[; ;main.c: 70:        _delay((unsigned long)((200)*(4000000/4000000.0)));
+[e = _DATO2 -> * - -> _RCREG `i -> 48 `i -> 10 `i `uc ]
+"71
+[; ;main.c: 71:        EUSART_ENVIAR(POS2);
+[e = _POS_RX -> -> 2 `i `uc ]
+"72
+[; ;main.c: 72:        _delay((unsigned long)((200)*(4000000/4000000.0)));
+[e $U 150  ]
+"73
+[; ;main.c: 73:        EUSART_ENVIAR(0x2C);
+[e :U 154 ]
+"74
+[; ;main.c: 74:        _delay((unsigned long)((200)*(4000000/4000000.0)));
+[e = _DATO3 -> - -> _RCREG `i -> 48 `i `uc ]
+"75
+[; ;main.c: 75:        EUSART_ENVIAR(POS3);
+[e = _POS_RX -> -> 0 `i `uc ]
+"76
+[; ;main.c: 76:        _delay((unsigned long)((200)*(4000000/4000000.0)));
+[e $U 150  ]
+"77
+[; ;main.c: 77:        EUSART_ENVIAR(0x2C);
+}
+[e $U 150  ]
+[e :U 151 ]
+[e [\ -> _POS_RX `i , $ -> 0 `i 152
+ , $ -> 1 `i 153
+ , $ -> 2 `i 154
+ 150 ]
+[e :U 150 ]
+"78
+[; ;main.c: 78:        _delay((unsigned long)((200)*(4000000/4000000.0)));
+}
+[e :U 149 ]
+"79
+[; ;main.c: 79:         POT1= POT1*1.961;
+}
+[e :U 147 ]
+"80
+[; ;main.c: 80:         VAL(POT1);
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+"81
+[; ;main.c: 81: 
 [e :UE 146 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"61
-[; ;main.c: 61:         _delay((unsigned long)((200)*(4000000/4000000.0)));
+"83
+[; ;main.c: 83:         _delay((unsigned long)((200)*(4000000/4000000.0)));
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"62
-[; ;main.c: 62:         EUSART_ENVIAR(0x2C);
-[e ( _setup ..  ]
-"63
-[; ;main.c: 63:         _delay((unsigned long)((200)*(4000000/4000000.0)));
-[e :U 149 ]
-{
-"64
-[; ;main.c: 64:         EUSART_ENVIAR(POS2);
-[e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
-"65
-[; ;main.c: 65:         _delay((unsigned long)((200)*(4000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
-"66
-[; ;main.c: 66:         EUSART_ENVIAR(0x2C);
-[e ( _spiWrite (1 -> -> 1 `i `uc ]
-"67
-[; ;main.c: 67:         _delay((unsigned long)((200)*(4000000/4000000.0)));
-[e = _POT0 -> ( _spiRead ..  `ui ]
-"68
-[; ;main.c: 68:         EUSART_ENVIAR(POS3);
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
-"70
-[; ;main.c: 70:         EUSART_ENVIAR(10);
-[e = _POT0 -> * -> _POT0 `d .1.961 `ui ]
-"71
-[; ;main.c: 71:         _delay((unsigned long)((200)*(4000000/4000000.0)));
-[e ( _VAL (1 _POT0 ]
-"73
-[; ;main.c: 73: 
-[e ( _spiWrite (1 -> -> 2 `i `uc ]
-"74
-[; ;main.c: 74: 
-[e = _POT1 -> ( _spiRead ..  `ui ]
-"75
-[; ;main.c: 75: 
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
-"77
-[; ;main.c: 77: 
-[e $ ! != _POT1 -> -> 0 `i `ui 151  ]
-{
-"78
-[; ;main.c: 78: }
-[e ( _EUSART_ENVIAR (1 _POS1 ]
-"79
-[; ;main.c: 79: 
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
-"80
-[; ;main.c: 80: 
-[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
-"81
-[; ;main.c: 81: void setup(void){
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
-"82
-[; ;main.c: 82: 
-[e ( _EUSART_ENVIAR (1 _POS2 ]
-"83
-[; ;main.c: 83:     ANSEL = 0B00000000;
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
 "84
-[; ;main.c: 84:     ANSELH = 0X00;
-[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
+[; ;main.c: 84:         EUSART_ENVIAR(0x2C);
+[e ( _setup ..  ]
 "85
-[; ;main.c: 85: 
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 85:         _delay((unsigned long)((200)*(4000000/4000000.0)));
+[e :U 157 ]
+{
 "86
-[; ;main.c: 86:     TRISA = 0B00000000;
-[e ( _EUSART_ENVIAR (1 _POS3 ]
+[; ;main.c: 86:         EUSART_ENVIAR(POS2);
+[e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
 "87
-[; ;main.c: 87:     TRISC2 = 0;
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 87:         _delay((unsigned long)((200)*(4000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
 "88
-[; ;main.c: 88:     TRISC7 = 1;
-[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
+[; ;main.c: 88:         EUSART_ENVIAR(0x2C);
+[e ( _spiWrite (1 -> -> 1 `i `uc ]
 "89
-[; ;main.c: 89:     PORTCbits.RC2 = 1;
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 89:         _delay((unsigned long)((200)*(4000000/4000000.0)));
+[e = _POT0 -> ( _spiRead ..  `ui ]
 "90
-[; ;main.c: 90:     TRISD = 0X00;
-[e = _POT1 -> * -> _POT1 `d .1.961 `ui ]
-"91
-[; ;main.c: 91:     TRISE = 0X00;
-[e ( _VAL (1 _POT1 ]
+[; ;main.c: 90:         EUSART_ENVIAR(POS3);
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
+"92
+[; ;main.c: 92:         EUSART_ENVIAR(10);
+[e = _POT0 -> * -> _POT0 `d .1.961 `ui ]
 "93
-[; ;main.c: 93: 
-[e ( _EUSART_ENVIAR (1 _POS1 ]
-"94
-[; ;main.c: 94:     PORTA = 0X00;
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 93:         _delay((unsigned long)((200)*(4000000/4000000.0)));
+[e ( _VAL (1 _POT0 ]
 "95
-[; ;main.c: 95:     PORTB = 0X00;
-[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
+[; ;main.c: 95:        PORTB = DATO1 + DATO2 +DATO3;
+[e ( _spiWrite (1 -> -> 2 `i `uc ]
 "96
-[; ;main.c: 96:     PORTC = 0X00;
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 96: 
+[e = _POT1 -> ( _spiRead ..  `ui ]
 "97
-[; ;main.c: 97:     PORTD = 0X00;
-[e ( _EUSART_ENVIAR (1 _POS2 ]
-"98
-[; ;main.c: 98:     PORTE = 0X00;
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 97: 
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
 "99
-[; ;main.c: 99: 
-[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
+[; ;main.c: 99:     }
+[e $ ! != _POT1 -> -> 0 `i `ui 159  ]
+{
 "100
 [; ;main.c: 100: 
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+[e ( _EUSART_ENVIAR (1 _POS1 ]
 "101
-[; ;main.c: 101:     OSCCONbits.IRCF2 = 1;
-[e ( _EUSART_ENVIAR (1 _POS3 ]
+[; ;main.c: 101: }
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
 "102
-[; ;main.c: 102:     OSCCONbits.IRCF1 = 1;
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 102: 
+[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
 "103
-[; ;main.c: 103:     OSCCONbits.IRCF0 = 0;
-[e ( _EUSART_ENVIAR (1 -> -> 10 `i `uc ]
-"104
-[; ;main.c: 104:     OSCCONbits.SCS = 1;
+[; ;main.c: 103: 
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"104
+[; ;main.c: 104: void setup(void){
+[e ( _EUSART_ENVIAR (1 _POS2 ]
 "105
 [; ;main.c: 105: 
-}
-[e :U 151 ]
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"106
+[; ;main.c: 106:     ANSEL = 0B00000000;
+[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
+"107
+[; ;main.c: 107:     ANSELH = 0X00;
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"108
+[; ;main.c: 108: 
+[e ( _EUSART_ENVIAR (1 _POS3 ]
 "109
-[; ;main.c: 109:     INTCONbits.PEIE = 1;
-}
-[e :U 148 ]
-[e $U 149  ]
-[e :U 150 ]
+[; ;main.c: 109:     TRISA = 0B00000000;
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"110
+[; ;main.c: 110:     TRISC2 = 0;
+[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
 "111
-[; ;main.c: 111:     spiInit(SPI_MASTER_OSC_DIV4, SPI_DATA_SAMPLE_MIDDLE, SPI_CLOCK_IDLE_LOW, SPI_IDLE_2_ACTIVE);
-[e :UE 147 ]
+[; ;main.c: 111:     TRISC7 = 1;
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"112
+[; ;main.c: 112:     PORTCbits.RC2 = 1;
+[e = _POT1 -> * -> _POT1 `d .1.961 `ui ]
+"113
+[; ;main.c: 113:     TRISD = 0X00;
+[e ( _VAL (1 _POT1 ]
+"115
+[; ;main.c: 115:     TRISB = 0B00000000;
+[e ( _EUSART_ENVIAR (1 _POS1 ]
+"116
+[; ;main.c: 116: 
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"117
+[; ;main.c: 117:     PORTA = 0X00;
+[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
+"118
+[; ;main.c: 118:     PORTB = 0X00;
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"119
+[; ;main.c: 119:     PORTC = 0X00;
+[e ( _EUSART_ENVIAR (1 _POS2 ]
+"120
+[; ;main.c: 120:     PORTD = 0X00;
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"121
+[; ;main.c: 121:     PORTE = 0X00;
+[e ( _EUSART_ENVIAR (1 -> -> 44 `i `uc ]
+"122
+[; ;main.c: 122: 
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"123
+[; ;main.c: 123: 
+[e ( _EUSART_ENVIAR (1 _POS3 ]
+"124
+[; ;main.c: 124:     OSCCONbits.IRCF2 = 1;
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"125
+[; ;main.c: 125:     OSCCONbits.IRCF1 = 1;
+[e ( _EUSART_ENVIAR (1 -> -> 10 `i `uc ]
+"126
+[; ;main.c: 126:     OSCCONbits.IRCF0 = 0;
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"127
+[; ;main.c: 127:     OSCCONbits.SCS = 1;
 }
-"114
-[; ;main.c: 114: void VAL(uint16_t variable){
+[e :U 159 ]
+"128
+[; ;main.c: 128: 
+[e = _PORTB -> + + -> _DATO1 `i -> _DATO2 `i -> _DATO3 `i `uc ]
+"132
+[; ;main.c: 132:     INTCONbits.PEIE = 1;
+}
+[e :U 156 ]
+[e $U 157  ]
+[e :U 158 ]
+"134
+[; ;main.c: 134:     spiInit(SPI_MASTER_OSC_DIV4, SPI_DATA_SAMPLE_MIDDLE, SPI_CLOCK_IDLE_LOW, SPI_IDLE_2_ACTIVE);
+[e :UE 155 ]
+}
+"137
+[; ;main.c: 137: void VAL(uint16_t variable){
 [v _setup `(v ~T0 @X0 1 ef ]
 {
 [e :U _setup ]
 [f ]
-"116
-[; ;main.c: 116:     valor = variable;
-[e = _ANSEL -> -> 0 `i `uc ]
-"117
-[; ;main.c: 117:     POS1 = (valor/100) ;
-[e = _ANSELH -> -> 0 `i `uc ]
-"119
-[; ;main.c: 119:     POS2 = (valor/10);
-[e = _TRISA -> -> 0 `i `uc ]
-"120
-[; ;main.c: 120:     valor = (valor - (POS2*10));
-[e = _TRISC2 -> -> 0 `i `b ]
-"121
-[; ;main.c: 121:     POS3 = (valor);
-[e = _TRISC7 -> -> 1 `i `b ]
-"122
-[; ;main.c: 122: 
-[e = . . _PORTCbits 0 2 -> -> 1 `i `uc ]
-"123
-[; ;main.c: 123:     POS1 = POS1 + 48;
-[e = _TRISD -> -> 0 `i `uc ]
-"124
-[; ;main.c: 124:     POS2 = POS2 + 48;
-[e = _TRISE -> -> 0 `i `uc ]
-"125
-[; ;main.c: 125:     POS3 = POS3 + 48;
-[e = _TRISB -> -> 0 `i `uc ]
-"127
-[; ;main.c: 127: }
-[e = _PORTA -> -> 0 `i `uc ]
-"128
-[e = _PORTB -> -> 0 `i `uc ]
-"129
-[e = _PORTC -> -> 0 `i `uc ]
-"130
-[e = _PORTD -> -> 0 `i `uc ]
-"131
-[e = _PORTE -> -> 0 `i `uc ]
-"134
-[e = . . _OSCCONbits 1 3 -> -> 1 `i `uc ]
-"135
-[e = . . _OSCCONbits 1 2 -> -> 1 `i `uc ]
-"136
-[e = . . _OSCCONbits 1 1 -> -> 0 `i `uc ]
-"137
-[e = . . _OSCCONbits 0 0 -> -> 1 `i `uc ]
 "139
-[e ( _EUSART_INIT (2 , -> -> 0 `i `ui -> -> 1 `i `ui ]
-"141
-[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+[; ;main.c: 139:     valor = variable;
+[e = _ANSEL -> -> 0 `i `uc ]
+"140
+[; ;main.c: 140:     POS1 = (valor/100) ;
+[e = _ANSELH -> -> 0 `i `uc ]
 "142
-[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
+[; ;main.c: 142:     POS2 = (valor/10);
+[e = _TRISA -> -> 0 `i `uc ]
+"143
+[; ;main.c: 143:     valor = (valor - (POS2*10));
+[e = _TRISC2 -> -> 0 `i `b ]
 "144
-[e ( _spiInit (4 , , , . `E1478 0 . `E1486 0 . `E1490 1 . `E1494 0 ]
+[; ;main.c: 144:     POS3 = (valor);
+[e = _TRISC7 -> -> 1 `i `b ]
+"145
+[; ;main.c: 145: 
+[e = . . _PORTCbits 0 2 -> -> 1 `i `uc ]
 "146
-[e :UE 152 ]
-}
+[; ;main.c: 146:     POS1 = POS1 + 48;
+[e = _TRISD -> -> 0 `i `uc ]
 "147
+[; ;main.c: 147:     POS2 = POS2 + 48;
+[e = _TRISE -> -> 0 `i `uc ]
+"148
+[; ;main.c: 148:     POS3 = POS3 + 48;
+[e = _TRISB -> -> 0 `i `uc ]
+"150
+[; ;main.c: 150: }
+[e = _PORTA -> -> 0 `i `uc ]
+"151
+[e = _PORTB -> -> 0 `i `uc ]
+"152
+[e = _PORTC -> -> 0 `i `uc ]
+"153
+[e = _PORTD -> -> 0 `i `uc ]
+"154
+[e = _PORTE -> -> 0 `i `uc ]
+"157
+[e = . . _OSCCONbits 1 3 -> -> 1 `i `uc ]
+"158
+[e = . . _OSCCONbits 1 2 -> -> 1 `i `uc ]
+"159
+[e = . . _OSCCONbits 1 1 -> -> 0 `i `uc ]
+"160
+[e = . . _OSCCONbits 0 0 -> -> 1 `i `uc ]
+"162
+[e ( _EUSART_INIT (2 , -> -> 0 `i `ui -> -> 1 `i `ui ]
+"164
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+"165
+[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
+"167
+[e ( _spiInit (4 , , , . `E1478 0 . `E1486 0 . `E1490 1 . `E1494 0 ]
+"169
+[e :UE 160 ]
+}
+"170
 [v _VAL `(v ~T0 @X0 1 ef1`ui ]
 {
 [e :U _VAL ]
 [v _variable `ui ~T0 @X0 1 r1 ]
 [f ]
-"148
+"171
 [v _valor `ui ~T0 @X0 1 a ]
-"149
+"172
 [e = _valor _variable ]
-"150
+"173
 [e = _POS1 -> / _valor -> -> 100 `i `ui `uc ]
-"151
+"174
 [e = _valor - _valor -> * -> _POS1 `i -> 100 `i `ui ]
-"152
+"175
 [e = _POS2 -> / _valor -> -> 10 `i `ui `uc ]
-"153
+"176
 [e = _valor - _valor -> * -> _POS2 `i -> 10 `i `ui ]
-"154
+"177
 [e = _POS3 -> _valor `uc ]
-"156
+"179
 [e = _POS1 -> + -> _POS1 `i -> 48 `i `uc ]
-"157
+"180
 [e = _POS2 -> + -> _POS2 `i -> 48 `i `uc ]
-"158
+"181
 [e = _POS3 -> + -> _POS3 `i -> 48 `i `uc ]
-"160
-[e :UE 153 ]
+"183
+[e :UE 161 ]
 }

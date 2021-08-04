@@ -17,7 +17,7 @@
    <widget class="QLabel" name="POT1">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>190</x>
       <y>240</y>
       <width>181</width>
       <height>121</height>
@@ -36,7 +36,7 @@
    <widget class="QLabel" name="POT2">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>420</x>
       <y>270</y>
       <width>141</width>
       <height>61</height>
@@ -52,46 +52,10 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QProgressBar" name="POT1_P">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>350</y>
-      <width>118</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="value">
-     <number>24</number>
-    </property>
-   </widget>
-   <widget class="QProgressBar" name="POT2_P">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>350</y>
-      <width>118</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="value">
-     <number>24</number>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="TEXT_CONTADOR">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>210</y>
-      <width>221</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="ENVIAR">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>460</x>
       <y>210</y>
       <width>93</width>
       <height>28</height>
@@ -99,6 +63,38 @@
     </property>
     <property name="text">
      <string>Enviar</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>210</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>150</y>
+      <width>291</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>CONTADOR</string>
     </property>
    </widget>
   </widget>

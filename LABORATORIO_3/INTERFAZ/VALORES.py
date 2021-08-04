@@ -14,14 +14,14 @@ class interfaz (QtWidgets.QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         # FUNCIONES DE BOTONES, SLIDERS, ETC.
-        self.ENVIAR.valueChanged.connect(self.serial_cont)
+        #self.ENVIAR.pressed.connect(self.serial_cont)
         threading.Thread(daemon=True, target=posiciones).start()
 
     def serial_cont(self):
         global ser
         ser.write(bytes.fromhex('61'))  #letra a
-        ser.write(bytes.fromhex(hex(ord(str(self.TEXT_CONTADOR.value())))[2:]))
-        
+        #ser.write(bytes.fromhex(hex(ord(str(self.TEXT_CONTADOR.value())))[2:]))
+
     def escribir(self,pot1_1,pot1_2,pot1_3,pot2_1,pot2_2,pot2_3):
         V1 = pot1_1 + (0.1*pot1_2) + (0.01*pot1_3)
         V2 = pot2_1 + (0.1*pot2_2) + (0.01*pot2_3)
@@ -51,7 +51,7 @@ def posiciones():
                 pot2_2 = int(valoradc[4][0])
                 pot2_3 = int(valoradc[5][0])
                 ventana.escribir(pot1_1,pot1_2,pot1_3,pot2_1,pot2_2,pot2_3)
-                print(pot1_1,'\t',pot2_1)
+                print(TEXT_CONTADOR.value())
             except :
                 pass
             ventana.actual()

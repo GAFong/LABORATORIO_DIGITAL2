@@ -2919,6 +2919,11 @@ uint8_t POS1;
 uint8_t POS2;
 uint8_t POS3;
 uint8_t POS_TX = 0;
+uint8_t POS_RX = 0;
+uint8_t SEL = 0;
+uint8_t DATO1 = 0;
+uint8_t DATO2 = 0;
+uint8_t DATO3 = 0;
 
 void setup (void);
 void VAL (uint16_t var);
@@ -2926,9 +2931,26 @@ void VAL (uint16_t var);
 
 void __attribute__((picinterrupt((""))))isr(void){
     (INTCONbits.GIE = 0);
-
-
-
+     if (PIR1bits.RCIF){
+        if (RCREG >= 97 && RCREG <= 104 ){
+                SEL = RCREG; }
+        else {
+            switch (POS_RX){
+                case 0:
+                    DATO1 = (RCREG-48)*100;
+                    POS_RX = 1;
+                    break;
+                case 1:
+                    DATO2 = (RCREG-48)*10;
+                    POS_RX = 2;
+                    break;
+                case 2:
+                    DATO3 = (RCREG-48);
+                    POS_RX = 0;
+                    break;
+        }
+        }
+     }
     (INTCONbits.GIE = 1);
 }
 
@@ -2977,6 +2999,7 @@ void main (void){
         EUSART_ENVIAR(10);
         _delay((unsigned long)((200)*(4000000/4000000.0)));
        }
+       PORTB = DATO1 + DATO2 +DATO3;
 
 
 

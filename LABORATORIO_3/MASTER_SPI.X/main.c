@@ -45,6 +45,11 @@ uint8_t POS1;
 uint8_t POS2;
 uint8_t POS3;
 uint8_t POS_TX = 0;
+uint8_t POS_RX = 0;
+uint8_t SEL = 0;
+uint8_t DATO1 = 0;
+uint8_t DATO2 = 0;
+uint8_t DATO3 = 0;
 //-----------------------------PROTOTIPOS---------------------------------------
 void setup (void);
 void VAL (uint16_t var);
@@ -52,9 +57,26 @@ void VAL (uint16_t var);
 //---------------------------INTERRUPCION--------------------------------------
 void __interrupt()isr(void){
     di();                   //PUSH
-     
-    
-    
+     if (PIR1bits.RCIF){
+        if (RCREG >= 97 && RCREG <= 104 ){
+                SEL = RCREG;  }         //AGREGAMOS EL VALOR PARA SELECCIONAR DEL EUSART
+        else  {
+            switch (POS_RX){
+                case 0:
+                    DATO1 = (RCREG-48)*100;     //CENTENAS
+                    POS_RX = 1;
+                    break;
+                case 1:
+                    DATO2 = (RCREG-48)*10;      //DECENAS
+                    POS_RX = 2;
+                    break;
+                case 2:
+                    DATO3 = (RCREG-48);         //UNIDADES
+                    POS_RX = 0;
+                    break; 
+        }
+        }
+     }
     ei();                           //POP
 }
 
@@ -103,6 +125,7 @@ void main (void){
         EUSART_ENVIAR(ENTER);
         __delay_us(200);
        }
+       PORTB = DATO1 + DATO2 +DATO3;
       // __delay_ms(1);
       // PORTCbits.RC2 = 1;       //Slave Deselect
          
