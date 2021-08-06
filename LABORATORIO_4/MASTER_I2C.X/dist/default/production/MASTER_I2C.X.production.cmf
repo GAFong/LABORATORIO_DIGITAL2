@@ -28,7 +28,7 @@ cstackBANK0 BANK0 1 20 20 11 1
 intentry CODE 0 4 4 8 2
 bssCOMMON COMMON 1 7A 7A 2 1
 config CONFIG 4 2007 2007 2 2
-$C:\Users\DELL\AppData\Local\Temp\s4g4.o
+$C:\Users\DELL\AppData\Local\Temp\se6c.o
 reset_vec CODE 0 0 0 3 2
 end_init CODE 0 C C 3 2
 config CONFIG 4 2007 2007 2 2
@@ -78,13 +78,13 @@ STRING 175-1FFF 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\MASTER_I2C.X.production.o
-F cinit CODE >645:C:\Users\DELL\AppData\Local\Temp\s4g4.s
-F cinit CODE >648:C:\Users\DELL\AppData\Local\Temp\s4g4.s
-F cinit CODE >662:C:\Users\DELL\AppData\Local\Temp\s4g4.s
-10 cinit CODE >663:C:\Users\DELL\AppData\Local\Temp\s4g4.s
-11 cinit CODE >669:C:\Users\DELL\AppData\Local\Temp\s4g4.s
-11 cinit CODE >671:C:\Users\DELL\AppData\Local\Temp\s4g4.s
-12 cinit CODE >672:C:\Users\DELL\AppData\Local\Temp\s4g4.s
+F cinit CODE >645:C:\Users\DELL\AppData\Local\Temp\se6c.s
+F cinit CODE >648:C:\Users\DELL\AppData\Local\Temp\se6c.s
+F cinit CODE >662:C:\Users\DELL\AppData\Local\Temp\se6c.s
+10 cinit CODE >663:C:\Users\DELL\AppData\Local\Temp\se6c.s
+11 cinit CODE >669:C:\Users\DELL\AppData\Local\Temp\se6c.s
+11 cinit CODE >671:C:\Users\DELL\AppData\Local\Temp\se6c.s
+12 cinit CODE >672:C:\Users\DELL\AppData\Local\Temp\se6c.s
 4 intentry CODE >42:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_4\MASTER_I2C.X\main.c
 16C text9 CODE >42:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_4\MASTER_I2C.X\main.c
 16C text9 CODE >43:C:\Users\DELL\Documents\TERCER_AÑO\6_SEMESTRE\DIGITAL2\LABORATORIO\LABORATORIO_DIGITAL2\LABORATORIO_4\MASTER_I2C.X\main.c
@@ -193,21 +193,21 @@ I2C_Master_Init@c 26 0 BANK0 1 cstackBANK0 dist/default/production\MASTER_I2C.X.
 __Heeprom_data 0 0 EEDATA 3 eeprom_data -
 __Hstrings 0 0 ABS 0 strings -
 _PEIE 5E 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
-___sp 0 0 STACK 2 stack C:\Users\DELL\AppData\Local\Temp\s4g4.o
+___sp 0 0 STACK 2 stack C:\Users\DELL\AppData\Local\Temp\se6c.o
 _main 16A 0 CODE 0 maintext dist/default/production\MASTER_I2C.X.production.o
 btemp 7E 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
-start 18 0 CODE 0 init C:\Users\DELL\AppData\Local\Temp\s4g4.o
+start 18 0 CODE 0 init C:\Users\DELL\AppData\Local\Temp\se6c.o
 __size_of_main 0 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
 __size_of___lldiv 0 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
 __HbssCOMMON 0 0 ABS 0 bssCOMMON -
 __Hpowerup 0 0 CODE 0 powerup -
 I2C_Master_Read@a 72 0 COMMON 1 cstackCOMMON dist/default/production\MASTER_I2C.X.production.o
-intlevel0 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\s4g4.o
-intlevel1 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\s4g4.o
-intlevel2 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\s4g4.o
-intlevel3 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\s4g4.o
-intlevel4 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\s4g4.o
-intlevel5 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\s4g4.o
+intlevel0 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\se6c.o
+intlevel1 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\se6c.o
+intlevel2 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\se6c.o
+intlevel3 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\se6c.o
+intlevel4 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\se6c.o
+intlevel5 0 0 ENTRY 0 functab C:\Users\DELL\AppData\Local\Temp\se6c.o
 __LbssCOMMON 0 0 ABS 0 bssCOMMON -
 _OSCCONbits 8F 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
 wtemp0 7E 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
@@ -217,8 +217,8 @@ __Hclrtext 0 0 ABS 0 clrtext -
 _ANSELH 189 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
 __Lmaintext 0 0 ABS 0 maintext -
 __end_of___lldiv FA 0 CODE 0 text3 dist/default/production\MASTER_I2C.X.production.o
-___stackhi 0 0 ABS 0 - C:\Users\DELL\AppData\Local\Temp\s4g4.o
-___stacklo 0 0 ABS 0 - C:\Users\DELL\AppData\Local\Temp\s4g4.o
+___stackhi 0 0 ABS 0 - C:\Users\DELL\AppData\Local\Temp\se6c.o
+___stacklo 0 0 ABS 0 - C:\Users\DELL\AppData\Local\Temp\se6c.o
 __size_of_setup 0 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
 ___lldiv@counter 25 0 BANK0 1 cstackBANK0 dist/default/production\MASTER_I2C.X.production.o
 start_initialization 1E 0 CODE 0 cinit dist/default/production\MASTER_I2C.X.production.o
@@ -230,7 +230,7 @@ _SSPBUF 13 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
 _SSPCON 14 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
 _TRISC3 43B 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
 _TRISC4 43C 0 ABS 0 - dist/default/production\MASTER_I2C.X.production.o
-___int_sp 0 0 STACK 2 stack C:\Users\DELL\AppData\Local\Temp\s4g4.o
+___int_sp 0 0 STACK 2 stack C:\Users\DELL\AppData\Local\Temp\se6c.o
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
 __Hbank2 0 0 ABS 0 bank2 -
@@ -278,7 +278,7 @@ _I2C_Master_Write 2A0 0 CODE 0 text4 dist/default/production\MASTER_I2C.X.produc
 __end_of_isr 2EA 0 CODE 0 text9 dist/default/production\MASTER_I2C.X.production.o
 __Lintentry 8 0 CODE 0 intentry -
 ___lldiv@divisor 72 0 COMMON 1 cstackCOMMON dist/default/production\MASTER_I2C.X.production.o
-reset_vec 0 0 CODE 0 reset_vec C:\Users\DELL\AppData\Local\Temp\s4g4.o
+reset_vec 0 0 CODE 0 reset_vec C:\Users\DELL\AppData\Local\Temp\se6c.o
 ___lldiv 2A 0 CODE 0 text3 dist/default/production\MASTER_I2C.X.production.o
 __pmaintext 16A 0 CODE 0 maintext dist/default/production\MASTER_I2C.X.production.o
 __Lcommon 0 0 ABS 0 common -

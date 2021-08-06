@@ -1,7 +1,7 @@
 /* 
  * File:   main.c
  * Author: GABRIEL ALEXANDER FONG PENAGOS
- *ESCLAVO I2C
+ *ESCLAVO I2C, ADC
  * Created on August 4, 2021, 10:48 PM
  */
 
