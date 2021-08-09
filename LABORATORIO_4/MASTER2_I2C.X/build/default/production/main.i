@@ -2918,6 +2918,7 @@ uint8_t POS1;
 uint8_t POS2;
 uint8_t POS3;
 uint8_t CONTADOR;
+uint16_t TEMP;
 
 
 void setup (void);
@@ -2935,6 +2936,16 @@ void main (void){
     Lcd_Clear();
     Lcd_Set_Cursor(1,1);
     Lcd_Write_String(" S1:   S2:   S3:");
+
+     I2C_Master_Start();
+     I2C_Master_Write(0x90);
+     I2C_Master_Write(0xAC);
+     I2C_Master_Write(0x00);
+     I2C_Master_RepeatedStart();
+     I2C_Master_Write(0x90);
+     I2C_Master_Write(0xEE);
+     I2C_Master_Stop();
+     _delay((unsigned long)((200)*(8000000/4000.0)));
     while(1){
 
         I2C_Master_Start();
@@ -2946,6 +2957,17 @@ void main (void){
         I2C_Master_Start();
         I2C_Master_Write(0x81);
         CONTADOR = I2C_Master_Read(0);
+        I2C_Master_Stop();
+        _delay((unsigned long)((200)*(8000000/4000.0)));
+# 95 "main.c"
+        I2C_Master_Start();
+        I2C_Master_Write(0x90);
+        I2C_Master_Write(0xAA);
+        I2C_Master_Stop();
+        I2C_Master_Start();
+        I2C_Master_Write(0x91);
+
+        TEMP = I2C_Master_Read(0);
         I2C_Master_Stop();
         _delay((unsigned long)((200)*(8000000/4000.0)));
 
@@ -2962,6 +2984,13 @@ void main (void){
         Lcd_Write_Char(POS1);
         Lcd_Write_Char(POS2);
         Lcd_Write_Char(POS3);
+        Lcd_Write_String("  ");
+
+        VAL(TEMP);
+        Lcd_Write_Char(POS1);
+        Lcd_Write_Char(POS2);
+        Lcd_Write_Char(POS3);
+
     }
 }
 

@@ -41,6 +41,7 @@ uint8_t POS1;
 uint8_t POS2;
 uint8_t POS3;
 uint8_t CONTADOR;
+uint16_t TEMP;
 
 //-----------------------------PROTOTIPOS---------------------------------------
 void setup (void);
@@ -58,6 +59,16 @@ void main (void){
     Lcd_Clear();  //Limpiar LCD
     Lcd_Set_Cursor(1,1); //cursor fila uno primera posicion 
     Lcd_Write_String(" S1:   S2:   S3:");
+    
+     I2C_Master_Start();         //INICIALIZAMOS LA COMUNICACION
+     I2C_Master_Write(0x90);     //ESCRIBIMOS A LA DIRECCION PARA LEER SENSOR TEMP
+     I2C_Master_Write(0xAC);     //CONFIGURACION
+     I2C_Master_Write(0x00);     //INICIA LA CONVERSION
+     I2C_Master_RepeatedStart();
+     I2C_Master_Write(0x90);     //ESCRIBIMOS A LA DIRECCION PARA LEER SENSOR TEMP
+     I2C_Master_Write(0xEE);     //INICIA LA CONVERSION
+     I2C_Master_Stop();          //DETENEMOS LA COMUNICACION
+     __delay_ms(200);
     while(1){
         
         I2C_Master_Start();         //INICIALIZAMOS LA COMUNICACION
@@ -68,7 +79,27 @@ void main (void){
         
         I2C_Master_Start();         //INICIALIZAMOS LA COMUNICACION
         I2C_Master_Write(0x81);     //ESCRIBIMOS A LA DIRECCION PARA LEER ESCLAVO2
-        CONTADOR = I2C_Master_Read(0); //AGREGAMOS EL VALOR AL PORTD
+        CONTADOR = I2C_Master_Read(0); //AGREGAMOS EL VALOR AL CONTADOR
+        I2C_Master_Stop();          //DETENEMOS LA COMUNICACION
+        __delay_ms(200);
+        
+      /*  I2C_Master_Start();         //INICIALIZAMOS LA COMUNICACION
+        I2C_Master_Write(0x90);     //ESCRIBIMOS A LA DIRECCION PARA LEER SENSOR TEMP
+        I2C_Master_Write(0xAC);     //CONFIGURACION
+        I2C_Master_Write(0x02);     //INICIA LA CONVERSION
+         I2C_Master_Write(0x90);     //ESCRIBIMOS A LA DIRECCION PARA LEER SENSOR TEMP
+        I2C_Master_Write(0xEE);     //INICIA LA CONVERSION
+        I2C_Master_Stop();          //DETENEMOS LA COMUNICACION
+        __delay_ms(200);*/
+        
+        I2C_Master_Start();         //INICIALIZAMOS LA COMUNICACION
+        I2C_Master_Write(0x90);     //ESCRIBIMOS A LA DIRECCION PARA LEER SENSOR TEMP
+        I2C_Master_Write(0xAA);     //LEE LA TEMP
+        I2C_Master_Stop();          //DETENEMOS LA COMUNICACION
+        I2C_Master_Start();         //INICIALIZAMOS LA COMUNICACION
+        I2C_Master_Write(0x91);     //ESCRIBIMOS A LA DIRECCION PARA LEER SENSOR TEMP
+        
+        TEMP = I2C_Master_Read(0); //AGREGAMOS EL VALOR A TEMP
         I2C_Master_Stop();          //DETENEMOS LA COMUNICACION
         __delay_ms(200);
         
@@ -85,6 +116,13 @@ void main (void){
         Lcd_Write_Char(POS1);
         Lcd_Write_Char(POS2);
         Lcd_Write_Char(POS3);
+        Lcd_Write_String("  ");
+        
+        VAL(TEMP);                  //EXTRAER LOS VALORES DE TEMP
+        Lcd_Write_Char(POS1);
+        Lcd_Write_Char(POS2);
+        Lcd_Write_Char(POS3);
+       // Lcd_Write_String("°C");
     }
 }
 //---------------------------CONFIGURACION--------------------------------------
