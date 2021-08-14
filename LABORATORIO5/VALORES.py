@@ -27,17 +27,16 @@ class interfaz (QtWidgets.QMainWindow, Ui_MainWindow):
 
     def serial_sensor1(self):
         global ser
-        s1 = self.SENSOR1.value()
-        print(s1)
+
         #SENSOR1 Feed
         analog_feed = aio.feeds('sensor1-lab5')
-        aio.send_data(analog_feed.key, 1)
-        digital_data = aio.receive(analog_feed.key)
+        aio.send_data(analog_feed.key, self.SENSOR1.value())
+        analog_data = aio.receive(analog_feed.key)
         print(f'digital signal: {analog_data.value}')
 
     def serial_sensor2(self):
         global ser
-        
+
         #SENSOR2 Feed
         analog_feed = aio.feeds('sensor2-lab5')
         aio.send_data(analog_feed.key, self.SENSOR2.value())
