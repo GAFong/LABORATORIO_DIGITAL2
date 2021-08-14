@@ -88,7 +88,7 @@ void main (void){
     setup(); 
     ADCON0bits.GO = 1;
     while(1){
-        PORTB = VALOR_ADC;
+        //PORTB = VALOR_ADC;
         ADC_CHANNELS(CANAL0,VALOR_ADC,&VALOR_ADC);  //POT0
         __delay_ms(10);
     }

@@ -2984,7 +2984,7 @@ void main (void){
     setup();
     ADCON0bits.GO = 1;
     while(1){
-        PORTB = VALOR_ADC;
+
         ADC_CHANNELS(0,VALOR_ADC,&VALOR_ADC);
         _delay((unsigned long)((10)*(8000000/4000.0)));
     }
