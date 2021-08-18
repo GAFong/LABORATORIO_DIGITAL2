@@ -31,12 +31,13 @@
 #define _XTAL_FREQ 4000000
 #define tx 0
 #define rx 1
-#define ENTER 13
+#define ENTER 10
 #define COMA 0x2C
 //------------------------------VARIABLES---------------------------------------
 uint8_t CONTADOR;
 uint8_t flag1 = 0;
 uint8_t flag2 = 0;
+uint8_t flagc = 0;
 uint8_t POS1;
 uint8_t POS2;
 uint8_t POS3;
@@ -60,6 +61,7 @@ void __interrupt()isr(void){
             if (flag1 == 1) {
                 CONTADOR++;            //INCREMENTAMOS LA VARIABLE
                 flag1 = 0;              //LIMPIAMOS LA BANDERA
+                flagc = 3;
             }
         }
            
@@ -70,6 +72,7 @@ void __interrupt()isr(void){
             if(flag2 ==1){
                 CONTADOR--;             //DECREMNTAMOS LA VARIABLE
                 flag2 = 0;              //LIMPIAMOS LA BANDERA
+                flagc = 3;
             }
         }
      INTCONbits.RBIF = 0;           //LIMPIAMOS LA BANDERA DEL TMR0
@@ -78,7 +81,8 @@ void __interrupt()isr(void){
         if (RCREG >= 97 && RCREG <= 104 ){
                 SEL = RCREG;  }         //AGREGAMOS EL VALOR PARA SELECCIONAR DEL EUSART
         else  {
-            switch (POS_RX){
+            
+             switch (POS_RX){
                 case 0:
                     DATO1 = (RCREG-48)*100;     //CENTENAS
                     POS_RX = 1;
@@ -100,22 +104,25 @@ void main (void){
     setup(); 
     while(1){
        
-        VAL(CONTADOR);
-        EUSART_ENVIAR(POS1);     //ENVIAMOS POSICION POR POSICION Y SEPARADOS POR COMAS
-       __delay_us(200);
-       EUSART_ENVIAR(COMA);
-       __delay_us(200);
-       EUSART_ENVIAR(POS2);
-       __delay_us(200);
-       EUSART_ENVIAR(COMA);
-       __delay_us(200);
-       EUSART_ENVIAR(POS3);
-       __delay_us(200);
-       EUSART_ENVIAR(COMA);
-       __delay_us(200);
-       EUSART_ENVIAR(ENTER);
-        __delay_us(200);
-       PORTD = DATO1 + DATO2 +DATO3;
+        
+        if (flagc >= 1){
+            VAL(CONTADOR);
+            EUSART_ENVIAR(POS1);     //ENVIAMOS POSICION POR POSICION Y SEPARADOS POR COMAS
+           __delay_us(200);
+           EUSART_ENVIAR(COMA);
+           __delay_us(200);
+           EUSART_ENVIAR(POS2);
+           __delay_us(200);
+           EUSART_ENVIAR(COMA);
+           __delay_us(200);
+           EUSART_ENVIAR(POS3);
+           __delay_us(200);
+           EUSART_ENVIAR(COMA);
+           __delay_us(200);
+           EUSART_ENVIAR(ENTER);
+            __delay_us(200);
+            flagc--;}
+       PORTD = DATO1 + DATO2 + DATO3;
     }
     
 }
@@ -130,7 +137,8 @@ void setup(void){
     TRISD = 0X00;               //PORTD COMO OUTPUT
     TRISE = 0X00;               //PORTE COMO OUTPUT
     TRISB = 0X03;                //PORTB COMO OUTPUT
-    
+    TRISC6 = 0;
+    TRISC7 = 1;                 //TX
     PORTA = 0X00;                //LIMPIAMOS EL PUERTOA
     PORTB = 0X00;                //LIMPIAMOS EL PUERTOB
     PORTC = 0X00;                //LIMPIAMOS EL PUERTOC
