@@ -83,7 +83,6 @@ void main (void){
     Lcd_Set_Cursor(1,1); //cursor fila uno primera posicion 
     Lcd_Write_String("FRECUENCIA");
     TMR1ON = 1;
-    PORTCbits.RC2 = 1;
     while(1){
         void READ_ROJO(void);
         
@@ -150,7 +149,7 @@ void setup(void){
     TMR1L = TMR1L_value;
     
     //CONFIGURACION COMPARADOR
-     CCP2CON = 0B00000101;       //CADA FALNCO DE SUBIDA
+     CCP1CON = 0B00000101;       //CADA FALNCO DE SUBIDA
      
 }
 void VAL(uint16_t variable){        // Función para obtener valor decimal

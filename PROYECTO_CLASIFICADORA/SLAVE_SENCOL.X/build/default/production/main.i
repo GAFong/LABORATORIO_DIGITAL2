@@ -2950,6 +2950,7 @@ void main (void){
     Lcd_Set_Cursor(1,1);
     Lcd_Write_String("FRECUENCIA");
     TMR1ON = 1;
+    PORTCbits.RC2 = 1;
     while(1){
         void READ_ROJO(void);
 
@@ -2968,7 +2969,7 @@ void main (void){
         PORTD++;
 
 
-        _delay((unsigned long)((100)*(8000000/4000.0)));
+
 
     }
 
@@ -3016,7 +3017,7 @@ void setup(void){
     TMR1L = 0x00;;
 
 
-     CCP1CON = 0B00000101;
+     CCP2CON = 0B00000101;
 
 }
 void VAL(uint16_t variable){

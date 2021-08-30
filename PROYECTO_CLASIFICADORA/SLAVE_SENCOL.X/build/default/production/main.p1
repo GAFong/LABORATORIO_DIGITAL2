@@ -61,17 +61,24 @@ Version 4.0 HI-TECH Software Intermediate Code
 "60
 [; ;./LCD.h: 60: void Lcd_Write_String(char *a);
 [v _Lcd_Write_String `(v ~T0 @X0 0 ef1`*uc ]
+"296 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
+[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 296:     struct {
+[s S15 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S15 . RC0 RC1 RC2 RC3 RC4 RC5 RC6 RC7 ]
+"295
+[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 295: typedef union {
+[u S14 `S15 1 ]
+[n S14 . . ]
+"307
+[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 307: extern volatile PORTCbits_t PORTCbits __attribute__((address(0x007)));
+[v _PORTCbits `VS14 ~T0 @X0 0 e@7 ]
 "60 main.c
 [; ;main.c: 60: void floattostr_(float numero_, unsigned char *cadena_,char decimales_);
 [v _floattostr_ `(v ~T0 @X0 0 ef3`f`*uc`uc ]
 "352 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 352: extern volatile unsigned char PORTD __attribute__((address(0x008)));
 [v _PORTD `Vuc ~T0 @X0 0 e@8 ]
-[v F1465 `(v ~T0 @X0 1 tf1`ul ]
-"92 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\pic.h
-[v __delay `JF1465 ~T0 @X0 0 e ]
-[p i __delay ]
-"3387 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
+"3387
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 3387: extern volatile unsigned char ANSEL __attribute__((address(0x188)));
 [v _ANSEL `Vuc ~T0 @X0 0 e@392 ]
 "3449
@@ -141,9 +148,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "671
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 671: extern volatile unsigned char T1CON __attribute__((address(0x010)));
 [v _T1CON `Vuc ~T0 @X0 0 e@16 ]
-"941
-[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 941: extern volatile unsigned char CCP1CON __attribute__((address(0x017)));
-[v _CCP1CON `Vuc ~T0 @X0 0 e@23 ]
+"1168
+[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1168: extern volatile unsigned char CCP2CON __attribute__((address(0x01D)));
+[v _CCP2CON `Vuc ~T0 @X0 0 e@29 ]
 "54 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 54: __asm("INDF equ 00h");
 [; <" INDF equ 00h ;# ">
@@ -519,203 +526,203 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 85:     TMR1ON = 1;
 [e = _TMR1ON -> -> 1 `i `b ]
 "86
-[; ;main.c: 86:     while(1){
+[; ;main.c: 86:     PORTCbits.RC2 = 1;
+[e = . . _PORTCbits 0 2 -> -> 1 `i `uc ]
+"87
+[; ;main.c: 87:     while(1){
 [e :U 147 ]
 {
-"90
-[; ;main.c: 90:         if (flag_frec==1){
+"91
+[; ;main.c: 91:         if (flag_frec==1){
 [e $ ! == -> _flag_frec `i -> 1 `i 149  ]
 {
-"91
-[; ;main.c: 91:             if (frecu!=0){
+"92
+[; ;main.c: 92:             if (frecu!=0){
 [e $ ! != _frecu -> -> 0 `i `ui 150  ]
 {
-"92
-[; ;main.c: 92:                 frecuencia=8000000/(frecu*4.0);
-[e = _frecuencia -> / -> -> 8000000 `l `d * -> _frecu `d .4.0 `f ]
 "93
-[; ;main.c: 93:                 frecu=0;
-[e = _frecu -> -> 0 `i `ui ]
+[; ;main.c: 93:                 frecuencia=8000000/(frecu*4.0);
+[e = _frecuencia -> / -> -> 8000000 `l `d * -> _frecu `d .4.0 `f ]
 "94
-[; ;main.c: 94:          }
+[; ;main.c: 94:                 frecu=0;
+[e = _frecu -> -> 0 `i `ui ]
+"95
+[; ;main.c: 95:          }
 }
 [e :U 150 ]
-"96
-[; ;main.c: 96:             flag_frec=0;
-[e = _flag_frec -> -> 0 `i `uc ]
 "97
-[; ;main.c: 97:         }
+[; ;main.c: 97:             flag_frec=0;
+[e = _flag_frec -> -> 0 `i `uc ]
+"98
+[; ;main.c: 98:         }
 }
 [e :U 149 ]
-"98
-[; ;main.c: 98:         floattostr_(frecuencia,texto,2);
-[e ( _floattostr_ (3 , , _frecuencia -> &U _texto `*uc -> -> 2 `i `uc ]
 "99
-[; ;main.c: 99:         Lcd_Set_Cursor(2,5);
-[e ( _Lcd_Set_Cursor (2 , -> -> 2 `i `uc -> -> 5 `i `uc ]
+[; ;main.c: 99:         floattostr_(frecuencia,texto,2);
+[e ( _floattostr_ (3 , , _frecuencia -> &U _texto `*uc -> -> 2 `i `uc ]
 "100
-[; ;main.c: 100:         Lcd_Write_String(texto);
-[e ( _Lcd_Write_String (1 &U _texto ]
+[; ;main.c: 100:         Lcd_Set_Cursor(2,5);
+[e ( _Lcd_Set_Cursor (2 , -> -> 2 `i `uc -> -> 5 `i `uc ]
 "101
-[; ;main.c: 101:         PORTD++;
+[; ;main.c: 101:         Lcd_Write_String(texto);
+[e ( _Lcd_Write_String (1 &U _texto ]
+"102
+[; ;main.c: 102:         PORTD++;
 [e ++ _PORTD -> -> 1 `i `Vuc ]
-"104
-[; ;main.c: 104:         _delay((unsigned long)((100)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"106
-[; ;main.c: 106:     }
+"107
+[; ;main.c: 107:     }
 }
 [e :U 146 ]
 [e $U 147  ]
 [e :U 148 ]
-"108
-[; ;main.c: 108:     }
+"109
+[; ;main.c: 109:     }
 [e :UE 145 ]
 }
-"112
-[; ;main.c: 112: void setup(void){
+"113
+[; ;main.c: 113: void setup(void){
 [v _setup `(v ~T0 @X0 1 ef ]
 {
 [e :U _setup ]
 [f ]
-"114
-[; ;main.c: 114:     ANSEL = 0B0000000;
-[e = _ANSEL -> -> 0 `i `uc ]
 "115
-[; ;main.c: 115:     ANSELH = 0X00;
+[; ;main.c: 115:     ANSEL = 0B0000000;
+[e = _ANSEL -> -> 0 `i `uc ]
+"116
+[; ;main.c: 116:     ANSELH = 0X00;
 [e = _ANSELH -> -> 0 `i `uc ]
-"117
-[; ;main.c: 117:     TRISA = 0B0000000;
-[e = _TRISA -> -> 0 `i `uc ]
 "118
-[; ;main.c: 118:     TRISD = 0X00;
-[e = _TRISD -> -> 0 `i `uc ]
+[; ;main.c: 118:     TRISA = 0B0000000;
+[e = _TRISA -> -> 0 `i `uc ]
 "119
-[; ;main.c: 119:     TRISE = 0X00;
-[e = _TRISE -> -> 0 `i `uc ]
+[; ;main.c: 119:     TRISD = 0X00;
+[e = _TRISD -> -> 0 `i `uc ]
 "120
-[; ;main.c: 120:     TRISB = 0B00000000;
-[e = _TRISB -> -> 0 `i `uc ]
+[; ;main.c: 120:     TRISE = 0X00;
+[e = _TRISE -> -> 0 `i `uc ]
 "121
-[; ;main.c: 121:     TRISC = 0X02;
+[; ;main.c: 121:     TRISB = 0B00000000;
+[e = _TRISB -> -> 0 `i `uc ]
+"122
+[; ;main.c: 122:     TRISC = 0X02;
 [e = _TRISC -> -> 2 `i `uc ]
-"123
-[; ;main.c: 123:     PORTA = 0X00;
-[e = _PORTA -> -> 0 `i `uc ]
 "124
-[; ;main.c: 124:     PORTB = 0X00;
-[e = _PORTB -> -> 0 `i `uc ]
+[; ;main.c: 124:     PORTA = 0X00;
+[e = _PORTA -> -> 0 `i `uc ]
 "125
-[; ;main.c: 125:     PORTC = 0X00;
-[e = _PORTC -> -> 0 `i `uc ]
+[; ;main.c: 125:     PORTB = 0X00;
+[e = _PORTB -> -> 0 `i `uc ]
 "126
-[; ;main.c: 126:     PORTD = 0X00;
-[e = _PORTD -> -> 0 `i `uc ]
+[; ;main.c: 126:     PORTC = 0X00;
+[e = _PORTC -> -> 0 `i `uc ]
 "127
-[; ;main.c: 127:     PORTE = 0X00;
+[; ;main.c: 127:     PORTD = 0X00;
+[e = _PORTD -> -> 0 `i `uc ]
+"128
+[; ;main.c: 128:     PORTE = 0X00;
 [e = _PORTE -> -> 0 `i `uc ]
-"130
-[; ;main.c: 130:     OSCCONbits.IRCF2 = 1;
-[e = . . _OSCCONbits 1 3 -> -> 1 `i `uc ]
 "131
-[; ;main.c: 131:     OSCCONbits.IRCF1 = 1;
-[e = . . _OSCCONbits 1 2 -> -> 1 `i `uc ]
+[; ;main.c: 131:     OSCCONbits.IRCF2 = 1;
+[e = . . _OSCCONbits 1 3 -> -> 1 `i `uc ]
 "132
-[; ;main.c: 132:     OSCCONbits.IRCF0 = 1;
-[e = . . _OSCCONbits 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 132:     OSCCONbits.IRCF1 = 1;
+[e = . . _OSCCONbits 1 2 -> -> 1 `i `uc ]
 "133
-[; ;main.c: 133:     OSCCONbits.SCS = 1;
+[; ;main.c: 133:     OSCCONbits.IRCF0 = 1;
+[e = . . _OSCCONbits 1 1 -> -> 1 `i `uc ]
+"134
+[; ;main.c: 134:     OSCCONbits.SCS = 1;
 [e = . . _OSCCONbits 0 0 -> -> 1 `i `uc ]
-"136
-[; ;main.c: 136:     INTCONbits.GIE = 1;
-[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
 "137
-[; ;main.c: 137:     INTCONbits.PEIE = 1;
-[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
+[; ;main.c: 137:     INTCONbits.GIE = 1;
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
 "138
-[; ;main.c: 138:     PIE2bits.CCP2IE = 1;
-[e = . . _PIE2bits 0 0 -> -> 1 `i `uc ]
+[; ;main.c: 138:     INTCONbits.PEIE = 1;
+[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
 "139
-[; ;main.c: 139:     PIR2bits.CCP2IF = 0;
+[; ;main.c: 139:     PIE2bits.CCP2IE = 1;
+[e = . . _PIE2bits 0 0 -> -> 1 `i `uc ]
+"140
+[; ;main.c: 140:     PIR2bits.CCP2IF = 0;
 [e = . . _PIR2bits 0 0 -> -> 0 `i `uc ]
-"143
-[; ;main.c: 143:     PORTEbits.RE0 = 1;
-[e = . . _PORTEbits 0 0 -> -> 1 `i `uc ]
 "144
-[; ;main.c: 144:     PORTEbits.RE1 = 1;
+[; ;main.c: 144:     PORTEbits.RE0 = 1;
+[e = . . _PORTEbits 0 0 -> -> 1 `i `uc ]
+"145
+[; ;main.c: 145:     PORTEbits.RE1 = 1;
 [e = . . _PORTEbits 0 1 -> -> 1 `i `uc ]
-"147
-[; ;main.c: 147:     T1CON = 0x00;
-[e = _T1CON -> -> 0 `i `uc ]
 "148
-[; ;main.c: 148:     TMR1H = 0x00;;
-[e = _TMR1H -> -> 0 `i `uc ]
+[; ;main.c: 148:     T1CON = 0x00;
+[e = _T1CON -> -> 0 `i `uc ]
 "149
-[; ;main.c: 149:     TMR1L = 0x00;;
+[; ;main.c: 149:     TMR1H = 0x00;;
+[e = _TMR1H -> -> 0 `i `uc ]
+"150
+[; ;main.c: 150:     TMR1L = 0x00;;
 [e = _TMR1L -> -> 0 `i `uc ]
-"152
-[; ;main.c: 152:      CCP1CON = 0B00000101;
-[e = _CCP1CON -> -> 5 `i `uc ]
-"154
-[; ;main.c: 154: }
+"153
+[; ;main.c: 153:      CCP2CON = 0B00000101;
+[e = _CCP2CON -> -> 5 `i `uc ]
+"155
+[; ;main.c: 155: }
 [e :UE 151 ]
 }
-"155
-[; ;main.c: 155: void VAL(uint16_t variable){
+"156
+[; ;main.c: 156: void VAL(uint16_t variable){
 [v _VAL `(v ~T0 @X0 1 ef1`ui ]
 {
 [e :U _VAL ]
 [v _variable `ui ~T0 @X0 1 r1 ]
 [f ]
-"156
-[; ;main.c: 156:     uint16_t valor;
-[v _valor `ui ~T0 @X0 1 a ]
 "157
-[; ;main.c: 157:     valor = variable;
-[e = _valor _variable ]
+[; ;main.c: 157:     uint16_t valor;
+[v _valor `ui ~T0 @X0 1 a ]
 "158
-[; ;main.c: 158:     POS1 = (valor/100) ;
-[e = _POS1 -> / _valor -> -> 100 `i `ui `uc ]
+[; ;main.c: 158:     valor = variable;
+[e = _valor _variable ]
 "159
-[; ;main.c: 159:     valor = (valor - (POS1*100));
-[e = _valor - _valor -> * -> _POS1 `i -> 100 `i `ui ]
+[; ;main.c: 159:     POS1 = (valor/100) ;
+[e = _POS1 -> / _valor -> -> 100 `i `ui `uc ]
 "160
-[; ;main.c: 160:     POS2 = (valor/10);
-[e = _POS2 -> / _valor -> -> 10 `i `ui `uc ]
+[; ;main.c: 160:     valor = (valor - (POS1*100));
+[e = _valor - _valor -> * -> _POS1 `i -> 100 `i `ui ]
 "161
-[; ;main.c: 161:     valor = (valor - (POS2*10));
-[e = _valor - _valor -> * -> _POS2 `i -> 10 `i `ui ]
+[; ;main.c: 161:     POS2 = (valor/10);
+[e = _POS2 -> / _valor -> -> 10 `i `ui `uc ]
 "162
-[; ;main.c: 162:     POS3 = (valor);
+[; ;main.c: 162:     valor = (valor - (POS2*10));
+[e = _valor - _valor -> * -> _POS2 `i -> 10 `i `ui ]
+"163
+[; ;main.c: 163:     POS3 = (valor);
 [e = _POS3 -> _valor `uc ]
-"164
-[; ;main.c: 164:     POS1 = POS1 + 48;
-[e = _POS1 -> + -> _POS1 `i -> 48 `i `uc ]
 "165
-[; ;main.c: 165:     POS2 = POS2 + 48;
-[e = _POS2 -> + -> _POS2 `i -> 48 `i `uc ]
+[; ;main.c: 165:     POS1 = POS1 + 48;
+[e = _POS1 -> + -> _POS1 `i -> 48 `i `uc ]
 "166
-[; ;main.c: 166:     POS3 = POS3 + 48;
+[; ;main.c: 166:     POS2 = POS2 + 48;
+[e = _POS2 -> + -> _POS2 `i -> 48 `i `uc ]
+"167
+[; ;main.c: 167:     POS3 = POS3 + 48;
 [e = _POS3 -> + -> _POS3 `i -> 48 `i `uc ]
-"168
-[; ;main.c: 168: }
+"169
+[; ;main.c: 169: }
 [e :UE 152 ]
 }
-"170
-[; ;main.c: 170: void READ_ROJO(void){
+"171
+[; ;main.c: 171: void READ_ROJO(void){
 [v _READ_ROJO `(v ~T0 @X0 1 ef ]
 {
 [e :U _READ_ROJO ]
 [f ]
-"172
-[; ;main.c: 172:     PORTEbits.RE2 = 0;
+"173
+[; ;main.c: 173:     PORTEbits.RE2 = 0;
 [e = . . _PORTEbits 0 2 -> -> 0 `i `uc ]
-"176
-[; ;main.c: 176: }
+"177
+[; ;main.c: 177: }
 [e :UE 153 ]
 }
-"178
-[; ;main.c: 178:  void floattostr_(float numero_, unsigned char *cadena_,char decimales_){
+"179
+[; ;main.c: 179:  void floattostr_(float numero_, unsigned char *cadena_,char decimales_){
 [v _floattostr_ `(v ~T0 @X0 1 ef3`f`*uc`uc ]
 {
 [e :U _floattostr_ ]
@@ -723,128 +730,128 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _cadena_ `*uc ~T0 @X0 1 r2 ]
 [v _decimales_ `uc ~T0 @X0 1 r3 ]
 [f ]
-"180
-[; ;main.c: 180: int largo_entera,largo_n,cont_for,tempo_int;
+"181
+[; ;main.c: 181: int largo_entera,largo_n,cont_for,tempo_int;
 [v _largo_entera `i ~T0 @X0 1 a ]
 [v _largo_n `i ~T0 @X0 1 a ]
 [v _cont_for `i ~T0 @X0 1 a ]
 [v _tempo_int `i ~T0 @X0 1 a ]
-"181
-[; ;main.c: 181: double tempo_float;
+"182
+[; ;main.c: 182: double tempo_float;
 [v _tempo_float `d ~T0 @X0 1 a ]
-"183
-[; ;main.c: 183: largo_n = decimales_+1;
-[e = _largo_n + -> _decimales_ `i -> 1 `i ]
 "184
-[; ;main.c: 184: largo_entera = 0;
+[; ;main.c: 184: largo_n = decimales_+1;
+[e = _largo_n + -> _decimales_ `i -> 1 `i ]
+"185
+[; ;main.c: 185: largo_entera = 0;
 [e = _largo_entera -> 0 `i ]
-"186
-[; ;main.c: 186: if ( numero_ < 0)
-[e $ ! < _numero_ -> -> 0 `i `f 155  ]
 "187
-[; ;main.c: 187:   {
-{
+[; ;main.c: 187: if ( numero_ < 0)
+[e $ ! < _numero_ -> -> 0 `i `f 155  ]
 "188
-[; ;main.c: 188:   *cadena_++ = '-';
-[e = *U ++ _cadena_ * -> -> 1 `i `x -> -> # *U _cadena_ `i `x -> -> 45 `ui `uc ]
+[; ;main.c: 188:   {
+{
 "189
-[; ;main.c: 189:   numero_ = -numero_;
-[e = _numero_ -U _numero_ ]
+[; ;main.c: 189:   *cadena_++ = '-';
+[e = *U ++ _cadena_ * -> -> 1 `i `x -> -> # *U _cadena_ `i `x -> -> 45 `ui `uc ]
 "190
-[; ;main.c: 190:   }
+[; ;main.c: 190:   numero_ = -numero_;
+[e = _numero_ -U _numero_ ]
+"191
+[; ;main.c: 191:   }
 }
 [e :U 155 ]
-"192
-[; ;main.c: 192: if (numero_ > 0.0) while (numero_ < 1.0)
+"193
+[; ;main.c: 193: if (numero_ > 0.0) while (numero_ < 1.0)
 [e $ ! > -> _numero_ `d .0.0 156  ]
 [e $U 157  ]
 [e :U 158 ]
-"193
-[; ;main.c: 193:   {
-{
 "194
-[; ;main.c: 194:   numero_ =numero_* 10.0;
-[e = _numero_ -> * -> _numero_ `d .10.0 `f ]
+[; ;main.c: 194:   {
+{
 "195
-[; ;main.c: 195:   largo_entera--;
-[e -- _largo_entera -> 1 `i ]
+[; ;main.c: 195:   numero_ =numero_* 10.0;
+[e = _numero_ -> * -> _numero_ `d .10.0 `f ]
 "196
-[; ;main.c: 196:   }
+[; ;main.c: 196:   largo_entera--;
+[e -- _largo_entera -> 1 `i ]
+"197
+[; ;main.c: 197:   }
 }
 [e :U 157 ]
-"192
-[; ;main.c: 192: if (numero_ > 0.0) while (numero_ < 1.0)
+"193
+[; ;main.c: 193: if (numero_ > 0.0) while (numero_ < 1.0)
 [e $ < -> _numero_ `d .1.0 158  ]
 [e :U 159 ]
-"196
-[; ;main.c: 196:   }
+"197
+[; ;main.c: 197:   }
 [e :U 156 ]
-"199
-[; ;main.c: 199: while (numero_ >= 10.0)
+"200
+[; ;main.c: 200: while (numero_ >= 10.0)
 [e $U 160  ]
 [e :U 161 ]
-"200
-[; ;main.c: 200:   {
-{
 "201
-[; ;main.c: 201:   numero_ = numero_/10.0;
-[e = _numero_ -> / -> _numero_ `d .10.0 `f ]
+[; ;main.c: 201:   {
+{
 "202
-[; ;main.c: 202:   largo_entera++;
-[e ++ _largo_entera -> 1 `i ]
+[; ;main.c: 202:   numero_ = numero_/10.0;
+[e = _numero_ -> / -> _numero_ `d .10.0 `f ]
 "203
-[; ;main.c: 203:  }
+[; ;main.c: 203:   largo_entera++;
+[e ++ _largo_entera -> 1 `i ]
+"204
+[; ;main.c: 204:  }
 }
 [e :U 160 ]
-"199
-[; ;main.c: 199: while (numero_ >= 10.0)
+"200
+[; ;main.c: 200: while (numero_ >= 10.0)
 [e $ >= -> _numero_ `d .10.0 161  ]
 [e :U 162 ]
-"204
-[; ;main.c: 204:  largo_n = largo_n+largo_entera;
+"205
+[; ;main.c: 205:  largo_n = largo_n+largo_entera;
 [e = _largo_n + _largo_n _largo_entera ]
-"208
-[; ;main.c: 208: for (tempo_float = cont_for = 1; cont_for < largo_n; cont_for++)
+"209
+[; ;main.c: 209: for (tempo_float = cont_for = 1; cont_for < largo_n; cont_for++)
 {
 [e = _tempo_float -> = _cont_for -> 1 `i `d ]
 [e $U 166  ]
 [e :U 163 ]
-"209
-[; ;main.c: 209:   tempo_float = tempo_float/10.0;
+"210
+[; ;main.c: 210:   tempo_float = tempo_float/10.0;
 [e = _tempo_float / _tempo_float .10.0 ]
 [e ++ _cont_for -> 1 `i ]
 [e :U 166 ]
 [e $ < _cont_for _largo_n 163  ]
 [e :U 164 ]
 }
-"210
-[; ;main.c: 210: numero_ += tempo_float/2.0;
-[e =+ _numero_ -> / _tempo_float .2.0 `f ]
 "211
-[; ;main.c: 211: if (numero_ >= 10.0) {numero_ = 1.0; largo_entera++;}
+[; ;main.c: 211: numero_ += tempo_float/2.0;
+[e =+ _numero_ -> / _tempo_float .2.0 `f ]
+"212
+[; ;main.c: 212: if (numero_ >= 10.0) {numero_ = 1.0; largo_entera++;}
 [e $ ! >= -> _numero_ `d .10.0 167  ]
 {
 [e = _numero_ -> .1.0 `f ]
 [e ++ _largo_entera -> 1 `i ]
 }
 [e :U 167 ]
-"213
-[; ;main.c: 213: if (largo_entera<0)
-[e $ ! < _largo_entera -> 0 `i 168  ]
 "214
-[; ;main.c: 214:   {
-{
+[; ;main.c: 214: if (largo_entera<0)
+[e $ ! < _largo_entera -> 0 `i 168  ]
 "215
-[; ;main.c: 215:    *cadena_++ = '0'; *cadena_++ = '.';
+[; ;main.c: 215:   {
+{
+"216
+[; ;main.c: 216:    *cadena_++ = '0'; *cadena_++ = '.';
 [e = *U ++ _cadena_ * -> -> 1 `i `x -> -> # *U _cadena_ `i `x -> -> 48 `ui `uc ]
 [e = *U ++ _cadena_ * -> -> 1 `i `x -> -> # *U _cadena_ `i `x -> -> 46 `ui `uc ]
-"216
-[; ;main.c: 216:    if (largo_n < 0) largo_entera = largo_entera-largo_n;
+"217
+[; ;main.c: 217:    if (largo_n < 0) largo_entera = largo_entera-largo_n;
 [e $ ! < _largo_n -> 0 `i 169  ]
 [e = _largo_entera - _largo_entera _largo_n ]
 [e :U 169 ]
-"217
-[; ;main.c: 217:    for (cont_for = -1; cont_for > largo_entera; cont_for--) *cadena_++ = '0';
+"218
+[; ;main.c: 218:    for (cont_for = -1; cont_for > largo_entera; cont_for--) *cadena_++ = '0';
 {
 [e = _cont_for -U -> 1 `i ]
 [e $U 173  ]
@@ -855,49 +862,49 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ > _cont_for _largo_entera 170  ]
 [e :U 171 ]
 }
-"218
-[; ;main.c: 218:   }
+"219
+[; ;main.c: 219:   }
 }
 [e :U 168 ]
-"219
-[; ;main.c: 219: for (cont_for=0; cont_for < largo_n; cont_for++)
+"220
+[; ;main.c: 220: for (cont_for=0; cont_for < largo_n; cont_for++)
 {
 [e = _cont_for -> 0 `i ]
 [e $U 177  ]
 [e :U 174 ]
-"220
-[; ;main.c: 220:   {
-{
 "221
-[; ;main.c: 221:   tempo_int = numero_;
-[e = _tempo_int -> _numero_ `i ]
+[; ;main.c: 221:   {
+{
 "222
-[; ;main.c: 222:   *cadena_++ = tempo_int + 48;
-[e = *U ++ _cadena_ * -> -> 1 `i `x -> -> # *U _cadena_ `i `x -> + _tempo_int -> 48 `i `uc ]
+[; ;main.c: 222:   tempo_int = numero_;
+[e = _tempo_int -> _numero_ `i ]
 "223
-[; ;main.c: 223:   if (cont_for == largo_entera ) *cadena_++ = '.';
+[; ;main.c: 223:   *cadena_++ = tempo_int + 48;
+[e = *U ++ _cadena_ * -> -> 1 `i `x -> -> # *U _cadena_ `i `x -> + _tempo_int -> 48 `i `uc ]
+"224
+[; ;main.c: 224:   if (cont_for == largo_entera ) *cadena_++ = '.';
 [e $ ! == _cont_for _largo_entera 178  ]
 [e = *U ++ _cadena_ * -> -> 1 `i `x -> -> # *U _cadena_ `i `x -> -> 46 `ui `uc ]
 [e :U 178 ]
-"224
-[; ;main.c: 224:   numero_ -= (tempo_float=tempo_int);
-[e =- _numero_ -> = _tempo_float -> _tempo_int `d `f ]
 "225
-[; ;main.c: 225:   numero_ = numero_*10.0;
-[e = _numero_ -> * -> _numero_ `d .10.0 `f ]
+[; ;main.c: 225:   numero_ -= (tempo_float=tempo_int);
+[e =- _numero_ -> = _tempo_float -> _tempo_int `d `f ]
 "226
-[; ;main.c: 226:   }
+[; ;main.c: 226:   numero_ = numero_*10.0;
+[e = _numero_ -> * -> _numero_ `d .10.0 `f ]
+"227
+[; ;main.c: 227:   }
 }
 [e ++ _cont_for -> 1 `i ]
 [e :U 177 ]
 [e $ < _cont_for _largo_n 174  ]
 [e :U 175 ]
 }
-"227
-[; ;main.c: 227: *cadena_ =0;
-[e = *U _cadena_ -> -> 0 `i `uc ]
 "228
-[; ;main.c: 228: }
+[; ;main.c: 228: *cadena_ =0;
+[e = *U _cadena_ -> -> 0 `i `uc ]
+"229
+[; ;main.c: 229: }
 [e :UE 154 ]
 }
 [a 1C 70 82 69 67 85 69 78 67 73 65 0 ]

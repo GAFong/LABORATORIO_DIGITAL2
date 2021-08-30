@@ -51,15 +51,15 @@
 [v _isr isr `II(v  1 e 1 0 ]
 "79
 [v _main main `(v  1 e 1 0 ]
-"112
+"113
 [v _setup setup `(v  1 e 1 0 ]
-"178
+"179
 [v _floattostr_ floattostr_ `(v  1 e 1 0 ]
 "166 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
 [v _PORTA PORTA `VEuc  1 e 1 @5 ]
 "228
 [v _PORTB PORTB `VEuc  1 e 1 @6 ]
-[s S351 . 1 `uc 1 RB0 1 0 :1:0 
+[s S374 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -69,22 +69,34 @@
 `uc 1 RB7 1 0 :1:7 
 ]
 "245
-[u S360 . 1 `S351 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES360  1 e 1 @6 ]
+[u S383 . 1 `S374 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES383  1 e 1 @6 ]
 "290
 [v _PORTC PORTC `VEuc  1 e 1 @7 ]
+[s S104 . 1 `uc 1 RC0 1 0 :1:0 
+`uc 1 RC1 1 0 :1:1 
+`uc 1 RC2 1 0 :1:2 
+`uc 1 RC3 1 0 :1:3 
+`uc 1 RC4 1 0 :1:4 
+`uc 1 RC5 1 0 :1:5 
+`uc 1 RC6 1 0 :1:6 
+`uc 1 RC7 1 0 :1:7 
+]
+"307
+[u S113 . 1 `S104 1 . 1 0 ]
+[v _PORTCbits PORTCbits `VES113  1 e 1 @7 ]
 "352
 [v _PORTD PORTD `VEuc  1 e 1 @8 ]
 "414
 [v _PORTE PORTE `VEuc  1 e 1 @9 ]
-[s S175 . 1 `uc 1 RE0 1 0 :1:0 
+[s S190 . 1 `uc 1 RE0 1 0 :1:0 
 `uc 1 RE1 1 0 :1:1 
 `uc 1 RE2 1 0 :1:2 
 `uc 1 RE3 1 0 :1:3 
 ]
 "427
-[u S180 . 1 `S175 1 . 1 0 ]
-[v _PORTEbits PORTEbits `VES180  1 e 1 @9 ]
+[u S195 . 1 `S190 1 . 1 0 ]
+[v _PORTEbits PORTEbits `VES195  1 e 1 @9 ]
 [s S22 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
@@ -124,19 +136,19 @@
 [v _SSPBUF SSPBUF `VEuc  1 e 1 @19 ]
 "850
 [v _SSPCON SSPCON `VEuc  1 e 1 @20 ]
-"941
-[v _CCP1CON CCP1CON `VEuc  1 e 1 @23 ]
 "1154
 [v _CCPR2L CCPR2L `VEuc  1 e 1 @27 ]
 "1161
 [v _CCPR2H CCPR2H `VEuc  1 e 1 @28 ]
+"1168
+[v _CCP2CON CCP2CON `VEuc  1 e 1 @29 ]
 "1416
 [v _TRISA TRISA `VEuc  1 e 1 @133 ]
 "1478
 [v _TRISB TRISB `VEuc  1 e 1 @134 ]
 "1540
 [v _TRISC TRISC `VEuc  1 e 1 @135 ]
-[s S268 . 1 `uc 1 TRISC0 1 0 :1:0 
+[s S291 . 1 `uc 1 TRISC0 1 0 :1:0 
 `uc 1 TRISC1 1 0 :1:1 
 `uc 1 TRISC2 1 0 :1:2 
 `uc 1 TRISC3 1 0 :1:3 
@@ -146,13 +158,13 @@
 `uc 1 TRISC7 1 0 :1:7 
 ]
 "1557
-[u S277 . 1 `S268 1 . 1 0 ]
-[v _TRISCbits TRISCbits `VES277  1 e 1 @135 ]
+[u S300 . 1 `S291 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES300  1 e 1 @135 ]
 "1602
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
 "1664
 [v _TRISE TRISE `VEuc  1 e 1 @137 ]
-[s S154 . 1 `uc 1 CCP2IE 1 0 :1:0 
+[s S169 . 1 `uc 1 CCP2IE 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 ULPWUIE 1 0 :1:2 
 `uc 1 BCLIE 1 0 :1:3 
@@ -162,25 +174,25 @@
 `uc 1 OSFIE 1 0 :1:7 
 ]
 "1775
-[u S163 . 1 `S154 1 . 1 0 ]
-[v _PIE2bits PIE2bits `VES163  1 e 1 @141 ]
-[s S128 . 1 `uc 1 SCS 1 0 :1:0 
+[u S178 . 1 `S169 1 . 1 0 ]
+[v _PIE2bits PIE2bits `VES178  1 e 1 @141 ]
+[s S143 . 1 `uc 1 SCS 1 0 :1:0 
 `uc 1 LTS 1 0 :1:1 
 `uc 1 HTS 1 0 :1:2 
 `uc 1 OSTS 1 0 :1:3 
 `uc 1 IRCF 1 0 :3:4 
 ]
 "1882
-[s S134 . 1 `uc 1 . 1 0 :4:0 
+[s S149 . 1 `uc 1 . 1 0 :4:0 
 `uc 1 IRCF0 1 0 :1:4 
 `uc 1 IRCF1 1 0 :1:5 
 `uc 1 IRCF2 1 0 :1:6 
 ]
-[u S139 . 1 `S128 1 . 1 0 `S134 1 . 1 0 ]
-[v _OSCCONbits OSCCONbits `VES139  1 e 1 @143 ]
+[u S154 . 1 `S143 1 . 1 0 `S149 1 . 1 0 ]
+[v _OSCCONbits OSCCONbits `VES154  1 e 1 @143 ]
 "1979
 [v _SSPCON2 SSPCON2 `VEuc  1 e 1 @145 ]
-[s S289 . 1 `uc 1 SEN 1 0 :1:0 
+[s S312 . 1 `uc 1 SEN 1 0 :1:0 
 `uc 1 RSEN 1 0 :1:1 
 `uc 1 PEN 1 0 :1:2 
 `uc 1 RCEN 1 0 :1:3 
@@ -190,8 +202,8 @@
 `uc 1 GCEN 1 0 :1:7 
 ]
 "1996
-[u S298 . 1 `S289 1 . 1 0 ]
-[v _SSPCON2bits SSPCON2bits `VES298  1 e 1 @145 ]
+[u S321 . 1 `S312 1 . 1 0 ]
+[v _SSPCON2bits SSPCON2bits `VES321  1 e 1 @145 ]
 "2048
 [v _SSPADD SSPADD `VEuc  1 e 1 @147 ]
 "2177
@@ -241,28 +253,28 @@
 "79
 [v _main main `(v  1 e 1 0 ]
 {
-"108
+"109
 } 0
-"112
+"113
 [v _setup setup `(v  1 e 1 0 ]
 {
-"154
+"155
 } 0
-"178
+"179
 [v _floattostr_ floattostr_ `(v  1 e 1 0 ]
 {
+"182
+[v floattostr_@tempo_float tempo_float `d  1 a 4 16 ]
 "181
-[v floattostr_@tempo_float tempo_float `d  1 a 4 17 ]
-"180
-[v floattostr_@largo_entera largo_entera `i  1 a 2 25 ]
-[v floattostr_@cont_for cont_for `i  1 a 2 23 ]
-[v floattostr_@largo_n largo_n `i  1 a 2 21 ]
-[v floattostr_@tempo_int tempo_int `i  1 a 2 15 ]
-"178
+[v floattostr_@largo_entera largo_entera `i  1 a 2 24 ]
+[v floattostr_@cont_for cont_for `i  1 a 2 22 ]
+[v floattostr_@largo_n largo_n `i  1 a 2 20 ]
+[v floattostr_@tempo_int tempo_int `i  1 a 2 14 ]
+"179
 [v floattostr_@numero_ numero_ `f  1 p 4 8 ]
 [v floattostr_@cadena_ cadena_ `*.4uc  1 p 1 12 ]
 [v floattostr_@decimales_ decimales_ `uc  1 p 1 13 ]
-"228
+"229
 } 0
 "10 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\xxtofl.c
 [v ___xxtofl __xxtofl `(d  1 e 4 0 ]
@@ -321,17 +333,17 @@
 "8 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\sprcmul.c
 [v ___flmul __flmul `(d  1 e 4 0 ]
 {
-[s S679 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
+[s S706 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
 "13
-[s S684 . 4 `i 1 wordA 2 0 `i 1 wordB 2 2 ]
-[u S687 . 4 `l 1 i 4 0 `d 1 f 4 0 `S679 1 fAsBytes 4 0 `S684 1 fAsWords 4 0 ]
-[v ___flmul@prod prod `S687  1 a 4 26 ]
+[s S711 . 4 `i 1 wordA 2 0 `i 1 wordB 2 2 ]
+[u S714 . 4 `l 1 i 4 0 `d 1 f 4 0 `S706 1 fAsBytes 4 0 `S711 1 fAsWords 4 0 ]
+[v ___flmul@prod prod `S714  1 a 4 26 ]
 "12
 [v ___flmul@grs grs `ul  1 a 4 21 ]
-[s S756 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
+[s S783 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
 "14
-[u S759 . 2 `i 1 i 2 0 `ui 1 n 2 0 `S756 1 nAsBytes 2 0 ]
-[v ___flmul@temp temp `S759  1 a 2 30 ]
+[u S786 . 2 `i 1 i 2 0 `ui 1 n 2 0 `S783 1 nAsBytes 2 0 ]
+[v ___flmul@temp temp `S786  1 a 2 30 ]
 "10
 [v ___flmul@bexp bexp `uc  1 a 1 25 ]
 "11
