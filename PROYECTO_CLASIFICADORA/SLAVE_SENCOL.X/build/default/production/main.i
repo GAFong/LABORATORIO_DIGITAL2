@@ -2913,12 +2913,13 @@ uint8_t VERDE;
 uint8_t POS1;
 uint8_t POS2;
 uint8_t POS3;
-uint8_t COLORH;
+uint8_t COLOR;
 uint8_t COLORL;
 uint16_t frecu;
 float frecuencia=0;
 uint8_t flag_frec = 0;
 char texto[20];
+uint8_t z;
 
 
 void setup (void);
@@ -2929,7 +2930,7 @@ void floattostr_(float numero_, unsigned char *cadena_,char decimales_);
 void __attribute__((picinterrupt((""))))isr(void){
     (INTCONbits.GIE = 0);
     if (PIR2bits.CCP2IF == 1){
-        PORTA = 0X01;
+
         TMR1ON = 0;
         frecu=(CCPR2H << 8 ) | CCPR2L;
         flag_frec=1;
@@ -2939,7 +2940,38 @@ void __attribute__((picinterrupt((""))))isr(void){
         TMR1ON = 1;
 
     }
+     if(PIR1bits.SSPIF == 1){
 
+        SSPCONbits.CKP = 0;
+
+        if ((SSPCONbits.SSPOV) || (SSPCONbits.WCOL)){
+            z = SSPBUF;
+            SSPCONbits.SSPOV = 0;
+            SSPCONbits.WCOL = 0;
+            SSPCONbits.CKP = 1;
+        }
+
+        if(!SSPSTATbits.D_nA && !SSPSTATbits.R_nW) {
+
+            z = SSPBUF;
+
+            PIR1bits.SSPIF = 0;
+            SSPCONbits.CKP = 1;
+            while(!SSPSTATbits.BF);
+
+            _delay((unsigned long)((250)*(8000000/4000000.0)));
+
+        }else if(!SSPSTATbits.D_nA && SSPSTATbits.R_nW){
+            z = SSPBUF;
+            BF = 0;
+            SSPBUF = COLOR;
+            SSPCONbits.CKP = 1;
+            _delay((unsigned long)((250)*(8000000/4000000.0)));
+            while(SSPSTATbits.BF);
+        }
+
+        PIR1bits.SSPIF = 0;
+    }
     (INTCONbits.GIE = 1);
 }
 
@@ -2948,7 +2980,7 @@ void main (void){
     Lcd_Init();
     Lcd_Clear();
     Lcd_Set_Cursor(1,1);
-    Lcd_Write_String("FRECUENCIA");
+   Lcd_Write_String("FRECUENCIA");
     TMR1ON = 1;
     PORTCbits.RC2 = 1;
     while(1){
@@ -2966,10 +2998,21 @@ void main (void){
         floattostr_(frecuencia,texto,2);
         Lcd_Set_Cursor(2,5);
         Lcd_Write_String(texto);
-        PORTD++;
+        if (frecuencia >= 510 && frecuencia <= 1000 ){
+            COLOR = 0X01;
+            CCPR1L = (((0.247 * 8) + 62)*2);
+        }
+        if (frecuencia >= 230 && frecuencia <= 350){
+            COLOR = 0X02;
+            CCPR1L = (((0.247 * 75) + 62)*2);
+        }
+        if (frecuencia >= 130 && frecuencia <= 190){
+            COLOR = 0X03;
+            CCPR1L = (((0.247 * 40) + 62)*2);
+        }
 
 
-
+        _delay((unsigned long)((2000)*(8000000/4000.0)));
 
     }
 
@@ -3019,6 +3062,14 @@ void setup(void){
 
      CCP2CON = 0B00000101;
 
+
+    CCP1CON = 0B00001100;
+
+    T2CON = 0x4E;
+    PR2 = 250;
+
+     I2C_Slave_Init(0x70);
+
 }
 void VAL(uint16_t variable){
     uint16_t valor;
@@ -3036,11 +3087,7 @@ void VAL(uint16_t variable){
 }
 
 void READ_ROJO(void){
-
     PORTEbits.RE2 = 0;
-
-
-
 }
 
  void floattostr_(float numero_, unsigned char *cadena_,char decimales_){

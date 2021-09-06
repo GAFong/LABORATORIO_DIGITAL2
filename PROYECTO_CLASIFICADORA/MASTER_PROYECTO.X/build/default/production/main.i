@@ -2831,7 +2831,7 @@ void EUSART_INIT(unsigned int tx, unsigned int rx){
 
 
   TXSTAbits.SYNC = 0;
-  TXSTAbits.BRGH = 1;
+  TXSTAbits.BRGH = 0;
   TXSTAbits.TX9 = 0;
   TXSTAbits.TXEN= 1;
   RCSTAbits.SPEN = 1;
@@ -2842,8 +2842,8 @@ void EUSART_INIT(unsigned int tx, unsigned int rx){
 
 
     BAUDCTLbits.BRG16 = 0;
-    SPBRG =25;
-    SPBRGH = 1;
+    SPBRG =12;
+    SPBRGH = 0;
 
     PIE1bits.TXIE =tx;
     PIE1bits.RCIE =rx;
@@ -2852,7 +2852,7 @@ void EUSART_INIT(unsigned int tx, unsigned int rx){
 void EUSART_ENVIAR(uint8_t dato){
     if (PIR1bits.TXIF){
         TXREG = dato;
-        _delay((unsigned long)((10)*(4000000/4000.0)));}
+        _delay((unsigned long)((10)*(8000000/4000.0)));}
 }
 # 12 "main.c" 2
 
@@ -2938,10 +2938,13 @@ void I2C_Slave_Init(uint8_t address);
 
 #pragma config BOR4V = BOR40V
 #pragma config WRT = OFF
-# 42 "main.c"
+# 44 "main.c"
 uint8_t POS1;
 uint8_t POS2;
 uint8_t POS3;
+uint8_t VALOR_PESO = 0;
+uint8_t SENSOR_MOV = 0;
+uint8_t COLOR = 0;
 
 
 void setup (void);
@@ -2949,7 +2952,36 @@ void VAL (uint16_t var);
 
 void __attribute__((picinterrupt((""))))isr(void){
     (INTCONbits.GIE = 0);
+    if (PIR1bits.RCIF){
+        if (RCREG >= 65 && RCREG <= 67 ){
 
+             switch (RCREG){
+                case 65:
+                    VAL(VALOR_PESO);
+                    EUSART_ENVIAR(POS1);
+                    _delay((unsigned long)((200)*(8000000/4000000.0)));
+                    EUSART_ENVIAR(POS2);
+                    _delay((unsigned long)((200)*(8000000/4000000.0)));
+                    EUSART_ENVIAR(POS3);
+                    _delay((unsigned long)((200)*(8000000/4000000.0)));
+                    EUSART_ENVIAR(13);
+                    _delay((unsigned long)((200)*(8000000/4000000.0)));
+                    break;
+                case 66:
+                     VAL(COLOR);
+                     EUSART_ENVIAR(POS3);
+                    _delay((unsigned long)((200)*(8000000/4000000.0)));
+                    break;
+                case 67:
+                    VAL(SENSOR_MOV);
+                    EUSART_ENVIAR(POS3);
+                    _delay((unsigned long)((200)*(8000000/4000000.0)));
+                    EUSART_ENVIAR(13);
+                    _delay((unsigned long)((200)*(8000000/4000000.0)));
+                    break;
+        }
+        }
+     }
 
     (INTCONbits.GIE = 1);
 }
@@ -2961,7 +2993,57 @@ void main (void){
     Lcd_Set_Cursor(1,1);
     Lcd_Write_String("PESO: COLOR: BANDA:");
     while(1){
+        I2C_Master_Start();
+        I2C_Master_Write(0x50);
+        I2C_Master_Write(0X01);
+        I2C_Master_Stop();
+        _delay((unsigned long)((200)*(8000000/4000.0)));
 
+        I2C_Master_Start();
+        I2C_Master_Write(0x51);
+        VALOR_PESO = I2C_Master_Read(0);
+        I2C_Master_Stop();
+        _delay((unsigned long)((200)*(8000000/4000.0)));
+
+        I2C_Master_Start();
+        I2C_Master_Write(0x71);
+        COLOR = I2C_Master_Read(0);
+        I2C_Master_Stop();
+        _delay((unsigned long)((200)*(8000000/4000.0)));
+
+        switch (COLOR){
+            case 1:
+                Lcd_Set_Cursor(2,6);
+                Lcd_Write_String("BLANCO");
+                break;
+            case 2:
+                Lcd_Set_Cursor(2,6);
+                Lcd_Write_String("VERDE ");
+                break;
+            case 3:
+                Lcd_Set_Cursor(2,6);
+                Lcd_Write_String("ROJO  ");
+                break;
+
+        }
+        if (VALOR_PESO != 0 && SENSOR_MOV == 1){
+            PORTD = VALOR_PESO;
+            VALOR_PESO = (VALOR_PESO);
+            Lcd_Set_Cursor(2,1);
+            VAL(VALOR_PESO);
+            Lcd_Write_Char(POS1);
+            Lcd_Write_Char(POS2);
+            Lcd_Write_Char(POS3);
+            Lcd_Write_String("gr ");
+            Lcd_Set_Cursor(2,14);
+            Lcd_Write_String("ON ");
+# 162 "main.c"
+        }
+        else {
+            Lcd_Set_Cursor(2,14);
+            Lcd_Write_String("OFF");
+        }
+# 182 "main.c"
     }
 }
 
@@ -2990,6 +3072,11 @@ void setup(void){
     OSCCONbits.IRCF0 = 1;
     OSCCONbits.SCS = 1;
 
+    TRISC7 = 1;
+    EUSART_INIT(0,1);
+
+
+    I2C_Master_Init(100000);
 
 
     INTCONbits.GIE = 1;

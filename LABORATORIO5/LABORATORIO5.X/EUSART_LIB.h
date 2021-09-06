@@ -1,14 +1,14 @@
 /* 
  * File:   EUSART_LIB.h
  * Author: DELL
- *
+ *LIBRERIA PARA 8 MGHZ
  * Created on July 26, 2021, 6:05 PM
  */
 
 #ifndef EUSART_LIB_H
 #define	EUSART_LIB_H
 
-#define _XTAL_FREQ      4000000 
+#define _XTAL_FREQ      8000000 
 
 void EUSART_INIT(unsigned int tx, unsigned int rx){ //Enable interrupt Tx y Rx
 //CONFIG EUSART
@@ -25,8 +25,8 @@ void EUSART_INIT(unsigned int tx, unsigned int rx){ //Enable interrupt Tx y Rx
   RCSTAbits.CREN = 1;       //CREN ACTIVADO
   
   //BAUD RATE CONTROL
-    BAUDCTLbits.BRG16 = 0;  
-    SPBRG =25;              //SEÑAL DE 9600
+    BAUDCTLbits.BRG16 = 1;  
+    SPBRG =207;              //SEÑAL DE 9600
     SPBRGH = 1;
    
     PIE1bits.TXIE =tx;      //INTERRUPCIONES

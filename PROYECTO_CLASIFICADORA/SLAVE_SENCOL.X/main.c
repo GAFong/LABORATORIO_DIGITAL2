@@ -46,12 +46,13 @@ uint8_t VERDE;
 uint8_t POS1;
 uint8_t POS2;
 uint8_t POS3;
-uint8_t COLORH;
+uint8_t COLOR;
 uint8_t COLORL;
 uint16_t frecu;
 float  frecuencia=0;
 uint8_t flag_frec = 0;
 char texto[20];
+uint8_t z;
 
 //-----------------------------PROTOTIPOS---------------------------------------
 void setup (void);
@@ -62,7 +63,7 @@ void floattostr_(float numero_, unsigned char *cadena_,char decimales_);
 void __interrupt()isr(void){
     di(); 
     if (PIR2bits.CCP2IF == 1){
-        PORTA = 0X01;
+        //PORTA = 0X01;
         TMR1ON = 0;         //APAGAMOS EL TIMER1
         frecu=(CCPR2H << 8 ) | CCPR2L;
         flag_frec=1;  //habilita bandera de RPM
@@ -72,7 +73,38 @@ void __interrupt()isr(void){
         TMR1ON = 1;         //APAGAMOS EL TIMER1
        
     }
-     
+     if(PIR1bits.SSPIF == 1){ 
+
+        SSPCONbits.CKP = 0;
+       
+        if ((SSPCONbits.SSPOV) || (SSPCONbits.WCOL)){
+            z = SSPBUF;                 // LEEMOS EL VALOR DEL BUFFER Y AGREGAMOS A UNA VARIABLE
+            SSPCONbits.SSPOV = 0;       // LIMPIAMOS LA BANDERA DE OVERFLOW
+            SSPCONbits.WCOL = 0;        // LIMPIAMOS EL BIT DE COLISION
+            SSPCONbits.CKP = 1;         // HABILITAMOS SCL
+        }
+
+        if(!SSPSTATbits.D_nA && !SSPSTATbits.R_nW) {
+            //__delay_us(7);
+            z = SSPBUF;                 // LEEMOS EL VALOR DEL BUFFER Y AGREGAMOS A UNA VARIABLE
+            //__delay_us(2);
+            PIR1bits.SSPIF = 0;         // LIMPIAMOS BANDERA DE INTERUPCION RECEPCION/TRANSMISION SSP
+            SSPCONbits.CKP = 1;         // HABILITA LOS PULSOS DEL RELOJ SCL
+            while(!SSPSTATbits.BF);     // HASTA QUE LA RECEPCION SE REALICE
+           // PORTD = SSPBUF;             // Guardar en el PORTD el valor del buffer de recepción
+            __delay_us(250);
+            
+        }else if(!SSPSTATbits.D_nA && SSPSTATbits.R_nW){
+            z = SSPBUF;
+            BF = 0;
+            SSPBUF = COLOR;
+            SSPCONbits.CKP = 1;
+            __delay_us(250);
+            while(SSPSTATbits.BF);
+        }
+       
+        PIR1bits.SSPIF = 0;    
+    }
     ei();                           //POP
 }
 
@@ -81,12 +113,12 @@ void main (void){
     Lcd_Init();                     //INICIALIZAMOS LA LCD
     Lcd_Clear();  //Limpiar LCD
     Lcd_Set_Cursor(1,1); //cursor fila uno primera posicion 
-    Lcd_Write_String("FRECUENCIA");
+   Lcd_Write_String("FRECUENCIA");
     TMR1ON = 1;
     PORTCbits.RC2 = 1;
     while(1){
         void READ_ROJO(void);
-        
+        //PORTD = COLOR ;
         //__delay_ms(100);
         if (flag_frec==1){
             if (frecu!=0){
@@ -96,13 +128,24 @@ void main (void){
             //else frecuencia=0;
             flag_frec=0;
         }      
-        floattostr_(frecuencia,texto,2);
+        floattostr_(frecuencia,texto,2); //MOSTRAR LA FRECUENCIA EN LCD
         Lcd_Set_Cursor(2,5);
         Lcd_Write_String(texto);
-        PORTD++;
+        if (frecuencia >= 510 && frecuencia <= 1000 ){     //BLANCO
+            COLOR = 0X01;
+            CCPR1L = (((0.247 * 8) + 62)*2);            //MAPEO DEL SERVO1
+        }
+        if (frecuencia >= 230 && frecuencia <= 350){//azul
+            COLOR = 0X02;
+            CCPR1L = (((0.247 * 75) + 62)*2);            //MAPEO DEL SERVO1
+        }
+        if (frecuencia >= 130 && frecuencia <= 190){ //ROJO
+            COLOR = 0X03;
+            CCPR1L = (((0.247 * 40) + 62)*2);            //MAPEO DEL SERVO1
+        }
+        
 
-       // frecuencia=0;  //coloca en cero por si se quita la señal
-        //__delay_ms(100);
+        __delay_ms(2000);
 
     }
         
@@ -140,8 +183,8 @@ void setup(void){
     PIR2bits.CCP2IF = 0;        //LIMPIAMOS LAS BANDERA DEL CCP
     
     
-    //CONFIGUGACION DEL SENSOR TCS230
-    PORTEbits.RE0 = 1;
+    //CONFIGUGACION DEL SENSOR TCS230  S0 EN 0, S1 EN 1, S2 EN 0, S3 EN 1 
+    PORTEbits.RE0 = 1;          //FRECUENCIA EN 20%
     PORTEbits.RE1 = 1;
     
     //CONFIGURACION DEL TMR1
@@ -151,6 +194,14 @@ void setup(void){
     
     //CONFIGURACION COMPARADOR
      CCP2CON = 0B00000101;       //CADA FALNCO DE SUBIDA
+     
+     //CONFIGURACION DE CCP1 COMO PWM
+    CCP1CON = 0B00001100;       //CCP1 EN MODO PWM
+    //CONFIGURACION DEL TMR2
+    T2CON	 = 0x4E;
+    PR2		 = 250;
+    //CONFIGURACION DEL I2C ESCLAVO
+     I2C_Slave_Init(0x70);       //DIRECCION DEL I2C ESCLAVO
      
 }
 void VAL(uint16_t variable){        // Función para obtener valor decimal
@@ -169,11 +220,7 @@ void VAL(uint16_t variable){        // Función para obtener valor decimal
 }
 
 void READ_ROJO(void){
-    //CCP1CON = 0B00000101;
     PORTEbits.RE2 = 0;      //PARA LEER COLOR ROJO
-    //PORTBbits.RB3 = 0;
-    //PORTD = COLORH;
-    //PORTA = COLORL;
 }
 
  void floattostr_(float numero_, unsigned char *cadena_,char decimales_){

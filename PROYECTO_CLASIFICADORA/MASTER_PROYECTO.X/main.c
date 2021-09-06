@@ -35,13 +35,18 @@
 #define _XTAL_FREQ 8000000
 #define tx 0
 #define rx 1
-#define ENTER 10
+#define ENTER 13
 #define COMA 0x2C
+#define tx 0
+#define rx 1
 
 //------------------------------VARIABLES---------------------------------------
 uint8_t POS1;
 uint8_t POS2;
 uint8_t POS3;
+uint8_t VALOR_PESO = 0;
+uint8_t SENSOR_MOV = 0; 
+uint8_t COLOR = 0;
 
 //-----------------------------PROTOTIPOS---------------------------------------
 void setup (void);
@@ -49,7 +54,36 @@ void VAL (uint16_t var);
 
 void __interrupt()isr(void){
     di(); 
-    
+    if (PIR1bits.RCIF){
+        if (RCREG >= 65 && RCREG <= 67 ){
+                
+             switch (RCREG){
+                case 65:
+                    VAL(VALOR_PESO);
+                    EUSART_ENVIAR(POS1);     //ENVIAMOS VALOR DE PESO Y SEPARADOS POR COMAS
+                    __delay_us(200);
+                    EUSART_ENVIAR(POS2);
+                    __delay_us(200);
+                    EUSART_ENVIAR(POS3);
+                    __delay_us(200);
+                    EUSART_ENVIAR(ENTER);
+                    __delay_us(200);
+                    break;
+                case 66:
+                     VAL(COLOR);
+                     EUSART_ENVIAR(POS3);     //ENVIAMOS VALOR DE COLOR Y SEPARADOS POR COMAS
+                    __delay_us(200);
+                    break;
+                case 67:
+                    VAL(SENSOR_MOV);
+                    EUSART_ENVIAR(POS3);     //ENVIAMOS VALOR DE COLOR Y SEPARADOS POR COMAS
+                    __delay_us(200);
+                    EUSART_ENVIAR(ENTER);
+                    __delay_us(200);
+                    break; 
+        }
+        }
+     }
      
     ei();                           //POP
 }
@@ -61,6 +95,89 @@ void main (void){
     Lcd_Set_Cursor(1,1); //cursor fila uno primera posicion 
     Lcd_Write_String("PESO: COLOR: BANDA:");
     while(1){
+        I2C_Master_Start();
+        I2C_Master_Write(0x50);     //
+        I2C_Master_Write(0X01);
+        I2C_Master_Stop();
+        __delay_ms(200);
+        
+        I2C_Master_Start();         //INICIALIZAMOS LA COMUNICACION
+        I2C_Master_Write(0x51);     //ESCRIBIMOS A LA DIRECCION PARA LEER ESCLAVO DE PESO
+        VALOR_PESO = I2C_Master_Read(0);
+        I2C_Master_Stop();          //DETENEMOS LA COMUNICACION
+        __delay_ms(200);
+        
+        I2C_Master_Start();         //INICIALIZAMOS LA COMUNICACION
+        I2C_Master_Write(0x71);     //ESCRIBIMOS A LA DIRECCION PARA LEER ESCLAVO DE PESO
+        COLOR = I2C_Master_Read(0);
+        I2C_Master_Stop();          //DETENEMOS LA COMUNICACION
+        __delay_ms(200);
+        
+        switch (COLOR){
+            case 1:
+                Lcd_Set_Cursor(2,6);        //COLOCAMOS COLOR EN LA LCD
+                Lcd_Write_String("BLANCO");
+                break;
+            case 2:
+                Lcd_Set_Cursor(2,6);        //COLOCAMOS COLOR EN LA LCD
+                Lcd_Write_String("VERDE ");
+                break;
+            case 3:
+                Lcd_Set_Cursor(2,6);        //COLOCAMOS COLOR EN LA LCD
+                Lcd_Write_String("ROJO  ");
+                break;
+                
+        }
+        if (VALOR_PESO != 0 && SENSOR_MOV == 1){
+            PORTD = VALOR_PESO;
+            VALOR_PESO = (VALOR_PESO);
+            Lcd_Set_Cursor(2,1);        //COLOCAMOS VALORES DEL PESO EN LA LCD
+            VAL(VALOR_PESO);                  //EXTRAER LOS VALORES DE TEMP
+            Lcd_Write_Char(POS1);
+            Lcd_Write_Char(POS2);
+            Lcd_Write_Char(POS3);
+            Lcd_Write_String("gr ");
+            Lcd_Set_Cursor(2,14);
+            Lcd_Write_String("ON ");
+          /*  VAL(VALOR_PESO);
+            EUSART_ENVIAR(POS1);     //ENVIAMOS VALOR DE PESO Y SEPARADOS POR COMAS
+            __delay_us(200);
+            EUSART_ENVIAR(COMA);
+            __delay_us(200);
+            EUSART_ENVIAR(POS2);
+            __delay_us(200);
+            EUSART_ENVIAR(COMA);
+            __delay_us(200);
+            EUSART_ENVIAR(POS3);
+            __delay_us(200);
+            EUSART_ENVIAR(COMA);
+            __delay_us(200);
+            VAL(COLOR);
+             EUSART_ENVIAR(POS3);     //ENVIAMOS VALOR DE COLOR Y SEPARADOS POR COMAS
+            __delay_us(200);
+            VAL(SENSOR_MOV);
+            EUSART_ENVIAR(POS3);     //ENVIAMOS VALOR DE COLOR Y SEPARADOS POR COMAS
+            EUSART_ENVIAR(ENTER);
+            __delay_us(200);*/
+        }
+        else {
+            Lcd_Set_Cursor(2,14);
+            Lcd_Write_String("OFF");
+        }
+       /*
+        I2C_Master_Start();
+        I2C_Master_Write(0x50);     //
+        I2C_Master_Write(0X02);
+        I2C_Master_Stop();
+        __delay_ms(200);
+        
+        I2C_Master_Start();         //INICIALIZAMOS LA COMUNICACION
+        I2C_Master_Write(0x51);     //ESCRIBIMOS A LA DIRECCION PARA LEER ESCLAVO DE PESO
+        SENSOR_MOV = I2C_Master_Read(0);
+        I2C_Master_Stop();          //DETENEMOS LA COMUNICACION
+        __delay_ms(200);*/
+        
+        
         
     }
 }
@@ -89,7 +206,12 @@ void setup(void){
     OSCCONbits.IRCF1 = 1;
     OSCCONbits.IRCF0 = 1;
     OSCCONbits.SCS = 1;         //RELOJ INTERNO 
+    //EUSART
+    TRISC7 = 1;                 //TX
+    EUSART_INIT(tx,rx);
     
+    //CONFIGURACION I2C
+    I2C_Master_Init(100000);        // INICIALIZAR MASTER A FRECUENCIA DE 100kHz
     
    // EUSART_INIT(tx,rx);
     INTCONbits.GIE = 1;         //DESHABILITAMOS LAS INTERRUPCIONES GLOBALES
