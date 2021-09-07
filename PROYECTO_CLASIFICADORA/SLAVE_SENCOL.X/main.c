@@ -111,9 +111,9 @@ void __interrupt()isr(void){
 void main (void){
     setup();
     Lcd_Init();                     //INICIALIZAMOS LA LCD
-    Lcd_Clear();  //Limpiar LCD
-    Lcd_Set_Cursor(1,1); //cursor fila uno primera posicion 
-   Lcd_Write_String("FRECUENCIA");
+    //Lcd_Clear();  //Limpiar LCD
+   // Lcd_Set_Cursor(1,1); //cursor fila uno primera posicion 
+    //Lcd_Write_String("FRECUENCIA");
     TMR1ON = 1;
     PORTCbits.RC2 = 1;
     while(1){
@@ -128,9 +128,9 @@ void main (void){
             //else frecuencia=0;
             flag_frec=0;
         }      
-        floattostr_(frecuencia,texto,2); //MOSTRAR LA FRECUENCIA EN LCD
-        Lcd_Set_Cursor(2,5);
-        Lcd_Write_String(texto);
+        //floattostr_(frecuencia,texto,2); //MOSTRAR LA FRECUENCIA EN LCD
+        //Lcd_Set_Cursor(2,5);
+        //Lcd_Write_String(texto);
         if (frecuencia >= 510 && frecuencia <= 1000 ){     //BLANCO
             COLOR = 0X01;
             CCPR1L = (((0.247 * 8) + 62)*2);            //MAPEO DEL SERVO1

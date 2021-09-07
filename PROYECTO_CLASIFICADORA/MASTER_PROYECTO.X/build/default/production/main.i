@@ -3013,15 +3013,15 @@ void main (void){
 
         switch (COLOR){
             case 1:
-                Lcd_Set_Cursor(2,6);
+                Lcd_Set_Cursor(2,7);
                 Lcd_Write_String("BLANCO");
                 break;
             case 2:
-                Lcd_Set_Cursor(2,6);
-                Lcd_Write_String("VERDE ");
+                Lcd_Set_Cursor(2,7);
+                Lcd_Write_String("AZUL  ");
                 break;
             case 3:
-                Lcd_Set_Cursor(2,6);
+                Lcd_Set_Cursor(2,7);
                 Lcd_Write_String("ROJO  ");
                 break;
 
@@ -3035,15 +3035,32 @@ void main (void){
             Lcd_Write_Char(POS2);
             Lcd_Write_Char(POS3);
             Lcd_Write_String("gr ");
+
+
+        }
+        if (SENSOR_MOV == 1){
             Lcd_Set_Cursor(2,14);
             Lcd_Write_String("ON ");
-# 162 "main.c"
         }
         else {
             Lcd_Set_Cursor(2,14);
             Lcd_Write_String("OFF");
         }
-# 182 "main.c"
+
+        I2C_Master_Start();
+        I2C_Master_Write(0x50);
+        I2C_Master_Write(0X02);
+        I2C_Master_Stop();
+        _delay((unsigned long)((200)*(8000000/4000.0)));
+
+        I2C_Master_Start();
+        I2C_Master_Write(0x51);
+        SENSOR_MOV = I2C_Master_Read(0);
+        I2C_Master_Stop();
+        _delay((unsigned long)((200)*(8000000/4000.0)));
+
+
+
     }
 }
 

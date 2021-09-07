@@ -115,15 +115,15 @@ void main (void){
         
         switch (COLOR){
             case 1:
-                Lcd_Set_Cursor(2,6);        //COLOCAMOS COLOR EN LA LCD
+                Lcd_Set_Cursor(2,7);        //COLOCAMOS COLOR EN LA LCD
                 Lcd_Write_String("BLANCO");
                 break;
             case 2:
-                Lcd_Set_Cursor(2,6);        //COLOCAMOS COLOR EN LA LCD
-                Lcd_Write_String("VERDE ");
+                Lcd_Set_Cursor(2,7);        //COLOCAMOS COLOR EN LA LCD
+                Lcd_Write_String("AZUL  ");
                 break;
             case 3:
-                Lcd_Set_Cursor(2,6);        //COLOCAMOS COLOR EN LA LCD
+                Lcd_Set_Cursor(2,7);        //COLOCAMOS COLOR EN LA LCD
                 Lcd_Write_String("ROJO  ");
                 break;
                 
@@ -137,34 +137,18 @@ void main (void){
             Lcd_Write_Char(POS2);
             Lcd_Write_Char(POS3);
             Lcd_Write_String("gr ");
+            
+          
+        }
+        if (SENSOR_MOV == 1){
             Lcd_Set_Cursor(2,14);
             Lcd_Write_String("ON ");
-          /*  VAL(VALOR_PESO);
-            EUSART_ENVIAR(POS1);     //ENVIAMOS VALOR DE PESO Y SEPARADOS POR COMAS
-            __delay_us(200);
-            EUSART_ENVIAR(COMA);
-            __delay_us(200);
-            EUSART_ENVIAR(POS2);
-            __delay_us(200);
-            EUSART_ENVIAR(COMA);
-            __delay_us(200);
-            EUSART_ENVIAR(POS3);
-            __delay_us(200);
-            EUSART_ENVIAR(COMA);
-            __delay_us(200);
-            VAL(COLOR);
-             EUSART_ENVIAR(POS3);     //ENVIAMOS VALOR DE COLOR Y SEPARADOS POR COMAS
-            __delay_us(200);
-            VAL(SENSOR_MOV);
-            EUSART_ENVIAR(POS3);     //ENVIAMOS VALOR DE COLOR Y SEPARADOS POR COMAS
-            EUSART_ENVIAR(ENTER);
-            __delay_us(200);*/
         }
         else {
             Lcd_Set_Cursor(2,14);
             Lcd_Write_String("OFF");
         }
-       /*
+       
         I2C_Master_Start();
         I2C_Master_Write(0x50);     //
         I2C_Master_Write(0X02);
@@ -175,7 +159,7 @@ void main (void){
         I2C_Master_Write(0x51);     //ESCRIBIMOS A LA DIRECCION PARA LEER ESCLAVO DE PESO
         SENSOR_MOV = I2C_Master_Read(0);
         I2C_Master_Stop();          //DETENEMOS LA COMUNICACION
-        __delay_ms(200);*/
+        __delay_ms(200);
         
         
         
