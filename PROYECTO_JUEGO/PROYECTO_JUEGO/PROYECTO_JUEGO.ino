@@ -1,11 +1,6 @@
-/* Librería para el uso de la pantalla ILI9341 en modo 8 bits
- * Basado en el código de martinayotte - https://www.stm32duino.com/viewtopic.php?t=637
- * Adaptación, migración y creación de nuevas funciones: Pablo Mazariegos y José Morales
- * Con ayuda de: José Guerra y Jose Alvarez
- * Modificaciones y adaptación: Diego Morales
- * IE3027: Electrónica Digital 2 - 2021
- * GABRIEL ALEXANDER FONG PENAGOS 19722
- */
+
+
+
  
 #include <SD.h>
 #include <SPI.h>
@@ -26,6 +21,7 @@
 
 #include "lcd_registers.h"
 #include "font.h"
+#include "bitmaps.h"
 
 
 #define LCD_RST PD_0
@@ -35,14 +31,50 @@
 #define LCD_RD PE_1
 int DPINS[] = {PB_0, PB_1, PB_2, PB_3, PB_4, PB_5, PB_6, PB_7}; 
 
-int SEL = 0;
-int PB1 = PUSH1;
-int FLAG1 = 0;
-String inputString = "";
-
 File ARCHIVO;
+int PB1 = PUSH1;
+int PB2 = PUSH2;
+int SEL_JUG = 0;
+int FLAG1 = 0;
+int FLAG2 = 0;
+int START = 0;
+uint16_t x = 45;
+uint8_t y = 0;
+uint16_t xcarro1 = 100;
+uint8_t ycarro1 = 180;
+uint16_t xcarro2 = 250;
+uint8_t ycarro2 = 100;
+uint16_t xcarro3 = 300;
+uint16_t xcamion1 = 300;
+uint8_t ycamion1 =195;
+uint16_t xcamion2 = 300;
+uint8_t ycamion2 =55;
+uint16_t xcamion3 = 150;
+uint8_t ycamion3 =55;
+uint16_t xcar1 = 75;
+uint8_t ycar1 = 165;
+uint16_t xcar2 = 100 ;
+uint8_t ycar2 = 85;
+uint16_t xcar3 = 200;
+uint8_t ycar3 = 85;
+uint16_t xcar4 = 300;
+uint8_t ycar4 = 85;
+uint16_t xcono1 = 255;
+uint8_t ycono1 = 150;
+uint16_t xcono2 = 45;
+uint8_t ycono2 = 150;
+uint16_t xcono3 = 150;
+uint8_t ycono3 = 135;
+uint16_t xcono4 = 135;
+uint8_t ycono4 = 135;
+uint16_t xcono5 = 165;
+uint8_t ycono5 = 135;
+uint16_t xflorven1 = 165;
+uint8_t yflorven1 = 120;
+uint16_t xflorven2 = 150;
+uint8_t yflorven2 = 120;
 
-// Functions Prototypes
+// PROTOTIPOS
 //***************************************************************************************************************************************
 void LCD_Init(void);
 void LCD_CMD(uint8_t cmd);
@@ -57,81 +89,294 @@ void LCD_Print(String text, int x, int y, int fontSize, int color, int backgroun
 
 void LCD_Bitmap(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned char bitmap[]);
 void LCD_Sprite(int x, int y, int width, int height, unsigned char bitmap[],int columns, int index, char flip, char offset);
-
-extern uint8_t REAL[];
-
+void AJUMP_UPV(uint16_t x, uint8_t);
+void AJUMP_UPN(uint16_t x, uint8_t);
+void CARRO(uint16_t &x, uint8_t &y);
+void CAR(uint16_t &x, uint8_t &y);
+void CAMION1(uint16_t &x, uint8_t &y);
 
 void setup() {
   SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
   Serial.begin(9600);
   GPIOPadConfigSet(GPIO_PORTB_BASE, 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPU);
   Serial.println("Start");
+  pinMode(PB1, INPUT_PULLUP);      // COLOCAMOS LOS PUSH EN PULL UP
+  pinMode(PB2, INPUT_PULLUP);      // COLOCAMOS LOS PUSH EN PULL UP
   LCD_Init();
   LCD_Clear(0x00);
 
   //FillRect(unsigned int x, unsigned int y, unsigned int w, unsigned int h, unsigned int c)
-  FillRect(80, 60, 160, 120, 0x0400);
+  FillRect(60, 60, 210, 120, 0x0400);
 
   //LCD_Print(String text, int x, int y, int fontSize, int color, int background)
-  String nombre = "GABRIEL";
-  LCD_Print(nombre, 110, 90, 2, 0xffff, 0x0000);
+  String nombre = "GABRIEL FONG";
+  LCD_Print(nombre, 70, 100, 2, 0xffff, 0x0000);
   delay(1000);
-  String apellido = "FONG";
-  LCD_Print(apellido, 130, 110, 2, 0xffff, 0x0000);
+  String apellido = "DIEGO MENDEZ";
+  LCD_Print(apellido, 70, 120, 2, 0xffff, 0x0000);
   delay(1000);
-  String carnet = "19722";
-  LCD_Print(carnet, 120, 130, 2, 0xffff, 0x0000);
-  delay(1000);
-  
-  
+
   SPI.setModule(0);//UTILIZAMOS LA CONFIGURACION 0 PARA LA SD
   pinMode(12, OUTPUT);                //SC COMO OUTPUT
-  pinMode(PB1, INPUT_PULLUP);      // COLOCAMOS LOS PUSH EN PULL UP
-  pinMode(PB2, INPUT_PULLUP);      // COLOCAMOS LOS PUSH EN PULL UP
   
   if (!SD.begin(12)) {
     Serial.println("initialization failed!");
     return;
-  }
-  Serial.println("initialization done.");
-  
 }
-
+  Serial.println("initialization done.");
+  ARCHIVO = SD.open("FROG.txt",FILE_READ);
+  VALSD(ARCHIVO);  
+  ARCHIVO.close();
+  String jugador1 = "1 JUGADOR";
+  LCD_Print(jugador1, 80, 190, 2, 0xff00, 0x0000);
+  String jugador2 = "2 JUGADORES";
+  LCD_Print(jugador2, 80, 210, 2, 0xff00, 0x0000);
+}
 void loop() {
+  //ANTIREBOTE DEL BOTON 1
   if (digitalRead(PB1) == LOW)     //Pregunta si el PUSH1 está presionado
       {
         FLAG1 = 1;     //La variable cambia de valor
       }
    if (digitalRead(PB1) == HIGH && FLAG1 == 1)
       {
-        Serial.println("OK"); 
-        SEL++;
-        if (SEL >= 4){
-          SEL = 1; 
-        }
-        switch (SEL) {
-        case 1:
-          ARCHIVO = SD.open("ARENA.txt",FILE_READ);
-          VALSD(ARCHIVO);  
-          ARCHIVO.close();
-          break;
-        case 2:
-          ARCHIVO = SD.open("SANTIAGO.txt",FILE_READ);
-          VALSD(ARCHIVO);  
-          ARCHIVO.close();
-          break;
-        case 3:
-          ARCHIVO = SD.open("OLDTRA.txt",FILE_READ);
-          VALSD(ARCHIVO);  
-          ARCHIVO.close();
-          break;
         
-     }
-        Serial.println(SEL);
+        SEL_JUG++;
+        String flecha("->");
+        switch (SEL_JUG){
+          case 1:
+          
+           LCD_Print(flecha, 52, 190, 2, 0xff00, 0x0000);
+           for (int x = 0; x <15; x++){
+              H_line(53, 210 + x, 26, 0x0000);}
+           break;
+           
+           case 2:
+           LCD_Print(flecha, 52, 210, 2, 0xff00, 0x0000);
+           for (int x = 0; x <15; x++){
+           H_line(53, 190 + x, 26, 0x0000);}
+           SEL_JUG = 0;
+           break;
+           
+        }
         FLAG1 = 0;
-     }
-     
+        Serial.println(SEL_JUG);
 }
+
+if (digitalRead(PB2) == LOW)     //Pregunta si el PUSH1 está presionado
+      {
+        FLAG2 = 1;     //La variable cambia de valor
+      }
+if (digitalRead(PB2) == HIGH && FLAG2 == 1){
+      FLAG1 = 0;
+      switch (SEL_JUG){
+          case 0: //2 JUGADORES
+           START = 2;
+           break;
+           
+           case 1://1JUGADOR
+           START = 1;
+           break; 
+        }
+        FLAG2 = 0;  
+        FillRect(0, 0, 320, 240, 0x0000);
+        LCD_Bitmap(xcono1, ycono1, 15, 15, CONO);
+        LCD_Bitmap(xcono2, ycono2, 15, 15, CONO); 
+        LCD_Bitmap(xcono3, ycono3, 15, 15, CONO); 
+        LCD_Bitmap(xcono4, ycono4, 15, 15, CONO);
+        LCD_Bitmap(xcono5, ycono5, 15, 15, CONO);
+        LCD_Bitmap(xflorven1, yflorven1, 15, 15, FLORES_VEN);
+        LCD_Bitmap(xflorven2, yflorven2, 15, 15, FLORES_VEN);        
+      }
+
+while (START == 1){
+  if (((xcarro1-10)<= x && x<= xcarro1) && ((ycarro1-5)<=y && y<= (ycarro1+5))||
+  ((xcamion1-10)<= x && x<= xcamion1+35) && ((ycamion1 -8)<=y && y <= (5+ycamion1))||
+  ((xcamion2-10)<= x && x<= xcamion2+35) && ((ycamion2 -8)<=y && y <= (5+ycamion2))||
+  ((xcamion3-10)<= x && x<= xcamion3+35) && ((ycamion3 -8)<=y && y <= (5+ycamion3))||
+  (((xcarro2-10)<= x && x<= xcarro2)||((xcarro3-10)<= x && x<= xcarro3)) && ((ycarro2-5)<=y && y<= (ycarro2+5))||
+  ((xcar1)<= x && x<= (xcar1+10)) && ((ycar1-7)<=y && y<= (ycar1+10))||
+  ((xcar2)<= x && x<= (xcar2+10)) && ((ycar2-7)<=y && y<= (ycar2+10))||
+  ((xcar3)<= x && x<= (xcar3+10)) && ((ycar3-7)<=y && y<= (ycar3+10))||
+  ((xcar4)<= x && x<= (xcar4+10)) && ((ycar4-7)<=y && y<= (ycar4+10))||
+  (xflorven1 == x && y ==yflorven1)|| (xflorven2 == x && y ==yflorven2)
+  ){
+    START =0;
+  }
+
+ /* 
+  LCD_Bitmap(80, 80, 15, 15, RA_DOWN_N);
+  AJUMP_UPN(&x,&y);
+  AJUMP_DN(&x,&y);
+  AJUMP_DON(&x,&y);
+  AJUMP_IN(&x,&y);*/
+  CARRO(&xcarro2,&ycarro2);
+  CARRO(&xcarro1,&ycarro1);
+  CAR(&xcar1,&ycar1);
+  CAR(&xcar2,&ycar2);
+  CAR(&xcar3,&ycar3);
+  CAR(&xcar4,&ycar4);
+  CARRO(&xcarro3,&ycarro2);
+  CAMION1(&xcamion1,&ycamion1);
+  CAMION1(&xcamion2,&ycamion2);
+  CAMION1(&xcamion3,&ycamion3);
+  //LCD_Bitmap(x, y, 15, 15, RA_DOWN_N);
+ // LCD_Bitmap(150, 80, 29, 10, CAMION);
+ // delay(10000);
+  AJUMP_DON(&x,&y);
+  Serial.println(y);
+}
+        
+}
+//RANA AZUL SALTANDO HACIA ARRIBA
+
+void AJUMP_DON(uint16_t *x, uint8_t *y){
+  if( *y > 210 || (*y ==(ycono1-15)  && *x == xcono1)|| (*y ==(ycono2-15)  && *x == xcono2)|| (*y ==(ycono3-15)  && *x == xcono3)|| (*y ==(ycono4-15)  && *x == xcono4)|| (*y ==(ycono5-15)  && *x == xcono5)){
+  }
+  else{
+    for (int i = 0; i<3; i++){
+      LCD_Bitmap(*x, *y, 15, 15, RA_DOWN_N);
+      *y= *y +1;
+      delay(5);
+    }
+    for (int i = 0; i<3; i++){
+     LCD_Bitmap(*x, *y, 15, 15, RA_JUMP_DO_N);
+     *y= *y +1;
+     delay(5); 
+    }
+    for (int i = 0; i<6; i++){
+     LCD_Bitmap(*x, *y, 15, 15, RA_FLY_DO_N);
+     *y= *y +1;
+     delay(5); 
+    }
+    for (int i = 0; i<3; i++){
+      LCD_Bitmap(*x, *y, 15, 15, RA_DOWN_N);
+      *y= *y +1;
+      delay(5);
+    }
+ }
+}
+void AJUMP_UPN(uint16_t *x, uint8_t *y){
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_UP_N);
+    *y= *y -1;
+    delay(5);
+  }
+  for (int i = 0; i<3; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_JUMP_UP_N);
+   *y= *y -1;
+   delay(5); 
+  }
+  for (int i = 0; i<6; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_FLY_UP_N);
+   *y= *y -1;
+   delay(5); 
+  }
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_UP_N);
+    *y= *y -1;
+    delay(5);
+  }
+}
+void AJUMP_DN(uint16_t *x, uint8_t *y){
+  if(*x != 300){
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_D_N);
+    *x= *x +1;
+    delay(5);
+  }
+  for (int i = 0; i<3; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_JUMP_D_N);
+   *x= *x +1;
+   delay(5); 
+  }
+  for (int i = 0; i<6; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_FLY_D_N);
+   *x= *x +1;
+   delay(5); 
+  }
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_D_N);
+    *x= *x +1;
+    
+    delay(5);
+  }
+  }
+}
+void AJUMP_IN(uint16_t *x, uint8_t *y){
+  if (*x != 0){
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_I_N);
+    *x= *x -1;
+    delay(5);
+  }
+  for (int i = 0; i<3; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_JUMP_I_N);
+   *x = *x -1;
+   delay(5); 
+  }
+  for (int i = 0; i<6; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_FLY_I_N);
+   *x = *x -1;
+   delay(5); 
+  }
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_I_N);
+    *x = *x -1;
+    delay(5);
+  }
+  }
+}
+void CARRO(uint16_t *x, uint8_t *y){
+    LCD_Bitmap(*x, *y, 15, 15, CARRO1);
+    V_line(*x + 15, *y, 15, 0x0000);
+    V_line(*x + 14, *y, 15, 0x0000);
+    V_line(*x + 16, *y, 15, 0x0000);
+    *x = *x-2;
+    //Serial.println(*x);
+    if (*x >= 65530){
+      *x = 300;
+      for (int i = 0; i<15; i++){
+      V_line(i, *y, 15, 0x0000);}
+    }  
+      
+    delay(5);
+}
+void CAR(uint16_t *x, uint8_t *y){
+    LCD_Bitmap(*x, *y, 15, 15, CARRO2);
+    V_line(*x - 1, *y, 15, 0x0000);
+    V_line(*x - 2, *y, 15, 0x0000);
+    V_line(*x - 3, *y, 15, 0x0000);
+    V_line(*x - 4, *y, 15, 0x0000);
+    V_line(*x - 5, *y, 15, 0x0000);
+    V_line(*x - 6, *y, 15, 0x0000);
+    *x = *x+6;
+    //Serial.println(*x);
+    if (*x >= 320){
+      *x = 0;
+      for (int i = 0; i<20; i++){
+      V_line(300+i, *y, 15, 0x0000);}
+    }  
+      
+    delay(5);
+}
+void CAMION1(uint16_t *x, uint8_t *y){
+    LCD_Bitmap(*x, *y, 30, 10, CAMION);
+    V_line(*x + 34, *y, 15, 0x0000);
+    V_line(*x + 33, *y, 15, 0x0000);
+    V_line(*x + 35, *y, 15, 0x0000);
+    V_line(*x + 36, *y, 15, 0x0000);
+    *x = *x-4;
+    
+    if (*x >= 65530){
+      *x = 300;
+      for (int i = 0; i<33; i++){
+      V_line(i, *y, 15, 0x0000);}
+    }  
+      
+    delay(5);
+}
+
 void LCD_Init(void) {
   pinMode(LCD_RST, OUTPUT);
   pinMode(LCD_CS, OUTPUT);
@@ -468,7 +713,7 @@ void LCD_Sprite(int x, int y, int width, int height, unsigned char bitmap[],int 
   digitalWrite(LCD_CS, HIGH);
 }
 
-  void VALSD(File f){
+void VALSD(File f){
   LCD_CMD(0x02c); 
   digitalWrite(LCD_RS, HIGH);
   digitalWrite(LCD_CS, LOW);
