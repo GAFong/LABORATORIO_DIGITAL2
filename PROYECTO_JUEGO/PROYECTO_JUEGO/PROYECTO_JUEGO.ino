@@ -34,11 +34,14 @@ int PB1 = PUSH1;
 int PB2 = PUSH2;
 char SELECTOR;
 int SEL_JUG = 0;
+int SJUG = 0;
 int FLAG1 = 0;
 int FLAG2 = 0;
 int START = 0;
 uint16_t x = 0;
 uint8_t y = 0;
+uint16_t x2 = 0;
+uint8_t y2 = 0;
 uint16_t xcarro1 = 100;
 uint8_t ycarro1 = 180;
 uint16_t xcarro2 = 250;
@@ -86,6 +89,7 @@ uint16_t xflorven8 = 270;
 uint8_t yflorven8 = 210;
 
 char J1;
+char J2;
 char PUSHJ1;
 
 // PROTOTIPOS
@@ -184,12 +188,14 @@ if (PUSHJ1 == '9')     //Pregunta si el PUSH1 está presionado
 if (PUSHJ1 == '8' && FLAG2 == 1){
       FLAG1 = 0;
       switch (SEL_JUG){
-          case 1: //2 JUGADORES
+          case 1: //1 JUGADOR
            START = 1;
+           SJUG = 1;
            break;
            
-           case 2://1JUGADOR
-           START = 2;
+           case 2://2JUGADOR
+           START = 1;
+           SJUG = 2;
            break; 
         }
         FLAG2 = 0;  
@@ -210,7 +216,15 @@ if (PUSHJ1 == '8' && FLAG2 == 1){
            
         x = 90;
         y = 210;
-        AJUMP_DON(&x,&y);     
+        x2 = 180;
+        y2 = 195;
+        AJUMP_DON(&x,&y); 
+        YJUMP_DON(&x2,&y2);   
+        if (SJUG ==2){
+          x2 = 180;
+          y2 = 210;
+          YJUMP_DON(&x2,&y2); 
+        }
       }
 
 while (START == 1){
@@ -235,10 +249,32 @@ while (START == 1){
 
       case '3':
       AJUMP_UPN(&x,&y);
-      break;
-    
+      break;  
   }
- 
+  if (SJUG ==2){
+  LecJ2();
+  switch(J2){
+      default:
+      break;
+
+      case '1':
+      YJUMP_DN(&x2,&y2);
+      break;
+
+      case '2':
+      YJUMP_IN(&x2,&y2);
+      break;
+
+      case '4':
+      YJUMP_DON(&x2,&y2);
+      Serial.write("down");
+      break;
+
+      case '3':
+      YJUMP_UPN(&x2,&y2);
+      break;  
+    }
+  }
   CARRO(&xcarro2,&ycarro2);
   CARRO(&xcarro1,&ycarro1);
   CAR(&xcar1,&ycar1);
@@ -250,11 +286,11 @@ while (START == 1){
   CAMION1(&xcamion2,&ycamion2);
   CAMION1(&xcamion3,&ycamion3);
   
- if (((xcarro1-10)<= x && x<= xcarro1+10) && ((ycarro1-5)<=y && y<= (ycarro1+5))||
+ if (((xcarro1-10)<= x && x<= xcarro1+15) && ((ycarro1-5)<=y && y<= (ycarro1+5))||
   ((xcamion1-10)<= x && x<= xcamion1+35) && ((ycamion1 -8)<=y && y <= (5+ycamion1))||
   ((xcamion2-10)<= x && x<= xcamion2+35) && ((ycamion2 -8)<=y && y <= (5+ycamion2))||
   ((xcamion3-10)<= x && x<= xcamion3+35) && ((ycamion3 -8)<=y && y <= (5+ycamion3))||
-  (((xcarro2-10)<= x && x<= xcarro2+10)||((xcarro3-10)<= x && x<= xcarro3+10)) && ((ycarro2-5)<=y && y<= (ycarro2+5))||
+  (((xcarro2-10)<= x && x<= xcarro2+15)||((xcarro3-10)<= x && x<= xcarro3+15)) && ((ycarro2-5)<=y && y<= (ycarro2+5))||
   ((xcar1-15)<= x && x<= (xcar1+10)) && ((ycar1-7)<=y && y<= (ycar1+10))||
   ((xcar2-15)<= x && x<= (xcar2+10)) && ((ycar2-7)<=y && y<= (ycar2+10))||
   ((xcar3-15)<= x && x<= (xcar3+10)) && ((ycar3-7)<=y && y<= (ycar3+10))||
@@ -301,12 +337,27 @@ void LecJ1(void){
   //Serial.print(PUSHJ1);         // print the character
   delay(10); 
 }
-
-
+void LecJ2(void){
+Serial5.write('V'); 
+  delay(5);
+  if (Serial5.available()) {
+      J2 = Serial5.read(); 
+  }
+  //Serial.print(X);         // print the character
+  delay(5); 
+  
+  Serial5.write('P'); 
+   delay(5);
+  if (Serial5.available()) {
+      PUSHJ1 = Serial5.read(); 
+  }
+  Serial.print(PUSHJ1);         // print the character
+  delay(5);
+}
 //RANA AZUL SALTANDO HACIA ARRIBA
 
 void AJUMP_DON(uint16_t *x, uint8_t *y){
-  if( *y > 210 || (*y ==(ycono1-15)  && *x == xcono1)|| (*y ==(ycono2-15)  && *x == xcono2)|| (*y ==(ycono3-15)  && *x == xcono3)|| (*y ==(ycono4-15)  && *x == xcono4)|| (*y ==(ycono5-15)  && *x == xcono5)){
+  if( *y > 210 || (*y ==(y2-15)  && *x == x2) || (*y ==(ycono1-15)  && *x == xcono1)|| (*y ==(ycono2-15)  && *x == xcono2)|| (*y ==(ycono3-15)  && *x == xcono3)|| (*y ==(ycono4-15)  && *x == xcono4)|| (*y ==(ycono5-15)  && *x == xcono5)){
   }
   else{
     for (int i = 0; i<3; i++){
@@ -332,7 +383,7 @@ void AJUMP_DON(uint16_t *x, uint8_t *y){
  }
 }
 void AJUMP_UPN(uint16_t *x, uint8_t *y){
- if( (*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
+ if( (*y ==(y2+15)  && *x == x2)||(*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
   }
   else {
   for (int i = 0; i<3; i++){
@@ -359,7 +410,7 @@ void AJUMP_UPN(uint16_t *x, uint8_t *y){
 }
 void AJUMP_DN(uint16_t *x, uint8_t *y){
   
-  if(*x > 285|| (*x ==(xcono1-15)  && *y == ycono1)|| (*x ==(xcono2-15)  && *y == ycono2)|| (*x ==(xcono3-15)  && *y == ycono3)|| (*x ==(xcono4-15)  && *y == ycono4)|| (*x ==(xcono5-15)  && *y == ycono5)){
+  if(*x > 285|| (*x ==(x2-15)  && *y == y2)||(*x ==(xcono1-15)  && *y == ycono1)|| (*x ==(xcono2-15)  && *y == ycono2)|| (*x ==(xcono3-15)  && *y == ycono3)|| (*x ==(xcono4-15)  && *y == ycono4)|| (*x ==(xcono5-15)  && *y == ycono5)){
   }
   else{
   for (int i = 0; i<3; i++){
@@ -386,7 +437,7 @@ void AJUMP_DN(uint16_t *x, uint8_t *y){
   }
 }
 void AJUMP_IN(uint16_t *x, uint8_t *y){
-  if (*x < 15|| (*x ==(xcono1+15)  && *y == ycono1)|| (*x ==(xcono2+15)  && *y == ycono2)|| (*x ==(xcono3+15)  && *y == ycono3)|| (*x ==(xcono4+15)  && *y == ycono4)|| (*x ==(xcono5+15)  && *y == ycono5)){
+  if (*x < 15|| (*x ==(x2+15)  && *y == y2)||(*x ==(xcono1+15)  && *y == ycono1)|| (*x ==(xcono2+15)  && *y == ycono2)|| (*x ==(xcono3+15)  && *y == ycono3)|| (*x ==(xcono4+15)  && *y == ycono4)|| (*x ==(xcono5+15)  && *y == ycono5)){
   }
   else {
   for (int i = 0; i<3; i++){
@@ -406,6 +457,113 @@ void AJUMP_IN(uint16_t *x, uint8_t *y){
   }
   for (int i = 0; i<3; i++){
     LCD_Bitmap(*x, *y, 15, 15, RA_I_N);
+    *x = *x -1;
+    delay(5);
+  }
+  }
+}
+//RANA AMARILLA
+void YJUMP_DON(uint16_t *x, uint8_t *y){
+  if( *y > 210 || (*y ==(ycono1-15)  && *x == xcono1)|| (*y ==(ycono2-15)  && *x == xcono2)|| (*y ==(ycono3-15)  && *x == xcono3)|| (*y ==(ycono4-15)  && *x == xcono4)|| (*y ==(ycono5-15)  && *x == xcono5)){
+  }
+  else{
+    for (int i = 0; i<3; i++){
+      LCD_Bitmap(*x, *y, 15, 15, RA_DOWN_V);
+      *y= *y +1;
+      delay(5);
+    }
+    for (int i = 0; i<3; i++){
+     LCD_Bitmap(*x, *y, 15, 15, RA_JUMP_DO_V);
+     *y= *y +1;
+     delay(5); 
+    }
+    for (int i = 0; i<6; i++){
+     LCD_Bitmap(*x, *y, 15, 15, RA_FLY_DO_V);
+     *y= *y +1;
+     delay(5); 
+    }
+    for (int i = 0; i<3; i++){
+      LCD_Bitmap(*x, *y, 15, 15, RA_DOWN_V);
+      *y= *y +1;
+      delay(5);
+    }
+ }
+}
+void YJUMP_UPN(uint16_t *x, uint8_t *y){
+ if( (*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
+  }
+  else {
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_UP_V);
+    *y= *y -1;
+    delay(5);
+  }
+  for (int i = 0; i<3; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_JUMP_UP_V);
+   *y= *y -1;
+   delay(5); 
+  }
+  for (int i = 0; i<6; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_FLY_UP_V);
+   *y= *y -1;
+   delay(5); 
+  }
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_UP_V);
+    *y= *y -1;
+    delay(5);
+  }
+}
+}
+void YJUMP_DN(uint16_t *x, uint8_t *y){
+  
+  if(*x > 285|| (*x ==(xcono1-15)  && *y == ycono1)|| (*x ==(xcono2-15)  && *y == ycono2)|| (*x ==(xcono3-15)  && *y == ycono3)|| (*x ==(xcono4-15)  && *y == ycono4)|| (*x ==(xcono5-15)  && *y == ycono5)){
+  }
+  else{
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_D_V);
+    *x= *x +1;
+    delay(5);
+  }
+  for (int i = 0; i<3; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_JUMP_D_V);
+   *x= *x +1;
+   delay(5); 
+  }
+  for (int i = 0; i<6; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_FLY_D_V);
+   *x= *x +1;
+   delay(5); 
+  }
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_D_V);
+    *x= *x +1;
+    
+    delay(5);
+  }
+  }
+}
+void YJUMP_IN(uint16_t *x, uint8_t *y){
+  if (*x < 15|| (*x ==(xcono1+15)  && *y == ycono1)|| (*x ==(xcono2+15)  && *y == ycono2)|| (*x ==(xcono3+15)  && *y == ycono3)|| (*x ==(xcono4+15)  && *y == ycono4)|| (*x ==(xcono5+15)  && *y == ycono5)){
+  }
+  else {
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_I_V);
+    *x= *x -1;
+    delay(5);
+  }
+  for (int i = 0; i<3; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_JUMP_I_V);
+   *x = *x -1;
+   delay(5); 
+  }
+  for (int i = 0; i<6; i++){
+   LCD_Bitmap(*x, *y, 15, 15, RA_FLY_I_V);
+   *x = *x -1;
+   delay(5); 
+  }
+  for (int i = 0; i<3; i++){
+    LCD_Bitmap(*x, *y, 15, 15, RA_I_V);
     *x = *x -1;
     delay(5);
   }
