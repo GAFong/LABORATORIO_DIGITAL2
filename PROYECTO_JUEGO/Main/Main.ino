@@ -50,7 +50,7 @@ void loop() {
 //  Serial.print('\n');   // send a capital A
 //  Serial.print(Vertical);   // send a capital A
 //  Serial.print('\n');   // send a capital A
-  Serial.print(Valor);   // send a capital A
+//  Serial.print(Valor);   // send a capital A
   delay(100);
 }
 

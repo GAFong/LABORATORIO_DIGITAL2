@@ -1,6 +1,4 @@
 
-
-
  
 #include <SD.h>
 #include <SPI.h>
@@ -34,16 +32,17 @@ int DPINS[] = {PB_0, PB_1, PB_2, PB_3, PB_4, PB_5, PB_6, PB_7};
 File ARCHIVO;
 int PB1 = PUSH1;
 int PB2 = PUSH2;
+char SELECTOR;
 int SEL_JUG = 0;
 int FLAG1 = 0;
 int FLAG2 = 0;
 int START = 0;
-uint16_t x = 45;
+uint16_t x = 0;
 uint8_t y = 0;
 uint16_t xcarro1 = 100;
 uint8_t ycarro1 = 180;
 uint16_t xcarro2 = 250;
-uint8_t ycarro2 = 100;
+uint8_t ycarro2 = 105;
 uint16_t xcarro3 = 300;
 uint16_t xcamion1 = 300;
 uint8_t ycamion1 =195;
@@ -54,11 +53,11 @@ uint8_t ycamion3 =55;
 uint16_t xcar1 = 75;
 uint8_t ycar1 = 165;
 uint16_t xcar2 = 100 ;
-uint8_t ycar2 = 85;
+uint8_t ycar2 = 90;
 uint16_t xcar3 = 200;
-uint8_t ycar3 = 85;
+uint8_t ycar3 = 90;
 uint16_t xcar4 = 300;
-uint8_t ycar4 = 85;
+uint8_t ycar4 = 90;
 uint16_t xcono1 = 255;
 uint8_t ycono1 = 150;
 uint16_t xcono2 = 45;
@@ -73,6 +72,21 @@ uint16_t xflorven1 = 165;
 uint8_t yflorven1 = 120;
 uint16_t xflorven2 = 150;
 uint8_t yflorven2 = 120;
+uint16_t xflorven3 = 0;
+uint8_t yflorven3 = 210;
+uint16_t xflorven4 = 15;
+uint8_t yflorven4 = 210;
+uint16_t xflorven5 = 30;
+uint8_t yflorven5 = 210;
+uint16_t xflorven6 = 300;
+uint8_t yflorven6 = 210;
+uint16_t xflorven7 = 285;
+uint8_t yflorven7 = 210;
+uint16_t xflorven8 = 270;
+uint8_t yflorven8 = 210;
+
+char J1;
+char PUSHJ1;
 
 // PROTOTIPOS
 //***************************************************************************************************************************************
@@ -94,10 +108,12 @@ void AJUMP_UPN(uint16_t x, uint8_t);
 void CARRO(uint16_t &x, uint8_t &y);
 void CAR(uint16_t &x, uint8_t &y);
 void CAMION1(uint16_t &x, uint8_t &y);
+void VALSD(File f);
 
 void setup() {
   SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
   Serial.begin(9600);
+  Serial3.begin(9600);
   GPIOPadConfigSet(GPIO_PORTB_BASE, 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPU);
   Serial.println("Start");
   pinMode(PB1, INPUT_PULLUP);      // COLOCAMOS LOS PUSH EN PULL UP
@@ -134,48 +150,46 @@ void setup() {
 }
 void loop() {
   //ANTIREBOTE DEL BOTON 1
-  if (digitalRead(PB1) == LOW)     //Pregunta si el PUSH1 está presionado
-      {
-        FLAG1 = 1;     //La variable cambia de valor
-      }
-   if (digitalRead(PB1) == HIGH && FLAG1 == 1)
-      {
-        
-        SEL_JUG++;
+        LecJ1();
+        char SELECTOR = J1;
         String flecha("->");
-        switch (SEL_JUG){
-          case 1:
+        switch (SELECTOR){
+          case '3':
           
            LCD_Print(flecha, 52, 190, 2, 0xff00, 0x0000);
-           for (int x = 0; x <15; x++){
-              H_line(53, 210 + x, 26, 0x0000);}
+           for (int i = 0; i <15; i++){
+              H_line(53, 210 + i, 26, 0x0000);}
+              SEL_JUG = 1;
            break;
            
-           case 2:
+           case '4':
            LCD_Print(flecha, 52, 210, 2, 0xff00, 0x0000);
-           for (int x = 0; x <15; x++){
-           H_line(53, 190 + x, 26, 0x0000);}
-           SEL_JUG = 0;
+           for (int i = 0; i <15; i++){
+           H_line(53, 190 + i, 26, 0x0000);}
+           SEL_JUG = 2;
            break;
+
+           default:
+            break;
            
         }
         FLAG1 = 0;
         Serial.println(SEL_JUG);
-}
 
-if (digitalRead(PB2) == LOW)     //Pregunta si el PUSH1 está presionado
+
+if (PUSHJ1 == '9')     //Pregunta si el PUSH1 está presionado
       {
         FLAG2 = 1;     //La variable cambia de valor
       }
-if (digitalRead(PB2) == HIGH && FLAG2 == 1){
+if (PUSHJ1 == '8' && FLAG2 == 1){
       FLAG1 = 0;
       switch (SEL_JUG){
-          case 0: //2 JUGADORES
-           START = 2;
+          case 1: //2 JUGADORES
+           START = 1;
            break;
            
-           case 1://1JUGADOR
-           START = 1;
+           case 2://1JUGADOR
+           START = 2;
            break; 
         }
         FLAG2 = 0;  
@@ -186,30 +200,45 @@ if (digitalRead(PB2) == HIGH && FLAG2 == 1){
         LCD_Bitmap(xcono4, ycono4, 15, 15, CONO);
         LCD_Bitmap(xcono5, ycono5, 15, 15, CONO);
         LCD_Bitmap(xflorven1, yflorven1, 15, 15, FLORES_VEN);
-        LCD_Bitmap(xflorven2, yflorven2, 15, 15, FLORES_VEN);        
+        LCD_Bitmap(xflorven2, yflorven2, 15, 15, FLORES_VEN);
+        LCD_Bitmap(xflorven3, yflorven3, 15, 15, FLORES_VEN); 
+        LCD_Bitmap(xflorven4, yflorven4, 15, 15, FLORES_VEN);
+        LCD_Bitmap(xflorven5, yflorven5, 15, 15, FLORES_VEN);
+        LCD_Bitmap(xflorven6, yflorven6, 15, 15, FLORES_VEN);
+        LCD_Bitmap(xflorven7, yflorven7, 15, 15, FLORES_VEN); 
+        LCD_Bitmap(xflorven8, yflorven8, 15, 15, FLORES_VEN);  
+           
+        x = 90;
+        y = 210;
+        AJUMP_DON(&x,&y);     
       }
 
 while (START == 1){
-  if (((xcarro1-10)<= x && x<= xcarro1) && ((ycarro1-5)<=y && y<= (ycarro1+5))||
-  ((xcamion1-10)<= x && x<= xcamion1+35) && ((ycamion1 -8)<=y && y <= (5+ycamion1))||
-  ((xcamion2-10)<= x && x<= xcamion2+35) && ((ycamion2 -8)<=y && y <= (5+ycamion2))||
-  ((xcamion3-10)<= x && x<= xcamion3+35) && ((ycamion3 -8)<=y && y <= (5+ycamion3))||
-  (((xcarro2-10)<= x && x<= xcarro2)||((xcarro3-10)<= x && x<= xcarro3)) && ((ycarro2-5)<=y && y<= (ycarro2+5))||
-  ((xcar1)<= x && x<= (xcar1+10)) && ((ycar1-7)<=y && y<= (ycar1+10))||
-  ((xcar2)<= x && x<= (xcar2+10)) && ((ycar2-7)<=y && y<= (ycar2+10))||
-  ((xcar3)<= x && x<= (xcar3+10)) && ((ycar3-7)<=y && y<= (ycar3+10))||
-  ((xcar4)<= x && x<= (xcar4+10)) && ((ycar4-7)<=y && y<= (ycar4+10))||
-  (xflorven1 == x && y ==yflorven1)|| (xflorven2 == x && y ==yflorven2)
-  ){
-    START =0;
-  }
+  
+  LecJ1();
+  switch(J1){
+      default:
+      break;
 
- /* 
-  LCD_Bitmap(80, 80, 15, 15, RA_DOWN_N);
-  AJUMP_UPN(&x,&y);
-  AJUMP_DN(&x,&y);
-  AJUMP_DON(&x,&y);
-  AJUMP_IN(&x,&y);*/
+      case '1':
+      AJUMP_DN(&x,&y);
+      break;
+
+      case '2':
+      AJUMP_IN(&x,&y);
+      break;
+
+      case '4':
+      AJUMP_DON(&x,&y);
+      Serial.write("down");
+      break;
+
+      case '3':
+      AJUMP_UPN(&x,&y);
+      break;
+    
+  }
+ 
   CARRO(&xcarro2,&ycarro2);
   CARRO(&xcarro1,&ycarro1);
   CAR(&xcar1,&ycar1);
@@ -220,14 +249,60 @@ while (START == 1){
   CAMION1(&xcamion1,&ycamion1);
   CAMION1(&xcamion2,&ycamion2);
   CAMION1(&xcamion3,&ycamion3);
-  //LCD_Bitmap(x, y, 15, 15, RA_DOWN_N);
- // LCD_Bitmap(150, 80, 29, 10, CAMION);
- // delay(10000);
-  AJUMP_DON(&x,&y);
-  Serial.println(y);
+  
+ if (((xcarro1-10)<= x && x<= xcarro1+10) && ((ycarro1-5)<=y && y<= (ycarro1+5))||
+  ((xcamion1-10)<= x && x<= xcamion1+35) && ((ycamion1 -8)<=y && y <= (5+ycamion1))||
+  ((xcamion2-10)<= x && x<= xcamion2+35) && ((ycamion2 -8)<=y && y <= (5+ycamion2))||
+  ((xcamion3-10)<= x && x<= xcamion3+35) && ((ycamion3 -8)<=y && y <= (5+ycamion3))||
+  (((xcarro2-10)<= x && x<= xcarro2+10)||((xcarro3-10)<= x && x<= xcarro3+10)) && ((ycarro2-5)<=y && y<= (ycarro2+5))||
+  ((xcar1-15)<= x && x<= (xcar1+10)) && ((ycar1-7)<=y && y<= (ycar1+10))||
+  ((xcar2-15)<= x && x<= (xcar2+10)) && ((ycar2-7)<=y && y<= (ycar2+10))||
+  ((xcar3-15)<= x && x<= (xcar3+10)) && ((ycar3-7)<=y && y<= (ycar3+10))||
+  ((xcar4-15)<= x && x<= (xcar4+10)) && ((ycar4-7)<=y && y<= (ycar4+10))||
+  (xflorven1 == x && y ==yflorven1)|| (xflorven2 == x && y ==yflorven2)|| (xflorven3 == x && y ==yflorven3)|| (xflorven4 == x && y ==yflorven4)|| (xflorven5 == x && y ==yflorven5)|| (xflorven6 == x && y ==yflorven6)|| (xflorven7 == x && y ==yflorven7)|| (xflorven8 == x && y ==yflorven8)
+  ){
+    START =0;
+   
+    LCD_Bitmap(x, y, 15, 15, MUERTE);
+    for(int i = 0; i<10;i++){
+    LCD_Bitmap(100+i*5, 15,80 , 7, GAME_OVER);
+    delay(1000);
+    FillRect(100+i*5, 15, 80, 7, 0x0000);
+    }
+    delay(2000);
+    FillRect(0, 0, 320, 240, 0x0000);
+    ARCHIVO = SD.open("FROG.txt",FILE_READ);
+    VALSD(ARCHIVO);  
+    ARCHIVO.close();
+    String jugador1 = "1 JUGADOR";
+    LCD_Print(jugador1, 80, 190, 2, 0xff00, 0x0000);
+    String jugador2 = "2 JUGADORES";
+    LCD_Print(jugador2, 80, 210, 2, 0xff00, 0x0000);
+  }
 }
         
 }
+//FUNCION DE LECTURA DE SERIAL
+
+void LecJ1(void){
+ Serial3.write('V'); 
+  delay(5);
+  if (Serial3.available()) {
+      J1 = Serial3.read(); 
+  }
+  //Serial.print(XJ1);         // print the character
+  delay(10); 
+  
+  Serial3.write('P'); 
+   delay(5);
+  if (Serial3.available()) {
+      PUSHJ1 = Serial3.read(); 
+  }
+  //Serial.print(PUSHJ1);         // print the character
+  delay(10); 
+}
+
+
 //RANA AZUL SALTANDO HACIA ARRIBA
 
 void AJUMP_DON(uint16_t *x, uint8_t *y){
@@ -257,6 +332,9 @@ void AJUMP_DON(uint16_t *x, uint8_t *y){
  }
 }
 void AJUMP_UPN(uint16_t *x, uint8_t *y){
+ if( (*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
+  }
+  else {
   for (int i = 0; i<3; i++){
     LCD_Bitmap(*x, *y, 15, 15, RA_UP_N);
     *y= *y -1;
@@ -278,8 +356,12 @@ void AJUMP_UPN(uint16_t *x, uint8_t *y){
     delay(5);
   }
 }
+}
 void AJUMP_DN(uint16_t *x, uint8_t *y){
-  if(*x != 300){
+  
+  if(*x > 285|| (*x ==(xcono1-15)  && *y == ycono1)|| (*x ==(xcono2-15)  && *y == ycono2)|| (*x ==(xcono3-15)  && *y == ycono3)|| (*x ==(xcono4-15)  && *y == ycono4)|| (*x ==(xcono5-15)  && *y == ycono5)){
+  }
+  else{
   for (int i = 0; i<3; i++){
     LCD_Bitmap(*x, *y, 15, 15, RA_D_N);
     *x= *x +1;
@@ -304,7 +386,9 @@ void AJUMP_DN(uint16_t *x, uint8_t *y){
   }
 }
 void AJUMP_IN(uint16_t *x, uint8_t *y){
-  if (*x != 0){
+  if (*x < 15|| (*x ==(xcono1+15)  && *y == ycono1)|| (*x ==(xcono2+15)  && *y == ycono2)|| (*x ==(xcono3+15)  && *y == ycono3)|| (*x ==(xcono4+15)  && *y == ycono4)|| (*x ==(xcono5+15)  && *y == ycono5)){
+  }
+  else {
   for (int i = 0; i<3; i++){
     LCD_Bitmap(*x, *y, 15, 15, RA_I_N);
     *x= *x -1;
