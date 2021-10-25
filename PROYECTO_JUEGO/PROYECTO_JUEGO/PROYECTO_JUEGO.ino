@@ -50,9 +50,9 @@ uint16_t xcarro3 = 300;
 uint16_t xcamion1 = 300;
 uint8_t ycamion1 =195;
 uint16_t xcamion2 = 300;
-uint8_t ycamion2 =55;
+uint8_t ycamion2 =60;
 uint16_t xcamion3 = 150;
-uint8_t ycamion3 =55;
+uint8_t ycamion3 =60;
 uint16_t xcar1 = 75;
 uint8_t ycar1 = 165;
 uint16_t xcar2 = 100 ;
@@ -87,10 +87,14 @@ uint16_t xflorven7 = 285;
 uint8_t yflorven7 = 210;
 uint16_t xflorven8 = 270;
 uint8_t yflorven8 = 210;
+uint16_t xestrella = 150;
+uint8_t yestrella = 30;
 
 char J1;
 char J2;
 char PUSHJ1;
+char PUSHJ2;
+
 
 // PROTOTIPOS
 //***************************************************************************************************************************************
@@ -118,6 +122,7 @@ void setup() {
   SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
   Serial.begin(9600);
   Serial3.begin(9600);
+  Serial5.begin(9600);
   GPIOPadConfigSet(GPIO_PORTB_BASE, 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPU);
   Serial.println("Start");
   pinMode(PB1, INPUT_PULLUP);      // COLOCAMOS LOS PUSH EN PULL UP
@@ -142,6 +147,7 @@ void setup() {
   if (!SD.begin(12)) {
     Serial.println("initialization failed!");
     return;
+    
 }
   Serial.println("initialization done.");
   ARCHIVO = SD.open("FROG.txt",FILE_READ);
@@ -151,6 +157,8 @@ void setup() {
   LCD_Print(jugador1, 80, 190, 2, 0xff00, 0x0000);
   String jugador2 = "2 JUGADORES";
   LCD_Print(jugador2, 80, 210, 2, 0xff00, 0x0000);
+  Serial5.write('M'); 
+  delay(5);
 }
 void loop() {
   //ANTIREBOTE DEL BOTON 1
@@ -178,7 +186,7 @@ void loop() {
            
         }
         FLAG1 = 0;
-        Serial.println(SEL_JUG);
+        
 
 
 if (PUSHJ1 == '9')     //Pregunta si el PUSH1 está presionado
@@ -200,6 +208,7 @@ if (PUSHJ1 == '8' && FLAG2 == 1){
         }
         FLAG2 = 0;  
         FillRect(0, 0, 320, 240, 0x0000);
+        LCD_Bitmap(60, 0, 159, 15, TITULO);
         LCD_Bitmap(xcono1, ycono1, 15, 15, CONO);
         LCD_Bitmap(xcono2, ycono2, 15, 15, CONO); 
         LCD_Bitmap(xcono3, ycono3, 15, 15, CONO); 
@@ -212,14 +221,15 @@ if (PUSHJ1 == '8' && FLAG2 == 1){
         LCD_Bitmap(xflorven5, yflorven5, 15, 15, FLORES_VEN);
         LCD_Bitmap(xflorven6, yflorven6, 15, 15, FLORES_VEN);
         LCD_Bitmap(xflorven7, yflorven7, 15, 15, FLORES_VEN); 
-        LCD_Bitmap(xflorven8, yflorven8, 15, 15, FLORES_VEN);  
+        LCD_Bitmap(xflorven8, yflorven8, 15, 15, FLORES_VEN); 
+        LCD_Bitmap(xestrella, yestrella, 16, 16, ESTRELLA); 
            
         x1 = 90;
         y_1 = 210;
-        x2 = 180;
-        y2 = 195;
+        x2 = 0;
+        y2 = 0;
         AJUMP_DON(&x1,&y_1); 
-        YJUMP_DON(&x2,&y2);   
+         
         if (SJUG ==2){
           x2 = 180;
           y2 = 210;
@@ -228,7 +238,8 @@ if (PUSHJ1 == '8' && FLAG2 == 1){
       }
 
 while (START == 1){
-  
+  Serial5.write('N'); 
+  delay(5);
   LecJ1();
   switch(J1){
       default:
@@ -251,8 +262,9 @@ while (START == 1){
       AJUMP_UPN(&x1,&y_1);
       break;  
   }
-  if (SJUG ==2){
+  
   LecJ2();
+  if (SJUG ==2){
   switch(J2){
       default:
       break;
@@ -285,7 +297,38 @@ while (START == 1){
   CAMION1(&xcamion1,&ycamion1);
   CAMION1(&xcamion2,&ycamion2);
   CAMION1(&xcamion3,&ycamion3);
-  
+  //CONDICION DE GANADORES
+ if ((xestrella == x1 && y_1 == yestrella)||(xestrella == x2 && y2 == yestrella)){
+    START =0;
+    Serial5.write('W'); 
+    delay(5);
+    if (xestrella == x1 && y_1 == yestrella){ 
+      for(int i = 0; i<10;i++){
+      LCD_Bitmap(100+i*5, 20,80 , 7, WIN_J1);
+      delay(1000);
+      FillRect(100+i*5, 20, 80, 7, 0x0000);
+    }
+    }
+    if (xestrella == x2 && y2 == yestrella){ 
+      for(int i = 0; i<10;i++){
+      LCD_Bitmap(100+i*5, 20,80 , 7, WIN_J2);
+      delay(1000);
+      FillRect(100+i*5, 20, 80, 7, 0x0000);
+    }  
+    }
+    delay(1000);
+    FillRect(0, 0, 320, 240, 0x0000);
+    ARCHIVO = SD.open("FROG.txt",FILE_READ);
+    VALSD(ARCHIVO);  
+    ARCHIVO.close();
+    String jugador1 = "1 JUGADOR";
+    LCD_Print(jugador1, 80, 190, 2, 0xff00, 0x0000);
+    String jugador2 = "2 JUGADORES";
+    LCD_Print(jugador2, 80, 210, 2, 0xff00, 0x0000);
+    Serial5.write('M'); 
+    delay(5);
+ }
+ //CONDICION DE COLISION RANA AZUL
  if (((xcarro1-10)<= x1 && x1<= xcarro1+15) && ((ycarro1-5)<=y_1 && y_1<= (ycarro1+5))||
   ((xcamion1-10)<= x1 && x1<= xcamion1+35) && ((ycamion1 -8)<=y_1 && y_1 <= (5+ycamion1))||
   ((xcamion2-10)<= x1 && x1<= xcamion2+35) && ((ycamion2 -8)<=y_1 && y_1 <= (5+ycamion2))||
@@ -300,18 +343,22 @@ while (START == 1){
     START =0;
     switch (SJUG){
       case 1:
+      Serial5.write('G'); 
+      delay(5);
       LCD_Bitmap(x1, y_1, 15, 15, MUERTE);
       for(int i = 0; i<10;i++){
-      LCD_Bitmap(100+i*5, 15,80 , 7, GAME_OVER);
+      LCD_Bitmap(100+i*5, 20,80 , 7, GAME_OVER);
       delay(1000);
-      FillRect(100+i*5, 15, 80, 7, 0x0000);}
+      FillRect(100+i*5, 20, 80, 7, 0x0000);}
       break;
       case 2:
+      Serial5.write('W'); 
+      delay(5);
       LCD_Bitmap(x1, y_1, 15, 15, MUERTE);
       for(int i = 0; i<10;i++){
-      LCD_Bitmap(100+i*5, 15,80 , 7, WIN_J2);
+      LCD_Bitmap(100+i*5, 20,80 , 7, WIN_J2);
       delay(1000);
-      FillRect(100+i*5, 15, 80, 7, 0x0000);}
+      FillRect(100+i*5, 20, 80, 7, 0x0000);}
       break;
     }
     
@@ -324,7 +371,10 @@ while (START == 1){
     LCD_Print(jugador1, 80, 190, 2, 0xff00, 0x0000);
     String jugador2 = "2 JUGADORES";
     LCD_Print(jugador2, 80, 210, 2, 0xff00, 0x0000);
+    Serial5.write('M'); 
+    delay(5);
   }
+  //CONDICION DE COLISION RANA AMARILLA
    if (((xcarro1-10)<= x2 && x2<= xcarro1+15) && ((ycarro1-5)<=y2 && y2<= (ycarro1+5))||
   ((xcamion1-10)<= x2 && x2<= xcamion1+35) && ((ycamion1 -8)<=y2 && y2 <= (5+ycamion1))||
   ((xcamion2-10)<= x2 && x2<= xcamion2+35) && ((ycamion2 -8)<=y2 && y2 <= (5+ycamion2))||
@@ -337,12 +387,13 @@ while (START == 1){
   (xflorven1 == x2 && y2 ==yflorven1)|| (xflorven2 == x2 && y2 ==yflorven2)|| (xflorven3 == x2 && y2 ==yflorven3)|| (xflorven4 == x2 && y2 ==yflorven4)|| (xflorven5 == x2 && y2 ==yflorven5)|| (xflorven6 == x2 && y2 ==yflorven6)|| (xflorven7 == x2 && y2 ==yflorven7)|| (xflorven8 == x2 && y2 ==yflorven8)
   ){
     START =0;
-   
+    Serial5.write('W'); 
+    delay(5);
     LCD_Bitmap(x2, y2, 15, 15, MUERTE);
     for(int i = 0; i<10;i++){
-    LCD_Bitmap(100+i*5, 15,80 , 7, WIN_J1);
+    LCD_Bitmap(100+i*5, 20,80 , 7, WIN_J1);
     delay(1000);
-    FillRect(100+i*5, 15, 80, 7, 0x0000);
+    FillRect(100+i*5, 20, 80, 7, 0x0000);
     }
     delay(2000);
     FillRect(0, 0, 320, 240, 0x0000);
@@ -353,6 +404,8 @@ while (START == 1){
     LCD_Print(jugador1, 80, 190, 2, 0xff00, 0x0000);
     String jugador2 = "2 JUGADORES";
     LCD_Print(jugador2, 80, 210, 2, 0xff00, 0x0000);
+    Serial5.write('M'); 
+    delay(5);
   }
 }
         
@@ -379,21 +432,20 @@ void LecJ1(void){
 void LecJ2(void){
 Serial5.write('V'); 
   delay(5);
-  if (Serial5.available()) {
+  while(Serial5.available()) {
       J2 = Serial5.read(); 
   }
   //Serial.print(X);         // print the character
-  delay(5); 
+ // delay(5); 
   
-  Serial5.write('P'); 
+ /* Serial5.write('P'); 
    delay(5);
   if (Serial5.available()) {
-      PUSHJ1 = Serial5.read(); 
-  }
-  Serial.print(PUSHJ1);         // print the character
-  delay(5);
+      PUSHJ2 = Serial5.read(); 
+  }*/
+  
 }
-//RANA AZUL SALTANDO HACIA ARRIBA
+//RANA AZUL SALTANDO HACIA ABAJO
 
 void AJUMP_DON(uint16_t *x, uint8_t *y){
   if( *y > 210 || (*y ==(y2-15)  && *x == x2) || (*y ==(ycono1-15)  && *x == xcono1)|| (*y ==(ycono2-15)  && *x == xcono2)|| (*y ==(ycono3-15)  && *x == xcono3)|| (*y ==(ycono4-15)  && *x == xcono4)|| (*y ==(ycono5-15)  && *x == xcono5)){
@@ -421,8 +473,9 @@ void AJUMP_DON(uint16_t *x, uint8_t *y){
     }
  }
 }
+//RANA AZUL SALTANDO ARRIBA
 void AJUMP_UPN(uint16_t *x, uint8_t *y){
- if( (*y ==(y2+15)  && *x == x2)||(*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
+ if(*y < 30 || (*y ==(y2+15)  && *x == x2)||(*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
   }
   else {
   for (int i = 0; i<3; i++){
@@ -447,6 +500,7 @@ void AJUMP_UPN(uint16_t *x, uint8_t *y){
   }
 }
 }
+//RANA AZUL SALTANDO DERECHA
 void AJUMP_DN(uint16_t *x, uint8_t *y){
   
   if(*x > 285|| (*x ==(x2-15)  && *y == y2)||(*x ==(xcono1-15)  && *y == ycono1)|| (*x ==(xcono2-15)  && *y == ycono2)|| (*x ==(xcono3-15)  && *y == ycono3)|| (*x ==(xcono4-15)  && *y == ycono4)|| (*x ==(xcono5-15)  && *y == ycono5)){
@@ -475,6 +529,7 @@ void AJUMP_DN(uint16_t *x, uint8_t *y){
   }
   }
 }
+//RANA AZUL SALTANDO IZQUIERDA
 void AJUMP_IN(uint16_t *x, uint8_t *y){
   if (*x < 15|| (*x ==(x2+15)  && *y == y2)||(*x ==(xcono1+15)  && *y == ycono1)|| (*x ==(xcono2+15)  && *y == ycono2)|| (*x ==(xcono3+15)  && *y == ycono3)|| (*x ==(xcono4+15)  && *y == ycono4)|| (*x ==(xcono5+15)  && *y == ycono5)){
   }
@@ -501,7 +556,7 @@ void AJUMP_IN(uint16_t *x, uint8_t *y){
   }
   }
 }
-//RANA AMARILLA
+//RANA AMARILLA SALTANDO ABAJO
 void YJUMP_DON(uint16_t *x, uint8_t *y){
   if( *y > 210 || (*y ==(y_1-15)  && *x == x1)||(*y ==(ycono1-15)  && *x == xcono1)|| (*y ==(ycono2-15)  && *x == xcono2)|| (*y ==(ycono3-15)  && *x == xcono3)|| (*y ==(ycono4-15)  && *x == xcono4)|| (*y ==(ycono5-15)  && *x == xcono5)){
   }
@@ -528,8 +583,9 @@ void YJUMP_DON(uint16_t *x, uint8_t *y){
     }
  }
 }
+//RANA AMARRILLA SALTANDO ARRIBA
 void YJUMP_UPN(uint16_t *x, uint8_t *y){
- if( (*y ==((y_1)+15)  && *x == x1)||(*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
+ if( (*y < 30 ||*y ==((y_1)+15)  && *x == x1)||(*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
   }
   else {
   for (int i = 0; i<3; i++){
@@ -554,6 +610,7 @@ void YJUMP_UPN(uint16_t *x, uint8_t *y){
   }
 }
 }
+//RANA AMARRILLA SALTANDO DERECHA
 void YJUMP_DN(uint16_t *x, uint8_t *y){
   
   if(*x > 285|| (*x ==(x1-15)  && *y == y_1)||(*x ==(xcono1-15)  && *y == ycono1)|| (*x ==(xcono2-15)  && *y == ycono2)|| (*x ==(xcono3-15)  && *y == ycono3)|| (*x ==(xcono4-15)  && *y == ycono4)|| (*x ==(xcono5-15)  && *y == ycono5)){
@@ -582,6 +639,7 @@ void YJUMP_DN(uint16_t *x, uint8_t *y){
   }
   }
 }
+//RANA AMARRILLA SALTANDO IZQUIERDA
 void YJUMP_IN(uint16_t *x, uint8_t *y){
   if (*x < 15|| (*x ==(x1+15)  && *y == y_1)||(*x ==(xcono1+15)  && *y == ycono1)|| (*x ==(xcono2+15)  && *y == ycono2)|| (*x ==(xcono3+15)  && *y == ycono3)|| (*x ==(xcono4+15)  && *y == ycono4)|| (*x ==(xcono5+15)  && *y == ycono5)){
   }
@@ -608,6 +666,7 @@ void YJUMP_IN(uint16_t *x, uint8_t *y){
   }
   }
 }
+//FUNCION DEL CARRO
 void CARRO(uint16_t *x, uint8_t *y){
     LCD_Bitmap(*x, *y, 15, 15, CARRO1);
     V_line(*x + 15, *y, 15, 0x0000);
@@ -623,8 +682,9 @@ void CARRO(uint16_t *x, uint8_t *y){
       
     delay(5);
 }
+//FUNCION DEL CARRO DE CARRERAS
 void CAR(uint16_t *x, uint8_t *y){
-    LCD_Bitmap(*x, *y, 15, 15, CARRO2);
+    LCD_Bitmap(*x, *y, 16, 14, CARRO2);
     V_line(*x - 1, *y, 15, 0x0000);
     V_line(*x - 2, *y, 15, 0x0000);
     V_line(*x - 3, *y, 15, 0x0000);
@@ -641,8 +701,9 @@ void CAR(uint16_t *x, uint8_t *y){
       
     delay(5);
 }
+//FUNCION DEL CAMION
 void CAMION1(uint16_t *x, uint8_t *y){
-    LCD_Bitmap(*x, *y, 30, 10, CAMION);
+    LCD_Bitmap(*x, *y, 27, 10, CAMION);
     V_line(*x + 34, *y, 15, 0x0000);
     V_line(*x + 33, *y, 15, 0x0000);
     V_line(*x + 35, *y, 15, 0x0000);
