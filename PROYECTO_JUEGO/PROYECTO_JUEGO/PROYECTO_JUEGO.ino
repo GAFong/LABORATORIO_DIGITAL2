@@ -38,8 +38,8 @@ int SJUG = 0;
 int FLAG1 = 0;
 int FLAG2 = 0;
 int START = 0;
-uint16_t x = 0;
-uint8_t y = 0;
+uint16_t x1 = 0;
+uint8_t y_1 = 0;
 uint16_t x2 = 0;
 uint8_t y2 = 0;
 uint16_t xcarro1 = 100;
@@ -214,11 +214,11 @@ if (PUSHJ1 == '8' && FLAG2 == 1){
         LCD_Bitmap(xflorven7, yflorven7, 15, 15, FLORES_VEN); 
         LCD_Bitmap(xflorven8, yflorven8, 15, 15, FLORES_VEN);  
            
-        x = 90;
-        y = 210;
+        x1 = 90;
+        y_1 = 210;
         x2 = 180;
         y2 = 195;
-        AJUMP_DON(&x,&y); 
+        AJUMP_DON(&x1,&y_1); 
         YJUMP_DON(&x2,&y2);   
         if (SJUG ==2){
           x2 = 180;
@@ -235,20 +235,20 @@ while (START == 1){
       break;
 
       case '1':
-      AJUMP_DN(&x,&y);
+      AJUMP_DN(&x1,&y_1);
       break;
 
       case '2':
-      AJUMP_IN(&x,&y);
+      AJUMP_IN(&x1,&y_1);
       break;
 
       case '4':
-      AJUMP_DON(&x,&y);
+      AJUMP_DON(&x1,&y_1);
       Serial.write("down");
       break;
 
       case '3':
-      AJUMP_UPN(&x,&y);
+      AJUMP_UPN(&x1,&y_1);
       break;  
   }
   if (SJUG ==2){
@@ -286,22 +286,61 @@ while (START == 1){
   CAMION1(&xcamion2,&ycamion2);
   CAMION1(&xcamion3,&ycamion3);
   
- if (((xcarro1-10)<= x && x<= xcarro1+15) && ((ycarro1-5)<=y && y<= (ycarro1+5))||
-  ((xcamion1-10)<= x && x<= xcamion1+35) && ((ycamion1 -8)<=y && y <= (5+ycamion1))||
-  ((xcamion2-10)<= x && x<= xcamion2+35) && ((ycamion2 -8)<=y && y <= (5+ycamion2))||
-  ((xcamion3-10)<= x && x<= xcamion3+35) && ((ycamion3 -8)<=y && y <= (5+ycamion3))||
-  (((xcarro2-10)<= x && x<= xcarro2+15)||((xcarro3-10)<= x && x<= xcarro3+15)) && ((ycarro2-5)<=y && y<= (ycarro2+5))||
-  ((xcar1-15)<= x && x<= (xcar1+10)) && ((ycar1-7)<=y && y<= (ycar1+10))||
-  ((xcar2-15)<= x && x<= (xcar2+10)) && ((ycar2-7)<=y && y<= (ycar2+10))||
-  ((xcar3-15)<= x && x<= (xcar3+10)) && ((ycar3-7)<=y && y<= (ycar3+10))||
-  ((xcar4-15)<= x && x<= (xcar4+10)) && ((ycar4-7)<=y && y<= (ycar4+10))||
-  (xflorven1 == x && y ==yflorven1)|| (xflorven2 == x && y ==yflorven2)|| (xflorven3 == x && y ==yflorven3)|| (xflorven4 == x && y ==yflorven4)|| (xflorven5 == x && y ==yflorven5)|| (xflorven6 == x && y ==yflorven6)|| (xflorven7 == x && y ==yflorven7)|| (xflorven8 == x && y ==yflorven8)
+ if (((xcarro1-10)<= x1 && x1<= xcarro1+15) && ((ycarro1-5)<=y_1 && y_1<= (ycarro1+5))||
+  ((xcamion1-10)<= x1 && x1<= xcamion1+35) && ((ycamion1 -8)<=y_1 && y_1 <= (5+ycamion1))||
+  ((xcamion2-10)<= x1 && x1<= xcamion2+35) && ((ycamion2 -8)<=y_1 && y_1 <= (5+ycamion2))||
+  ((xcamion3-10)<= x1 && x1<= xcamion3+35) && ((ycamion3 -8)<=y_1 && y_1 <= (5+ycamion3))||
+  (((xcarro2-10)<= x1 && x1<= xcarro2+15)||((xcarro3-10)<= x1 && x1<= xcarro3+15)) && ((ycarro2-5)<=y_1 && y_1<= (ycarro2+5))||
+  ((xcar1-15)<= x1 && x1<= (xcar1+10)) && ((ycar1-7)<=y_1 && y_1<= (ycar1+10))||
+  ((xcar2-15)<= x1 && x1<= (xcar2+10)) && ((ycar2-7)<=y_1 && y_1<= (ycar2+10))||
+  ((xcar3-15)<= x1 && x1<= (xcar3+10)) && ((ycar3-7)<=y_1 && y_1<= (ycar3+10))||
+  ((xcar4-15)<= x1 && x1<= (xcar4+10)) && ((ycar4-7)<=y_1 && y_1<= (ycar4+10))||
+  (xflorven1 == x1 && y_1 ==yflorven1)|| (xflorven2 == x1 && y_1 ==yflorven2)|| (xflorven3 == x1 && y_1 ==yflorven3)|| (xflorven4 == x1 && y_1 ==yflorven4)|| (xflorven5 == x1 && y_1 ==yflorven5)|| (xflorven6 == x1 && y_1 ==yflorven6)|| (xflorven7 == x1 && y_1 ==yflorven7)|| (xflorven8 == x1 && y_1 ==yflorven8)
+  ){
+    START =0;
+    switch (SJUG){
+      case 1:
+      LCD_Bitmap(x1, y_1, 15, 15, MUERTE);
+      for(int i = 0; i<10;i++){
+      LCD_Bitmap(100+i*5, 15,80 , 7, GAME_OVER);
+      delay(1000);
+      FillRect(100+i*5, 15, 80, 7, 0x0000);}
+      break;
+      case 2:
+      LCD_Bitmap(x1, y_1, 15, 15, MUERTE);
+      for(int i = 0; i<10;i++){
+      LCD_Bitmap(100+i*5, 15,80 , 7, WIN_J2);
+      delay(1000);
+      FillRect(100+i*5, 15, 80, 7, 0x0000);}
+      break;
+    }
+    
+    delay(2000);
+    FillRect(0, 0, 320, 240, 0x0000);
+    ARCHIVO = SD.open("FROG.txt",FILE_READ);
+    VALSD(ARCHIVO);  
+    ARCHIVO.close();
+    String jugador1 = "1 JUGADOR";
+    LCD_Print(jugador1, 80, 190, 2, 0xff00, 0x0000);
+    String jugador2 = "2 JUGADORES";
+    LCD_Print(jugador2, 80, 210, 2, 0xff00, 0x0000);
+  }
+   if (((xcarro1-10)<= x2 && x2<= xcarro1+15) && ((ycarro1-5)<=y2 && y2<= (ycarro1+5))||
+  ((xcamion1-10)<= x2 && x2<= xcamion1+35) && ((ycamion1 -8)<=y2 && y2 <= (5+ycamion1))||
+  ((xcamion2-10)<= x2 && x2<= xcamion2+35) && ((ycamion2 -8)<=y2 && y2 <= (5+ycamion2))||
+  ((xcamion3-10)<= x2 && x2<= xcamion3+35) && ((ycamion3 -8)<=y2 && y2 <= (5+ycamion3))||
+  (((xcarro2-10)<= x2 && x2<= xcarro2+15)||((xcarro3-10)<= x2 && x2<= xcarro3+15)) && ((ycarro2-5)<=y2 && y2<= (ycarro2+5))||
+  ((xcar1-15)<= x2 && x2<= (xcar1+10)) && ((ycar1-7)<=y2 && y2<= (ycar1+10))||
+  ((xcar2-15)<= x2 && x2<= (xcar2+10)) && ((ycar2-7)<=y2 && y2<= (ycar2+10))||
+  ((xcar3-15)<= x2 && x2<= (xcar3+10)) && ((ycar3-7)<=y2 && y2<= (ycar3+10))||
+  ((xcar4-15)<= x2 && x2<= (xcar4+10)) && ((ycar4-7)<=y2 && y2<= (ycar4+10))||
+  (xflorven1 == x2 && y2 ==yflorven1)|| (xflorven2 == x2 && y2 ==yflorven2)|| (xflorven3 == x2 && y2 ==yflorven3)|| (xflorven4 == x2 && y2 ==yflorven4)|| (xflorven5 == x2 && y2 ==yflorven5)|| (xflorven6 == x2 && y2 ==yflorven6)|| (xflorven7 == x2 && y2 ==yflorven7)|| (xflorven8 == x2 && y2 ==yflorven8)
   ){
     START =0;
    
-    LCD_Bitmap(x, y, 15, 15, MUERTE);
+    LCD_Bitmap(x2, y2, 15, 15, MUERTE);
     for(int i = 0; i<10;i++){
-    LCD_Bitmap(100+i*5, 15,80 , 7, GAME_OVER);
+    LCD_Bitmap(100+i*5, 15,80 , 7, WIN_J1);
     delay(1000);
     FillRect(100+i*5, 15, 80, 7, 0x0000);
     }
@@ -464,7 +503,7 @@ void AJUMP_IN(uint16_t *x, uint8_t *y){
 }
 //RANA AMARILLA
 void YJUMP_DON(uint16_t *x, uint8_t *y){
-  if( *y > 210 || (*y ==(ycono1-15)  && *x == xcono1)|| (*y ==(ycono2-15)  && *x == xcono2)|| (*y ==(ycono3-15)  && *x == xcono3)|| (*y ==(ycono4-15)  && *x == xcono4)|| (*y ==(ycono5-15)  && *x == xcono5)){
+  if( *y > 210 || (*y ==(y_1-15)  && *x == x1)||(*y ==(ycono1-15)  && *x == xcono1)|| (*y ==(ycono2-15)  && *x == xcono2)|| (*y ==(ycono3-15)  && *x == xcono3)|| (*y ==(ycono4-15)  && *x == xcono4)|| (*y ==(ycono5-15)  && *x == xcono5)){
   }
   else{
     for (int i = 0; i<3; i++){
@@ -490,7 +529,7 @@ void YJUMP_DON(uint16_t *x, uint8_t *y){
  }
 }
 void YJUMP_UPN(uint16_t *x, uint8_t *y){
- if( (*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
+ if( (*y ==((y_1)+15)  && *x == x1)||(*y ==(ycono1+15)  && *x == xcono1)|| (*y ==(ycono2+15)  && *x == xcono2)|| (*y ==(ycono3+15)  && *x == xcono3)|| (*y ==(ycono4+15)  && *x == xcono4)|| (*y ==(ycono5+15)  && *x == xcono5)){
   }
   else {
   for (int i = 0; i<3; i++){
@@ -517,7 +556,7 @@ void YJUMP_UPN(uint16_t *x, uint8_t *y){
 }
 void YJUMP_DN(uint16_t *x, uint8_t *y){
   
-  if(*x > 285|| (*x ==(xcono1-15)  && *y == ycono1)|| (*x ==(xcono2-15)  && *y == ycono2)|| (*x ==(xcono3-15)  && *y == ycono3)|| (*x ==(xcono4-15)  && *y == ycono4)|| (*x ==(xcono5-15)  && *y == ycono5)){
+  if(*x > 285|| (*x ==(x1-15)  && *y == y_1)||(*x ==(xcono1-15)  && *y == ycono1)|| (*x ==(xcono2-15)  && *y == ycono2)|| (*x ==(xcono3-15)  && *y == ycono3)|| (*x ==(xcono4-15)  && *y == ycono4)|| (*x ==(xcono5-15)  && *y == ycono5)){
   }
   else{
   for (int i = 0; i<3; i++){
@@ -544,7 +583,7 @@ void YJUMP_DN(uint16_t *x, uint8_t *y){
   }
 }
 void YJUMP_IN(uint16_t *x, uint8_t *y){
-  if (*x < 15|| (*x ==(xcono1+15)  && *y == ycono1)|| (*x ==(xcono2+15)  && *y == ycono2)|| (*x ==(xcono3+15)  && *y == ycono3)|| (*x ==(xcono4+15)  && *y == ycono4)|| (*x ==(xcono5+15)  && *y == ycono5)){
+  if (*x < 15|| (*x ==(x1+15)  && *y == y_1)||(*x ==(xcono1+15)  && *y == ycono1)|| (*x ==(xcono2+15)  && *y == ycono2)|| (*x ==(xcono3+15)  && *y == ycono3)|| (*x ==(xcono4+15)  && *y == ycono4)|| (*x ==(xcono5+15)  && *y == ycono5)){
   }
   else {
   for (int i = 0; i<3; i++){
